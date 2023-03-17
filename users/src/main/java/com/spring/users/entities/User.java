@@ -1,6 +1,6 @@
 package com.spring.users.entities;
 
-import com.spring.enums.Role;
+import com.spring.users.enums.Role;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

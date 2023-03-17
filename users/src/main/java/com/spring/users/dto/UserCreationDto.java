@@ -1,6 +1,6 @@
 package com.spring.users.dto;
 
-import com.spring.enums.Role;
+import com.spring.users.enums.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;

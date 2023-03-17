@@ -1,0 +1,72 @@
+version: "3.8"
+
+services:
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: zipkin
+    ports:
+      - "9411:9411"
+    networks:
+      - spring-net
+
+  users-pg:
+    image: postgres:15.2
+    container_name: users-pg
+    networks:
+      - users-net
+    expose:
+      - 5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: users
+    restart: always
+    healthcheck:
+      test: pg_isready -d users
+      retries: 10
+      interval: 10s
+      start_period: 10s
+
+  users-api:
+    build: /users
+    container_name: users-api
+    expose:
+      - 8081
+    networks:
+      - users-net
+      - spring-net
+    depends_on:
+      eureka-server:
+        condition: service_started
+      zipkin:
+        condition: service_started
+      users-pg:
+        condition: service_healthy
+
+  eureka-server:
+    build: /eureka-server
+    container_name: eureka-server
+    ports:
+      - "9000:9000"
+    networks:
+      - spring-net
+    depends_on:
+      zipkin:
+        condition: service_started
+
+  gateway:  
+    build: /gateway
+    container_name: gateway
+    networks:
+      - spring-net
+    ports:
+      - "8080:8080"
+    depends_on:
+      eureka-server:
+        condition: service_started
+      zipkin:
+        condition: service_started
+
+networks:
+  users-net:
+  spring-net:
