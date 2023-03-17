@@ -1,6 +1,8 @@
-package com.spring.users.handlers;
+package com.spring.users.exceptions;
 
+import com.spring.users.dto.ResponseDto;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -23,5 +25,10 @@ public class ExceptionCatcher {
             errors.put(fieldName, errorMessage);
         });
         return ResponseEntity.badRequest().body(errors);
+    }
+
+    @ExceptionHandler(PersonNotFoundException.class)
+    public ResponseEntity<ResponseDto> handlePersonNotFoundException(HttpServletRequest request, PersonNotFoundException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDto(e.getMessage()));
     }
 }

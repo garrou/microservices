@@ -19,7 +19,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: admin
-      POSTGRES_DB: users
+      POSTGRES_DB: persons
     restart: always
     healthcheck:
       test: pg_isready -d users

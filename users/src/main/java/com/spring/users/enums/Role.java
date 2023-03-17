@@ -1,5 +1,10 @@
 package com.spring.users.enums;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@AllArgsConstructor
+@Getter
 public enum Role {
 
     MEMBER("member"),
@@ -11,12 +16,4 @@ public enum Role {
     PRESIDENT("president");
 
     private String name;
-
-    Role(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
 }
