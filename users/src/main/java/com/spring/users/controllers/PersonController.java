@@ -1,7 +1,7 @@
 package com.spring.users.controllers;
 
 import com.spring.users.dto.UserCreationDto;
-import com.spring.users.entities.User;
+import com.spring.users.entities.Person;
 import com.spring.users.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,14 +20,14 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    public ResponseEntity<List<User>> getUsers() {
-        List<User> users = userService.getUsers();
+    public ResponseEntity<List<Person>> getUsers() {
+        List<Person> users = userService.getUsers();
         return ResponseEntity.ok(users);
     }
 
     @PostMapping
-    public ResponseEntity<User> createUser(@Valid @RequestBody UserCreationDto user) {
-        User created = userService.createUser(user);
+    public ResponseEntity<Person> createUser(@Valid @RequestBody UserCreationDto user) {
+        Person created = userService.createUser(user);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(created.getId())
