@@ -45,7 +45,7 @@ services:
       start_period: 10s
 
   users-api:
-    build: /users
+    build: ./users
     container_name: users-api
     expose:
       - 8081
@@ -61,7 +61,7 @@ services:
         condition: service_healthy
 
   courses-api:
-    build: /courses
+    build: ./courses
     container_name: courses-api
     expose:
       - 8080
@@ -77,7 +77,7 @@ services:
           condition: service_healthy
 
   eureka-server:
-    build: /eureka-server
+    build: ./eureka-server
     container_name: eureka-server
     ports:
       - "9000:9000"
@@ -88,7 +88,7 @@ services:
         condition: service_started
 
   gateway:  
-    build: /gateway
+    build: ./gateway
     container_name: gateway
     networks:
       - spring-net
