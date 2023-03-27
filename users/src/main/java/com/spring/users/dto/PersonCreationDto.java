@@ -28,7 +28,6 @@ public class PersonCreationDto {
     @NotBlank(message = "Email can't be empty")
     private String address;
 
-    @NotNull
     @Min(value = 0, message = "The minimum level is {value}")
     @Max(value = 5, message = "The maximum level is {value}")
     private int level;

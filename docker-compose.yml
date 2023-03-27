@@ -27,6 +27,23 @@ services:
       interval: 10s
       start_period: 10s
 
+  courses-mongo:
+    image: mongo:6.0.4
+    container_name: courses-mongo
+    networks:
+      - courses-net
+    expose:
+      - 27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    restart: always
+    healthcheck:
+      test: echo 'db.runCommand({serverStatus:1}).ok' | mongosh admin -u $$MONGO_INITDB_ROOT_USERNAME -p $$MONGO_INITDB_ROOT_PASSWORD --quiet | grep 1
+      retries: 10
+      interval: 10s
+      start_period: 10s
+
   users-api:
     build: /users
     container_name: users-api
@@ -42,6 +59,22 @@ services:
         condition: service_started
       users-pg:
         condition: service_healthy
+
+  courses-api:
+    build: /courses
+    container_name: courses-api
+    expose:
+      - 8080
+    networks:
+      - courses-net
+      - spring-net
+    depends_on:
+      eureka-server:
+        condition: service_started
+      zipkin:
+        condition: service_started
+      courses-mongo:
+          condition: service_healthy
 
   eureka-server:
     build: /eureka-server
@@ -69,4 +102,5 @@ services:
 
 networks:
   users-net:
+  courses-net:
   spring-net:
