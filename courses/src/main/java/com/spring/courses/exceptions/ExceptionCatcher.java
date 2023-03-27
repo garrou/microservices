@@ -28,7 +28,7 @@ public class ExceptionCatcher {
     }
 
     @ExceptionHandler(CourseNotFoundException.class)
-    public ResponseEntity<ResponseDto> handlePersonNotFoundException(HttpServletRequest request, CourseNotFoundException e) {
+    public ResponseEntity<ResponseDto> handleCourseNotFoundException(HttpServletRequest request, CourseNotFoundException e) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDto(e.getMessage()));
     }
 }
