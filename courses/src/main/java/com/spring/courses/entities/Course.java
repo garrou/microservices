@@ -7,6 +7,8 @@ import lombok.Setter;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
 @Document
 @NoArgsConstructor
@@ -26,4 +28,10 @@ public class Course {
     private double duration;
 
     private String location;
+
+    private UUID teacherId;
+
+    private List<UUID> students;
+
+    private int nbMaxStudents;
 }

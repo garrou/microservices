@@ -1,17 +1,25 @@
 package com.spring.users.dto;
 
 import com.spring.users.enums.Role;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class PersonCreationDto {
+public class PersonUpdateDto {
+
+    @NotBlank(message = "Id can't be empty")
+    private UUID id;
 
     @NotBlank(message = "Firstname can't be empty")
     private String firstname;

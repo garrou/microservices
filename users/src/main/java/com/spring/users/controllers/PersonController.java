@@ -1,6 +1,7 @@
 package com.spring.users.controllers;
 
 import com.spring.users.dto.PersonCreationDto;
+import com.spring.users.dto.PersonUpdateDto;
 import com.spring.users.entities.Person;
 import com.spring.users.exceptions.PersonNotFoundException;
 import com.spring.users.services.PersonService;
@@ -15,15 +16,18 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/users")
 public class PersonController {
 
     @Autowired
     private PersonService personService;
 
     @GetMapping
-    public ResponseEntity<List<Person>> getPersons() {
-        List<Person> persons = personService.getPersons();
+    public ResponseEntity<List<Person>> getPersons(
+            @RequestParam(value = "level", required = false) Integer level,
+            @RequestParam(value = "pseudo", required = false) String pseudo
+    ) {
+        List<Person> persons = personService.getPersons(level, pseudo);
         return ResponseEntity.ok(persons);
     }
 
@@ -42,5 +46,11 @@ public class PersonController {
                 .toUri();
 
         return ResponseEntity.created(location).body(created);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Person> updatePerson(@Valid @PathVariable UUID id, @RequestBody PersonUpdateDto person) throws PersonNotFoundException {
+        Person updated = personService.updatePerson(id, person);
+        return ResponseEntity.ok(updated);
     }
 }

@@ -1,10 +1,7 @@
 package com.spring.users.entities;
 
 import com.spring.users.enums.Role;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,6 +24,7 @@ public class Person {
 
     private String lastname;
 
+    @Column(unique = true)
     private String pseudo;
 
     private String email;
@@ -35,7 +33,8 @@ public class Person {
 
     private int level;
 
-    // private Role role;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     private String password;
 }
