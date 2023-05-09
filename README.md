@@ -12,3 +12,5 @@ Micro services architecture
 - Statistics (Postgres)
 - Badges (Mongo)
 - Participations (Postgres)
+
+- TEsts
