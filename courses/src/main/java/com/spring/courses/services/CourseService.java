@@ -22,7 +22,15 @@ public class CourseService {
     @Autowired
     private MapperDto mapperDto;
 
-    public List<Course> getCourses() {
+    public List<Course> getCourses(UUID teacherId, Integer level) {
+
+        if (teacherId != null && level != null) {
+            return courseRepository.findCoursesByTeacherIdAndLevel(teacherId, level);
+        } else if (level != null) {
+            return courseRepository.findCoursesByLevel(level);
+        } else if (teacherId != null) {
+            return courseRepository.findCoursesByTeacherId(teacherId);
+        }
         return (List<Course>) courseRepository.findAll();
     }
 
@@ -39,7 +47,7 @@ public class CourseService {
     public Course updateCourse(String id, CourseUpdateDto courseUpdateDto) throws CourseNotFoundException {
 
         if (!id.equals(courseUpdateDto.getId())) {
-            throw new IllegalArgumentException(); // TODO Change
+            throw new IllegalArgumentException();
         }
         if (courseRepository.findById(courseUpdateDto.getId()).isEmpty()) {
             throw new CourseNotFoundException();

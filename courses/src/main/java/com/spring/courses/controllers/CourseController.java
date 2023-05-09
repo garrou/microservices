@@ -5,7 +5,10 @@ import com.spring.courses.dto.CourseUpdateDto;
 import com.spring.courses.entities.Course;
 import com.spring.courses.exceptions.CourseNotFoundException;
 import com.spring.courses.services.CourseService;
+import com.spring.courses.validators.Uuid;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,15 +19,20 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/courses")
+@RequestMapping("/api/courses")
 public class CourseController {
 
     @Autowired
     private CourseService courseService;
 
-    @GetMapping
-    public ResponseEntity<List<Course>> getCourses() {
-        List<Course> courses = courseService.getCourses();
+    @GetMapping()
+    public ResponseEntity<List<Course>> getCourses(
+            @RequestParam(value = "level", required = false)
+            @Min(value = 0, message = "Level can't be lower than {value}")
+            @Max(value = 5, message = "Level can't be greater than {value}") Integer level,
+            @RequestParam(value = "teacher", required = false) @Uuid UUID teacherId
+    ) {
+        List<Course> courses = courseService.getCourses(teacherId, level);
         return ResponseEntity.ok(courses);
     }
 

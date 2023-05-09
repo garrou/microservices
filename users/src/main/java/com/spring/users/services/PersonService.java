@@ -1,6 +1,6 @@
 package com.spring.users.services;
 
-import com.spring.users.config.MapperDto;
+import com.spring.users.configs.MapperDto;
 import com.spring.users.dto.PersonCreationDto;
 import com.spring.users.dto.PersonUpdateDto;
 import com.spring.users.entities.Person;
@@ -30,7 +30,7 @@ public class PersonService {
     public Person updatePerson(UUID id, PersonUpdateDto personUpdateDto) throws PersonNotFoundException {
 
         if (!id.equals(personUpdateDto.getId())) {
-            throw new IllegalArgumentException(); // TODO Change
+            throw new IllegalArgumentException();
         }
         if (personRepository.findById(personUpdateDto.getId()).isEmpty()) {
             throw new PersonNotFoundException();
@@ -41,13 +41,12 @@ public class PersonService {
 
     public List<Person> getPersons(Integer level, String pseudo) {
 
-        if (level != null) {
-            if (level < 1 || level > 5) {
-                throw new IllegalArgumentException(); // TODO Change
-            }
-            return pseudo == null
-                    ? personRepository.findPersonsByLevel(level)
-                    : personRepository.findPersonsByPseudoAndLevel(pseudo, level);
+        if (pseudo != null && level != null) {
+            return personRepository.findPersonsByPseudoAndLevel(pseudo, level);
+        } else if (level != null) {
+            return personRepository.findPersonsByLevel(level);
+        } else if (pseudo != null) {
+            return personRepository.findPersonsByPseudo(pseudo);
         }
         return (List<Person>) personRepository.findAll();
     }
