@@ -6,5 +6,9 @@ Micro services architecture
 
 ## Features
 
-- PostgreSQL to store users
-- API to manage users
+- Users (Postgres)
+- Courses (Mongo)
+- Competitions (Mongo)
+- Statistics (Postgres)
+- Badges (Mongo)
+- Participations (Postgres)
