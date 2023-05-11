@@ -28,7 +28,7 @@ spring:
           uri: lb://participations
           predicates:
             - Path=/api/participations/**
-
+            
 eureka:
   client:
     serviceUrl:
