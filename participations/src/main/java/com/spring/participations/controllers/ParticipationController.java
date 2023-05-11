@@ -1,6 +1,7 @@
 package com.spring.participations.controllers;
 
-import com.spring.participations.dto.ParticipationEditionDto;
+import com.spring.participations.dto.ParticipationCreationDto;
+import com.spring.participations.dto.ParticipationUpdateDto;
 import com.spring.participations.entities.Participation;
 import com.spring.participations.exceptions.ParticipationNotFoundException;
 import com.spring.participations.services.ParticipationService;
@@ -21,7 +22,7 @@ public class ParticipationController {
     private ParticipationService participationService;
 
     @PostMapping
-    public ResponseEntity<Participation> createParticipation(@Valid @RequestBody ParticipationEditionDto participation) {
+    public ResponseEntity<Participation> createParticipation(@Valid @RequestBody ParticipationCreationDto participation) {
         Participation created = participationService.createParticipation(participation);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
@@ -48,7 +49,7 @@ public class ParticipationController {
     @PutMapping("/{id}")
     public ResponseEntity<Participation> updateParticipation(
             @PathVariable String id,
-            @Valid @RequestBody ParticipationEditionDto participation
+            @Valid @RequestBody ParticipationUpdateDto participation
     ) throws ParticipationNotFoundException {
         Participation updated = participationService.updateParticipation(id, participation);
         return ResponseEntity.ok(updated);

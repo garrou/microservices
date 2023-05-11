@@ -1,7 +1,8 @@
 package com.spring.participations.services;
 
 import com.spring.participations.config.MapperDto;
-import com.spring.participations.dto.ParticipationEditionDto;
+import com.spring.participations.dto.ParticipationCreationDto;
+import com.spring.participations.dto.ParticipationUpdateDto;
 import com.spring.participations.entities.Participation;
 import com.spring.participations.exceptions.ParticipationNotFoundException;
 import com.spring.participations.repositories.ParticipationRepository;
@@ -20,7 +21,7 @@ public class ParticipationService {
     @Autowired
     private MapperDto mapperDto;
 
-    public Participation createParticipation(ParticipationEditionDto participationCreationDto) {
+    public Participation createParticipation(ParticipationCreationDto participationCreationDto) {
         Participation participation = mapperDto.modelMapper().map(participationCreationDto, Participation.class);
         return participationRepository.save(participation);
     }
@@ -43,15 +44,15 @@ public class ParticipationService {
         return participation.get();
     }
 
-    public Participation updateParticipation(String id, ParticipationEditionDto participationEditionDto) throws ParticipationNotFoundException {
+    public Participation updateParticipation(String id, ParticipationUpdateDto participationUpdateDto) throws ParticipationNotFoundException {
 
-        if (!id.equals(participationEditionDto.getId())) {
+        if (!id.equals(participationUpdateDto.getId())) {
             throw new IllegalArgumentException();
         }
-        if (participationRepository.findById(participationEditionDto.getId()).isEmpty()) {
+        if (participationRepository.findById(participationUpdateDto.getId()).isEmpty()) {
             throw new ParticipationNotFoundException();
         }
-        Participation course = mapperDto.modelMapper().map(participationEditionDto, Participation.class);
+        Participation course = mapperDto.modelMapper().map(participationUpdateDto, Participation.class);
         return participationRepository.save(course);
     }
 }

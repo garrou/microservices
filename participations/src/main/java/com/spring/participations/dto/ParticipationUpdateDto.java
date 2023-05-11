@@ -10,7 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class ParticipationEditionDto {
+public class ParticipationUpdateDto {
 
     @NotBlank
     private String id;
