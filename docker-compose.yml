@@ -44,6 +44,23 @@ services:
       interval: 10s
       start_period: 10s
 
+  participations-mongo:
+    image: mongo:6.0.4
+    container_name: participations-mongo
+    networks:
+      - participations-net
+    expose:
+      - 27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    restart: always
+    healthcheck:
+      test: echo 'db.runCommand({serverStatus:1}).ok' | mongosh admin -u $$MONGO_INITDB_ROOT_USERNAME -p $$MONGO_INITDB_ROOT_PASSWORD --quiet | grep 1
+      retries: 10
+      interval: 10s
+      start_period: 10s
+
   users-api:
     build: ./users
     container_name: users-api
@@ -64,7 +81,7 @@ services:
     build: ./courses
     container_name: courses-api
     expose:
-      - 8080
+      - 8082
     networks:
       - courses-net
       - spring-net
@@ -74,6 +91,22 @@ services:
       zipkin:
         condition: service_started
       courses-mongo:
+          condition: service_healthy
+
+  participations-api:
+    build: ./participations
+    container_name: participations-api
+    expose:
+      - 8083
+    networks:
+      - participations-net
+      - spring-net
+    depends_on:
+      eureka-server:
+        condition: service_started
+      zipkin:
+        condition: service_started
+      participations-mongo:
           condition: service_healthy
 
   eureka-server:
@@ -101,6 +134,7 @@ services:
         condition: service_started
 
 networks:
+  spring-net:
   users-net:
   courses-net:
-  spring-net:
+  participations-net:
