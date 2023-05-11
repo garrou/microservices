@@ -45,15 +45,15 @@ public class PersonService {
             throw new IllegalArgumentException();
         }
         if (pseudo != null && level != null) {
-            return personRepository.findPersonsByPseudoAndLevel(pseudo, level);
+            return personRepository.findAllByPseudoAndLevel(pseudo, level);
         } else if (pseudo != null && levelSup != null) {
-            return personRepository.findPersonByPseudoAndLevelGreaterThan(pseudo, levelSup);
+            return personRepository.findAllByPseudoAndLevelGreaterThan(pseudo, levelSup);
         } else if (level != null) {
-            return personRepository.findPersonsByLevel(level);
+            return personRepository.findAllByLevel(level);
         } else if (levelSup != null) {
-            return personRepository.findPersonByLevelGreaterThan(levelSup);
+            return personRepository.findAllByLevelGreaterThan(levelSup);
         } else if (pseudo != null) {
-            return personRepository.findPersonsByPseudo(pseudo);
+            return personRepository.findAllByPseudo(pseudo);
         }
         return (List<Person>) personRepository.findAll();
     }

@@ -25,19 +25,19 @@ public class CourseService {
     public List<Course> getCourses(UUID teacherId, UUID studentId, Integer level) {
 
         if (teacherId != null && studentId != null && level != null) {
-            return courseRepository.findCoursesByTeacherIdAndStudentsInAndLevel(teacherId, studentId, level);
+            return courseRepository.findAllByTeacherIdAndStudentsInAndLevel(teacherId, studentId, level);
         } else if (teacherId != null && studentId != null) {
-            return courseRepository.findCoursesByTeacherIdAndStudentsIn(teacherId, studentId);
+            return courseRepository.findAllByTeacherIdAndStudentsIn(teacherId, studentId);
         } else if (teacherId != null && level != null) {
-            return courseRepository.findCoursesByTeacherIdAndLevel(teacherId, level);
+            return courseRepository.findAllByTeacherIdAndLevel(teacherId, level);
         } else if (studentId != null && level != null) {
-            return courseRepository.findCoursesByStudentsInAndLevel(studentId, level);
+            return courseRepository.findAllByStudentsInAndLevel(studentId, level);
         } else if (teacherId != null) {
-            return courseRepository.findCoursesByTeacherId(teacherId);
+            return courseRepository.findAllByTeacherId(teacherId);
         } else if (studentId != null) {
-            return courseRepository.findCoursesByStudentsIn(studentId);
+            return courseRepository.findAllByStudentsIn(studentId);
         } else if (level != null) {
-            return courseRepository.findCoursesByLevel(level);
+            return courseRepository.findAllByLevel(level);
         }
         return (List<Course>) courseRepository.findAll();
     }
