@@ -1,6 +1,7 @@
 package com.spring.users.dto;
 
 import com.spring.users.enums.Role;
+import com.spring.users.validators.ValueOfEnum;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,8 +33,8 @@ public class PersonCreationDto {
     @Max(value = 5, message = "The maximum level is {value}")
     private int level;
 
-    @NotBlank(message = "Role can't be empty")
-    private Role role;
+    @ValueOfEnum(enumClass = Role.class, message = "The role '${validatedValue}' is not valid")
+    private String role;
 
     @NotBlank(message = "Password can't be empty")
     private String password;

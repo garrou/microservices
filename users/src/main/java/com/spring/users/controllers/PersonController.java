@@ -6,6 +6,9 @@ import com.spring.users.entities.Person;
 import com.spring.users.exceptions.PersonNotFoundException;
 import com.spring.users.services.PersonService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +19,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 public class PersonController {
 
     @Autowired
@@ -24,10 +27,16 @@ public class PersonController {
 
     @GetMapping
     public ResponseEntity<List<Person>> getPersons(
+            @Min(value = 0, message = "Level can't be lower than {value}")
+            @Max(value = 5, message = "Level can't be greater than {value}")
             @RequestParam(value = "level", required = false) Integer level,
+            @Min(value = 0, message = "Superior level can't be lower than {value}")
+            @Max(value = 5, message = "Superior level can't be greater than {value}")
+            @RequestParam(value = "level-sup", required = false) Integer levelSup,
+            @NotBlank
             @RequestParam(value = "pseudo", required = false) String pseudo
     ) {
-        List<Person> persons = personService.getPersons(level, pseudo);
+        List<Person> persons = personService.getPersons(level, levelSup, pseudo);
         return ResponseEntity.ok(persons);
     }
 
