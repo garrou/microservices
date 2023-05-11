@@ -1,4 +1,4 @@
-package com.spring.participations.participations;
+package com.spring.participations;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
