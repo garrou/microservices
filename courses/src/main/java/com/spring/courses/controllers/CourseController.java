@@ -30,9 +30,10 @@ public class CourseController {
             @RequestParam(value = "level", required = false)
             @Min(value = 0, message = "Level can't be lower than {value}")
             @Max(value = 5, message = "Level can't be greater than {value}") Integer level,
-            @RequestParam(value = "teacher", required = false) @Uuid UUID teacherId
+            @RequestParam(value = "teacher", required = false) @Uuid UUID teacherId,
+            @RequestParam(value = "student", required = false) @Uuid UUID studentId
     ) {
-        List<Course> courses = courseService.getCourses(teacherId, level);
+        List<Course> courses = courseService.getCourses(teacherId, studentId, level);
         return ResponseEntity.ok(courses);
     }
 

@@ -14,5 +14,13 @@ public interface CourseRepository extends CrudRepository<Course, String> {
 
     List<Course> findCoursesByTeacherId(UUID teacherId);
 
+    List<Course> findCoursesByStudentsIn(UUID studentId);
+
+    List<Course> findCoursesByTeacherIdAndStudentsInAndLevel(UUID teacherId, UUID studentId, Integer level);
+
+    List<Course> findCoursesByTeacherIdAndStudentsIn(UUID teacherId, UUID studentId);
+
     List<Course> findCoursesByTeacherIdAndLevel(UUID teacherId, Integer level);
+
+    List<Course> findCoursesByStudentsInAndLevel(UUID studentId, Integer level);
 }

@@ -15,4 +15,8 @@ public interface PersonRepository extends CrudRepository<Person, UUID> {
     List<Person> findPersonsByPseudo(String pseudo);
 
     List<Person> findPersonsByPseudoAndLevel(String pseudo, Integer level);
+
+    List<Person> findPersonByLevelGreaterThan(Integer level);
+
+    List<Person> findPersonByPseudoAndLevelGreaterThan(String pseudo, Integer level);
 }

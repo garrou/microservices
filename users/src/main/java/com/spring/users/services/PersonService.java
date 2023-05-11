@@ -39,12 +39,19 @@ public class PersonService {
         return personRepository.save(person);
     }
 
-    public List<Person> getPersons(Integer level, String pseudo) {
+    public List<Person> getPersons(Integer level, Integer levelSup, String pseudo) {
 
+        if (level != null && levelSup != null) {
+            throw new IllegalArgumentException();
+        }
         if (pseudo != null && level != null) {
             return personRepository.findPersonsByPseudoAndLevel(pseudo, level);
+        } else if (pseudo != null && levelSup != null) {
+            return personRepository.findPersonByPseudoAndLevelGreaterThan(pseudo, levelSup);
         } else if (level != null) {
             return personRepository.findPersonsByLevel(level);
+        } else if (levelSup != null) {
+            return personRepository.findPersonByLevelGreaterThan(levelSup);
         } else if (pseudo != null) {
             return personRepository.findPersonsByPseudo(pseudo);
         }
