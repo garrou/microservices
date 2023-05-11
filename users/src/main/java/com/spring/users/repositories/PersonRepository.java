@@ -10,13 +10,13 @@ import java.util.UUID;
 @Repository
 public interface PersonRepository extends CrudRepository<Person, UUID> {
 
-    List<Person> findPersonsByLevel(Integer level);
+    List<Person> findAllByLevel(Integer level);
 
-    List<Person> findPersonsByPseudo(String pseudo);
+    List<Person> findAllByPseudo(String pseudo);
 
-    List<Person> findPersonsByPseudoAndLevel(String pseudo, Integer level);
+    List<Person> findAllByPseudoAndLevel(String pseudo, Integer level);
 
-    List<Person> findPersonByLevelGreaterThan(Integer level);
+    List<Person> findAllByLevelGreaterThan(Integer level);
 
-    List<Person> findPersonByPseudoAndLevelGreaterThan(String pseudo, Integer level);
+    List<Person> findAllByPseudoAndLevelGreaterThan(String pseudo, Integer level);
 }

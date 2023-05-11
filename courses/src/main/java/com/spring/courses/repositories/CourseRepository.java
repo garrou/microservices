@@ -10,17 +10,17 @@ import java.util.UUID;
 @Repository
 public interface CourseRepository extends CrudRepository<Course, String> {
 
-    List<Course> findCoursesByLevel(Integer level);
+    List<Course> findAllByLevel(Integer level);
 
-    List<Course> findCoursesByTeacherId(UUID teacherId);
+    List<Course> findAllByTeacherId(UUID teacherId);
 
-    List<Course> findCoursesByStudentsIn(UUID studentId);
+    List<Course> findAllByStudentsIn(UUID studentId);
 
-    List<Course> findCoursesByTeacherIdAndStudentsInAndLevel(UUID teacherId, UUID studentId, Integer level);
+    List<Course> findAllByTeacherIdAndStudentsInAndLevel(UUID teacherId, UUID studentId, Integer level);
 
-    List<Course> findCoursesByTeacherIdAndStudentsIn(UUID teacherId, UUID studentId);
+    List<Course> findAllByTeacherIdAndStudentsIn(UUID teacherId, UUID studentId);
 
-    List<Course> findCoursesByTeacherIdAndLevel(UUID teacherId, Integer level);
+    List<Course> findAllByTeacherIdAndLevel(UUID teacherId, Integer level);
 
-    List<Course> findCoursesByStudentsInAndLevel(UUID studentId, Integer level);
+    List<Course> findAllByStudentsInAndLevel(UUID studentId, Integer level);
 }
