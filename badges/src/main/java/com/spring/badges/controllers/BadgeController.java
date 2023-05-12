@@ -22,8 +22,8 @@ public class BadgeController {
     private BadgeService badgeService;
 
     @GetMapping
-    public ResponseEntity<List<Badge>> getBadges() {
-        List<Badge> badges = badgeService.getBadges();
+    public ResponseEntity<List<Badge>> getBadges(@RequestParam(value = "idPersonne", required = false) String idPersonne) {
+        List<Badge> badges = badgeService.getBadges(idPersonne);
         return ResponseEntity.ok(badges);
     }
 
@@ -31,12 +31,6 @@ public class BadgeController {
     public ResponseEntity<Badge> getBadge(@PathVariable String id) throws BadgeNotFoundException {
         Badge badge = badgeService.getBadge(id);
         return ResponseEntity.ok(badge);
-    }
-
-    @GetMapping("/all/{id}")
-    public ResponseEntity<List<Badge>> getBadgeByIdPersonne(@PathVariable String id) throws BadgeNotFoundException {
-        List<Badge> badges = badgeService.getBadgeByIdPersonne(id);
-        return ResponseEntity.ok(badges);
     }
 
     @PutMapping("/{id}")

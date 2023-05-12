@@ -9,7 +9,6 @@ import com.spring.badges.repositories.BadgeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,7 +21,10 @@ public class BadgeService {
     @Autowired
     private MapperDto mapperDto;
 
-    public List<Badge> getBadges() {
+    public List<Badge> getBadges(String idPersonne) {
+        if (idPersonne != null) {
+            return badgeRepository.findByIdPersonne(idPersonne);
+        }
         return (List<Badge>) badgeRepository.findAll();
     }
 
@@ -30,30 +32,10 @@ public class BadgeService {
     public Badge getBadge(String id) throws BadgeNotFoundException {
 
         Optional<Badge> badge = badgeRepository.findById(id);
-
         if (badge.isEmpty()) {
             throw new BadgeNotFoundException();
         }
         return badge.get();
-    }
-
-    public List<Badge> getBadgeByIdPersonne(String idPersonne) throws BadgeNotFoundException {
-
-        List<Badge> badges = (List<Badge>) badgeRepository.findAll();
-
-        if (badges.isEmpty()) {
-            throw new BadgeNotFoundException();
-        }
-        List<Badge> badgesByIdPersonne = new ArrayList<>();
-        for (Badge badge : badges) {
-            if (badge.getIdPersonne() != null && badge.getIdPersonne().equals(idPersonne)) {
-                badgesByIdPersonne.add(badge);
-            }
-        }
-        if (badgesByIdPersonne.isEmpty()) {
-            throw new BadgeNotFoundException();
-        }
-        return badgesByIdPersonne;
     }
 
     public Badge updateBadge(String id, BadgeUpdateDto badgeUpdateDto) throws BadgeNotFoundException {
