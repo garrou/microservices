@@ -1,0 +1,23 @@
+server:
+  port: 8084
+
+spring:
+  application:
+    name: badges
+  data:
+    mongodb:
+      host: badges-mongo
+      port: 27017
+      username: root
+      password: root
+      database: badges
+      authentication-database: admin
+  zipkin:
+    base-url: http://zipkin:9411
+
+eureka:
+  client:
+    serviceUrl:
+      #defaultZone: http://localhost:9000/eureka/
+      defaultZone: http://eureka-server:9000/eureka/
+
