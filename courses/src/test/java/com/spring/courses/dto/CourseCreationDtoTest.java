@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -27,7 +29,7 @@ public class CourseCreationDtoTest {
                 120.5,
                 "9 speed road",
                 UUID.randomUUID(),
-                List.of(UUID.randomUUID(), UUID.randomUUID()),
+                List.of(),
                 18
         );
     }
@@ -63,7 +65,11 @@ public class CourseCreationDtoTest {
 
     @Test
     public void validateTestShouldBeInvalidCauseStudents() {
-        course.setStudents(List.of());
+        course.setStudents(
+                IntStream.range(0, 600)
+                        .mapToObj(i -> UUID.randomUUID())
+                        .collect(Collectors.toList())
+        );
         assertEquals(1, validator.validate(course).size(), "Students must be invalid");
     }
 
