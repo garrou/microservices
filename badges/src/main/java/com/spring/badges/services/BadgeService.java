@@ -41,7 +41,7 @@ public class BadgeService {
     public Badge updateBadge(String id, BadgeUpdateDto badgeUpdateDto) throws BadgeNotFoundException {
 
         if (!id.equals(badgeUpdateDto.getId())) {
-            throw new IllegalArgumentException(); // TODO Change
+            throw new IllegalArgumentException();
         }
         if (badgeRepository.findById(badgeUpdateDto.getId()).isEmpty()) {
             throw new BadgeNotFoundException();

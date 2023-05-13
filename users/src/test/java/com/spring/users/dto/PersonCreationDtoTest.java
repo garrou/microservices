@@ -40,62 +40,62 @@ public class PersonCreationDtoTest {
     public void validateTestShouldBeInvalidCauseFirstname() {
         person.setFirstname(" ");
         Set<ConstraintViolation<PersonCreationDto>> violations = validator.validate(person);
-        assertEquals(1, violations.size(), "Firstname must not be valid");
+        assertEquals(1, violations.size(), "Firstname must be invalid");
     }
 
     @Test
     public void validateTestShouldBeInvalidCauseLastname() {
         person.setLastname(" ");
         Set<ConstraintViolation<PersonCreationDto>> violations = validator.validate(person);
-        assertEquals(1, violations.size(), "Lastname must not be valid");
+        assertEquals(1, violations.size(), "Lastname must be invalid");
     }
 
     @Test
     public void validateTestShouldBeInvalidCausePseudo() {
         person.setPseudo(" ");
         Set<ConstraintViolation<PersonCreationDto>> violations = validator.validate(person);
-        assertEquals(1, violations.size(), "Pseudo must not be valid");
+        assertEquals(1, violations.size(), "Pseudo must be invalid");
     }
 
     @Test
     public void validateTestShouldBeInvalidCauseEmail() {
         person.setEmail("invalid");
         Set<ConstraintViolation<PersonCreationDto>> violations = validator.validate(person);
-        assertEquals(1, violations.size(), "Email must not be valid");
+        assertEquals(1, violations.size(), "Email must be invalid");
     }
 
     @Test
     public void validateTestShouldBeInvalidCauseAddress() {
         person.setAddress(" ");
         Set<ConstraintViolation<PersonCreationDto>> violations = validator.validate(person);
-        assertEquals(1, violations.size(), "Address must not be valid");
+        assertEquals(1, violations.size(), "Address must be invalid");
     }
 
     @Test
     public void validateTestShouldBeInvalidCauseMaxLevel() {
         person.setLevel(9);
         Set<ConstraintViolation<PersonCreationDto>> violations = validator.validate(person);
-        assertEquals(1, violations.size(), "Level must not be valid");
+        assertEquals(1, violations.size(), "Level must be invalid");
     }
 
     @Test
     public void validateTestShouldBeInvalidCauseMinLevel() {
         person.setLevel(-1);
         Set<ConstraintViolation<PersonCreationDto>> violations = validator.validate(person);
-        assertEquals(1, violations.size(), "Level must not be valid");
+        assertEquals(1, violations.size(), "Level must be invalid");
     }
 
     @Test
     public void validateTestShouldBeInvalidCauseRole() {
         person.setRole("");
         Set<ConstraintViolation<PersonCreationDto>> violations = validator.validate(person);
-        assertEquals(1, violations.size(), "Role must not be valid");
+        assertEquals(1, violations.size(), "Role must be invalid");
     }
 
     @Test
     public void validateTestShouldBeInvalidCausePassword() {
         person.setPassword("");
         Set<ConstraintViolation<PersonCreationDto>> violations = validator.validate(person);
-        assertEquals(1, violations.size(), "Password must not be valid");
+        assertEquals(1, violations.size(), "Password must be invalid");
     }
 }

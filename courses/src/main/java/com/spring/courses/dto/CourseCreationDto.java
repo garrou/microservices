@@ -28,7 +28,7 @@ public class CourseCreationDto {
     @JsonFormat(pattern = "dd/MM/yyyy")
     private Date timeSlot;
 
-    @DecimalMin(value = "0.0", message = "Minimum duration is {value}")
+    @DecimalMin(value = "1.0", message = "Minimum duration is {value}")
     private double duration;
 
     @NotBlank(message = "Location cant' be empty")
@@ -37,9 +37,10 @@ public class CourseCreationDto {
     @Uuid(message = "Teacher id is invalid")
     private UUID teacherId;
 
-    @Size(min = 1)
+    @Size(max = 500)
     private List<UUID> students;
 
     @Min(value = 1, message = "Minimum value is {value}")
+    @Max(value = 500, message = "Maximum value is {value}")
     private int nbStudentsMax;
 }
