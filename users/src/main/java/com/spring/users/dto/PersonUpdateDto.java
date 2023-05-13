@@ -1,6 +1,8 @@
 package com.spring.users.dto;
 
 import com.spring.users.enums.Role;
+import com.spring.users.validators.Uuid;
+import com.spring.users.validators.ValueOfEnum;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -18,7 +20,7 @@ import java.util.UUID;
 @Setter
 public class PersonUpdateDto {
 
-    @NotBlank(message = "Id can't be empty")
+    @Uuid(message = "Id is invalid")
     private UUID id;
 
     @NotBlank(message = "Firstname can't be empty")
@@ -40,8 +42,8 @@ public class PersonUpdateDto {
     @Max(value = 5, message = "The maximum level is {value}")
     private int level;
 
-    @NotBlank(message = "Role can't be empty")
-    private Role role;
+    @ValueOfEnum(enumClass = Role.class, message = "The role '${validatedValue}' is not valid")
+    private String role;
 
     @NotBlank(message = "Password can't be empty")
     private String password;

@@ -19,6 +19,16 @@ spring:
           predicates:
             - Path=/api/users/**
 
+        - id: courses
+          uri: lb://courses
+          predicates:
+            - Path=/api/courses/**
+
+        - id: participations
+          uri: lb://participations
+          predicates:
+            - Path=/api/participations/**
+            
 eureka:
   client:
     serviceUrl:
