@@ -28,6 +28,11 @@ spring:
           uri: lb://participations
           predicates:
             - Path=/api/participations/**
+
+        - id: badges
+          uri: lb://badges
+          predicates:
+            - Path=/api/badges/**
             
 eureka:
   client:

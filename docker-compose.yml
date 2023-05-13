@@ -110,22 +110,6 @@ services:
       courses-mongo:
           condition: service_healthy
 
-  badges-api:
-    build: ./badges
-    container_name: badges-api
-    expose:
-      - 8080
-    networks:
-      - badges-net
-      - spring-net
-    depends_on:
-      eureka-server:
-        condition: service_started
-      zipkin:
-        condition: service_started
-      badges-mongo:
-          condition: service_healthy
-
   participations-api:
     build: ./participations
     container_name: participations-api
@@ -141,6 +125,22 @@ services:
         condition: service_started
       participations-mongo:
         condition: service_healthy
+
+  badges-api:
+    build: ./badges
+    container_name: badges-api
+    expose:
+      - 8084
+    networks:
+      - badges-net
+      - spring-net
+    depends_on:
+      eureka-server:
+        condition: service_started
+      zipkin:
+        condition: service_started
+      badges-mongo:
+          condition: service_healthy
 
   eureka-server:
     build: ./eureka-server
