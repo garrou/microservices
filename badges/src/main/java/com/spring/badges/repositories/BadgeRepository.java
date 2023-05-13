@@ -9,6 +9,6 @@ import java.util.List;
 @Repository
 public interface BadgeRepository extends CrudRepository<Badge, String> {
 
-    List<Badge> findByIdPersonne(String idPersonne);
+    List<Badge> findAllByIdPerson(String idPerson);
 
 }

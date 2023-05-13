@@ -13,8 +13,8 @@ import lombok.Setter;
 public class BadgeCreationDto {
 
     private String id;
-    @NotBlank(message = "idPersonne can't be empty")
-    private String idPersonne;
+    @NotBlank(message = "idPerson can't be empty")
+    private String idPerson;
 
 
 }

@@ -15,6 +15,6 @@ public class Badge {
 
     private String id;
 
-    private String idPersonne;
+    private String idPerson;
 
 }

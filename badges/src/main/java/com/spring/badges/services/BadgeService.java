@@ -21,9 +21,9 @@ public class BadgeService {
     @Autowired
     private MapperDto mapperDto;
 
-    public List<Badge> getBadges(String idPersonne) {
-        if (idPersonne != null) {
-            return badgeRepository.findByIdPersonne(idPersonne);
+    public List<Badge> getBadges(String idPerson) {
+        if (idPerson != null) {
+            return badgeRepository.findAllByIdPerson(idPerson);
         }
         return (List<Badge>) badgeRepository.findAll();
     }

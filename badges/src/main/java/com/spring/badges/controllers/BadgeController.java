@@ -22,8 +22,8 @@ public class BadgeController {
     private BadgeService badgeService;
 
     @GetMapping
-    public ResponseEntity<List<Badge>> getBadges(@RequestParam(value = "idPersonne", required = false) String idPersonne) {
-        List<Badge> badges = badgeService.getBadges(idPersonne);
+    public ResponseEntity<List<Badge>> getBadges(@RequestParam(value = "id-person", required = false) String idPerson) {
+        List<Badge> badges = badgeService.getBadges(idPerson);
         return ResponseEntity.ok(badges);
     }
 
