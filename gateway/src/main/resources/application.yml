@@ -33,6 +33,11 @@ spring:
           uri: lb://badges
           predicates:
             - Path=/api/badges/**
+
+        - id: competitions
+          uri: lb://competitions
+          predicates:
+            - Path=/api/competitions/**
             
 eureka:
   client:
