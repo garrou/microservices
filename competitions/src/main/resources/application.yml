@@ -1,0 +1,22 @@
+server:
+  port: 8085
+
+spring:
+  application:
+    name: competitions
+  data:
+    mongodb:
+      host: competitions-mongo
+      port: 27017
+      username: root
+      password: root
+      database: competitions
+      authentication-database: admin
+  zipkin:
+    base-url: http://zipkin:9411
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka-server:9000/eureka/
+
