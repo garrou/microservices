@@ -15,7 +15,6 @@ import static java.lang.annotation.ElementType.*;
 @Constraint(validatedBy = UuidValidator.class)
 @Retention(RetentionPolicy.RUNTIME)
 @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
-@NotNull
 public @interface Uuid {
 
     String message() default "{invalid.uuid}";

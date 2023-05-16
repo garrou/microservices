@@ -12,12 +12,11 @@ import static java.lang.annotation.ElementType.*;
 @Constraint(validatedBy = ValueOfEnumValidator.class)
 @Retention(RetentionPolicy.RUNTIME)
 @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
-@NotNull
 public @interface ValueOfEnum {
 
     Class<? extends Enum<?>> enumClass();
 
-    String message() default "must be any of enum {enumClass}";
+    String message() default "must be valid";
 
     Class<?>[] groups() default {};
 
