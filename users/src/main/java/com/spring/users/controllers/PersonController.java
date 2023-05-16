@@ -58,7 +58,7 @@ public class PersonController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Person> updatePerson(@Valid @PathVariable UUID id, @RequestBody PersonUpdateDto person) throws PersonNotFoundException {
+    public ResponseEntity<Person> updatePerson(@PathVariable UUID id, @Valid @RequestBody PersonUpdateDto person) throws PersonNotFoundException {
         Person updated = personService.updatePerson(id, person);
         return ResponseEntity.ok(updated);
     }

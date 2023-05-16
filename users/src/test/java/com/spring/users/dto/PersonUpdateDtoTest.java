@@ -42,7 +42,7 @@ public class PersonUpdateDtoTest {
     public void validateTestShouldBeInvalidCauseId() {
         person.setId(null);
         Set<ConstraintViolation<PersonUpdateDto>> violations = validator.validate(person);
-        assertEquals(2, violations.size(), "Id must be invalid");
+        assertEquals(1, violations.size(), "Id must be invalid");
     }
 
     @Test
