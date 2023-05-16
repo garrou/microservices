@@ -3,6 +3,7 @@ package com.spring.users.services;
 import com.spring.users.entities.Person;
 import com.spring.users.enums.Role;
 import com.spring.users.exceptions.PersonNotFoundException;
+import com.spring.users.repositories.PersonRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -52,7 +53,7 @@ public class PersonServiceTest {
     }
 
     @Test
-    public void getAccountByIdNotPresentTest() {
+    public void getPersonByIdNotPresentTest() {
         assertThrows(PersonNotFoundException.class, () -> personService.getPerson(UUID.randomUUID()));
     }
 }
