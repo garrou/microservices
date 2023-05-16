@@ -33,5 +33,5 @@ public class Competition {
 
     private List<UUID> students;
 
-    private int nbMaxStudents;
+    private int nbStudentsMax;
 }

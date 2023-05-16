@@ -5,6 +5,7 @@ import com.spring.users.dto.PersonCreationDto;
 import com.spring.users.dto.PersonUpdateDto;
 import com.spring.users.entities.Person;
 import com.spring.users.enums.Role;
+import com.spring.users.exceptions.PersonNotFoundException;
 import com.spring.users.services.PersonService;
 import org.junit.Before;
 import org.junit.Test;
@@ -63,6 +64,7 @@ public class PersonControllerTest {
 
     @Test
     public void getAllPersonsTest() throws Exception {
+
         when(personService.getPersons(null, null, null)).thenReturn(List.of());
 
         mvc.perform(get("/api/users")
@@ -76,6 +78,7 @@ public class PersonControllerTest {
 
     @Test
     public void getOnePersonTest() throws Exception {
+
         when(personService.getPerson(PERSON.getId())).thenReturn(PERSON);
 
         mvc.perform(get("/api/users/{id}", PERSON.getId())
@@ -94,6 +97,20 @@ public class PersonControllerTest {
                 .andExpect(jsonPath("$.level").value(PERSON.getLevel()))
                 .andExpect(jsonPath("$.role").value(PERSON.getRole().toString()))
                 .andExpect(jsonPath("$.password").value(PERSON.getPassword()));
+    }
+
+    @Test
+    public void getOnePersonNotFoundTest() throws Exception {
+
+        when(personService.getPerson(PERSON.getId())).thenThrow(PersonNotFoundException.class);
+
+        mvc.perform(get("/api/users/{id}", PERSON.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andDo(print())
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$").exists())
+                .andExpect(jsonPath("$.*", hasSize(1)));
     }
 
     @Test
