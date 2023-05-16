@@ -17,4 +17,18 @@ jobs:
           distribution: 'temurin'
           cache: maven
       - name: Build with Maven
-        run: mvn --batch-mode --update-snapshots verify
+        run: |
+          cd ./badges
+          mvn --batch-mode --update-snapshots verify
+
+          cd ../competitions
+          mvn --batch-mode --update-snapshots verify
+
+          cd ../courses
+          mvn --batch-mode --update-snapshots verify
+
+          cd ../participations
+          mvn --batch-mode --update-snapshots verify
+
+          cd ../users
+          mvn --batch-mode --update-snapshots verify
