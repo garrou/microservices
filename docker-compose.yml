@@ -175,6 +175,22 @@ services:
       competitions-mongo:
         condition: service_healthy
 
+  statistiques-api:
+    build: ./statistiques
+    container_name: statistiques-api
+    expose:
+      - 8086
+    networks:
+      - statistiques-net
+      - spring-net
+    depends_on:
+      eureka-server:
+        condition: service_started
+      zipkin:
+        condition: service_started
+      gateway:
+        condition: service_started
+
   eureka-server:
     build: ./eureka-server
     container_name: eureka-server
@@ -206,3 +222,4 @@ networks:
   badges-net:
   participations-net:
   competitions-net:
+  statistiques-net:

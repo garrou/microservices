@@ -38,6 +38,11 @@ spring:
           uri: lb://competitions
           predicates:
             - Path=/api/competitions/**
+
+        - id: statistiques
+          uri: lb://statistiques
+          predicates:
+            - Path=/api/statistiques/**
             
 eureka:
   client:
