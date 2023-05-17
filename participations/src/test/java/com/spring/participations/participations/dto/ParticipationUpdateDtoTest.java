@@ -1,6 +1,5 @@
 package com.spring.participations.participations.dto;
 
-import com.spring.participations.dto.ParticipationCreationDto;
 import com.spring.participations.dto.ParticipationUpdateDto;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
@@ -21,7 +20,7 @@ public class ParticipationUpdateDtoTest {
 
     @BeforeEach
     public void setUp() {
-        participation = new ParticipationUpdateDto("test-id", "test");
+        participation = new ParticipationUpdateDto("test-id", "test", null);
     }
 
     @Test

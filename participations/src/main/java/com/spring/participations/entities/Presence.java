@@ -6,18 +6,22 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.List;
+import java.util.Date;
 
 @Document
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class Participation {
+public class Presence {
 
     private String id;
 
-    private String courseId;
+    private String badgeId;
 
-    private List<Presence> presenceList;
+    private boolean presence;
+
+    private Date date;
+
+    private Double note;
 }
