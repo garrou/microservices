@@ -21,8 +21,8 @@ public class CompetitionCreationDto {
     @NotBlank(message = "Title can't be empty")
     private String title;
 
-    @Min(value = 0, message = "The minimum level is {value}")
-    @Max(value = 5, message = "The maximum level is {value}")
+    @Min(value = 0, message = "Minimum level is {value}")
+    @Max(value = 5, message = "Maximum level is {value}")
     private int level;
 
     @JsonFormat(pattern = "dd/MM/yyyy")
@@ -31,13 +31,13 @@ public class CompetitionCreationDto {
     @DecimalMin(value = "1.0", message = "Minimum duration is {value}")
     private double duration;
 
-    @NotBlank(message = "Location cant' be empty")
+    @NotBlank(message = "Location can't be empty")
     private String location;
 
     @Uuid(message = "Teacher id is invalid")
     private UUID teacherId;
 
-    @Size(max = 500)
+    @Size(max = 500, message = "Maximum number of students is {max}")
     private List<UUID> students;
 
     @Min(value = 1, message = "Minimum value is {value}")

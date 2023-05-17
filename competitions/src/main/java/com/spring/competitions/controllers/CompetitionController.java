@@ -25,7 +25,7 @@ public class CompetitionController {
     @Autowired
     private CompetitionService competitionService;
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<List<Competition>> getCompetitions(
             @RequestParam(value = "level", required = false)
             @Min(value = 0, message = "Level can't be lower than {value}")
@@ -50,7 +50,7 @@ public class CompetitionController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Competition> updateCompetition(@Valid @PathVariable String id, @RequestBody CompetitionUpdateDto competition) throws CompetitionNotFoundException {
+    public ResponseEntity<Competition> updateCompetition(@PathVariable String id, @Valid @RequestBody CompetitionUpdateDto competition) throws CompetitionNotFoundException {
         Competition updated = competitionService.updateCompetition(id, competition);
         return ResponseEntity.ok(updated);
     }
