@@ -5,17 +5,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class Participation {
+public class Badge {
 
     private String id;
 
-    private String courseId;
+    private String idPerson;
 
-    private List<Presence> presenceList;
 }

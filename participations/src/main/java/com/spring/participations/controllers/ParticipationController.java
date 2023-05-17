@@ -38,9 +38,10 @@ public class ParticipationController {
 
     @GetMapping
     public ResponseEntity<List<Participation>> getParticipations(
-            @RequestParam(value = "course", required = false) String courseId
+            @RequestParam(value = "course", required = false) String courseId,
+            @RequestParam(value = "badgeId", required = false) String badgeId
     ) {
-        List<Participation> participations = participationService.getParticipations(courseId);
+        List<Participation> participations = participationService.getParticipations(courseId, badgeId);
         return ResponseEntity.ok(participations);
     }
 
@@ -60,24 +61,23 @@ public class ParticipationController {
     }
 
     @GetMapping("/{id}/presence")
-    public ResponseEntity<List<Presence>> getPresence(@PathVariable String id) throws ParticipationNotFoundException {
-        List<Presence> presenceList = participationService.getPresence(id);
+    public ResponseEntity<List<Presence>> getPresenceByParticipationId(@PathVariable String id) throws ParticipationNotFoundException {
+        List<Presence> presenceList = participationService.getPresenceByParticipationId(id);
         return ResponseEntity.ok(presenceList);
     }
 
     @PostMapping("/{id}/presence")
-    public Presence createPresence(@PathVariable String id, @Valid @RequestBody PresenceCreationDto presenceCreationDto) throws ParticipationNotFoundException {
-        Presence p = participationService.createPresence(id, presenceCreationDto);
+    public Presence createPresenceByParticipationId(@PathVariable String id, @Valid @RequestBody PresenceCreationDto presenceCreationDto) throws ParticipationNotFoundException {
+        Presence p = participationService.createPresenceByParticipationId(id, presenceCreationDto);
         return p;
     }
 
     @PutMapping("/{id}/presence")
-    public ResponseEntity<Presence> updatePresence(
+    public ResponseEntity<Presence> updatePresenceByParticipationId(
             @PathVariable String id,
             @Valid @RequestBody PresenceUpdateDto presenceUpdateDto
     ) throws ParticipationNotFoundException, PresenceNotFoundException {
-        Presence updated = participationService.updatePresence(id, presenceUpdateDto);
+        Presence updated = participationService.updatePresenceByParticipationId(id, presenceUpdateDto);
         return ResponseEntity.ok(updated);
     }
-
 }

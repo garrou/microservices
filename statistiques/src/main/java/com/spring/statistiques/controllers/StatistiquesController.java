@@ -4,6 +4,7 @@ import com.spring.statistiques.dto.Competition;
 import com.spring.statistiques.dto.Course;
 import com.spring.statistiques.dto.Participation;
 import com.spring.statistiques.dto.Person;
+import com.spring.statistiques.exceptions.CourseNotFoundException;
 import com.spring.statistiques.exceptions.ParticipationNotFoundException;
 import com.spring.statistiques.services.impl.StatistiqueServiceImpl;
 import com.spring.statistiques.validators.Uuid;
@@ -36,12 +37,12 @@ public class StatistiquesController {
     }
 
     @GetMapping("/nbPresence/{idCourse}")
-    public ResponseEntity<Integer> getNbStudentPresentByIdCourse(@PathVariable String idCourse) {
+    public ResponseEntity<Integer> getNbStudentPresentByIdCourse(@PathVariable String idCourse) throws ParticipationNotFoundException {
         return ResponseEntity.ok(statistiqueService.getNbStudentPresentByIdCourse(idCourse));
     }
 
     @GetMapping("/courses/{studentId}")
-    public ResponseEntity<HashMap<Course, Participation>> getCoursesByIdStudent(@PathVariable String studentId) {
+    public ResponseEntity<HashMap<Course, Participation>> getCoursesByIdStudent(@PathVariable String studentId) throws CourseNotFoundException {
         return ResponseEntity.ok(statistiqueService.getCoursesByStudentId(UUID.fromString(studentId)));
     }
 

@@ -17,9 +17,9 @@ public interface StatistiqueService {
 
     List<Person> getStudentsPresentByIdCourse(String idCourse) throws CourseNotFoundException, ParticipationNotFoundException;
 
-    int getNbStudentPresentByIdCourse(String idCourse);
+    int getNbStudentPresentByIdCourse(String idCourse) throws ParticipationNotFoundException;
 
-    HashMap<Course, Participation> getCoursesByStudentId(UUID studentId);
+    HashMap<Course, Participation> getCoursesByStudentId(UUID studentId) throws CourseNotFoundException;
 
     List<Competition> getCompetitions(Integer level, UUID studentId, UUID teacherId);
 
