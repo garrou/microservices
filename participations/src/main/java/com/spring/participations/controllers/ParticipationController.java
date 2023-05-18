@@ -39,7 +39,7 @@ public class ParticipationController {
     @GetMapping
     public ResponseEntity<List<Participation>> getParticipations(
             @RequestParam(value = "course", required = false) String courseId,
-            @RequestParam(value = "badgeId", required = false) String badgeId
+            @RequestParam(value = "badge-id", required = false) String badgeId
     ) {
         List<Participation> participations = participationService.getParticipations(courseId, badgeId);
         return ResponseEntity.ok(participations);

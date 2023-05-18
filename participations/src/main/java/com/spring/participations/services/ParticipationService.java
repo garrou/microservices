@@ -42,12 +42,12 @@ public class ParticipationService {
     public List<Participation> getParticipations(String courseId, String badgeId) {
         if (courseId != null && badgeId != null) {
             List<Participation> participationList = participationRepository.findAllByCourseId(courseId);
-            List<Presence> presenceList = presenceRepository.findAllBybadgeId(badgeId);
+            List<Presence> presenceList = presenceRepository.findAllByBadgeId(badgeId);
             List<Participation> result = new ArrayList<>();
             return filterByPresenceList(participationList, presenceList, result);
         } else if (badgeId != null) {
             List<Participation> participationList = (List<Participation>) participationRepository.findAll();
-            List<Presence> presenceList = presenceRepository.findAllBybadgeId(badgeId);
+            List<Presence> presenceList = presenceRepository.findAllByBadgeId(badgeId);
             List<Participation> result = new ArrayList<>();
             return filterByPresenceList(participationList, presenceList, result);
         } else if (courseId != null) {

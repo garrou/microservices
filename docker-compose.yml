@@ -175,13 +175,13 @@ services:
       competitions-mongo:
         condition: service_healthy
 
-  statistiques-api:
-    build: ./statistiques
-    container_name: statistiques-api
+  statistics-api:
+    build: ./statistics
+    container_name: statistics-api
     expose:
       - 8086
     networks:
-      - statistiques-net
+      - statistics-net
       - spring-net
     depends_on:
       eureka-server:
@@ -222,4 +222,4 @@ networks:
   badges-net:
   participations-net:
   competitions-net:
-  statistiques-net:
+  statistics-net:

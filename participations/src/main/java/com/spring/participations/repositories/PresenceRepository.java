@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface PresenceRepository extends CrudRepository<Presence, String> {
 
-    List<Presence> findAllBybadgeId(String id);
+    List<Presence> findAllByBadgeId(String id);
 }
