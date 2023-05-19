@@ -1,7 +1,5 @@
-package com.spring.participations.dto;
+package com.spring.statistics.dto;
 
-import com.spring.participations.entities.Presence;
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,13 +7,14 @@ import lombok.Setter;
 
 import java.util.List;
 
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
-public class ParticipationCreationDto {
+public class Participation {
 
-    @NotBlank
+    private String id;
+
     private String courseId;
 
     private List<Presence> presenceList;

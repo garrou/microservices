@@ -7,6 +7,7 @@ import jakarta.validation.Validator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -20,7 +21,7 @@ public class ParticipationCreationDtoTest {
 
     @BeforeEach
     public void setUp() {
-        participation = new ParticipationCreationDto("test");
+        participation = new ParticipationCreationDto("test", new ArrayList<>());
     }
 
     @Test
