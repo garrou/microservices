@@ -1,5 +1,6 @@
 package com.spring.users.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.spring.users.enums.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -36,5 +37,6 @@ public class Person {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @JsonIgnore
     private String password;
 }

@@ -9,9 +9,9 @@ import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 @EnableDiscoveryClient
 public class UsersApplication {
 
-	@LoadBalanced
-	public static void main(String[] args) {
-		SpringApplication.run(UsersApplication.class, args);
-	}
+    @LoadBalanced
+    public static void main(String[] args) {
+        SpringApplication.run(UsersApplication.class, args);
+    }
 
 }

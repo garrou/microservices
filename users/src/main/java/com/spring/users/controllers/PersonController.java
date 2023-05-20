@@ -1,9 +1,12 @@
 package com.spring.users.controllers;
 
+import com.spring.users.dto.LoginDto;
 import com.spring.users.dto.PersonCreationDto;
 import com.spring.users.dto.PersonUpdateDto;
 import com.spring.users.entities.Person;
 import com.spring.users.exceptions.PersonNotFoundException;
+import com.spring.users.exceptions.PseudoAlreadyExistException;
+import com.spring.users.exceptions.WrongAuthentificationException;
 import com.spring.users.services.PersonService;
 import com.spring.users.validators.Uuid;
 import jakarta.validation.Valid;
@@ -48,7 +51,7 @@ public class PersonController {
     }
 
     @PostMapping
-    public ResponseEntity<Person> createPerson(@Valid @RequestBody PersonCreationDto person) {
+    public ResponseEntity<Person> createPerson(@Valid @RequestBody PersonCreationDto person) throws PseudoAlreadyExistException {
         Person created = personService.createPerson(person);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
@@ -62,8 +65,17 @@ public class PersonController {
     public ResponseEntity<Person> updatePerson(
             @PathVariable @Uuid UUID id,
             @Valid @RequestBody PersonUpdateDto person
-    ) throws PersonNotFoundException {
+    ) throws PersonNotFoundException, PseudoAlreadyExistException {
         Person updated = personService.updatePerson(id, person);
         return ResponseEntity.ok(updated);
     }
+
+    @GetMapping("/login")
+    public ResponseEntity<Person> login(
+            @RequestBody LoginDto loginDto
+    ) throws PersonNotFoundException, WrongAuthentificationException {
+        Person person = personService.login(loginDto);
+        return ResponseEntity.ok(person);
+    }
+
 }
