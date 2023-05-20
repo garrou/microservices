@@ -38,7 +38,6 @@ public class StatisticsService implements com.spring.statistics.interfaces.Stati
     @Override
     public List<Person> getStudentsPresentByIdCourse(String idCourse) {
         List<Participation> pList = this.participationClient.getParticipations(idCourse, null);
-
         Set<String> idPersons = pList.get(0)
                 .getPresenceList()
                 .stream()
@@ -47,12 +46,10 @@ public class StatisticsService implements com.spring.statistics.interfaces.Stati
                 .map(this::getPersonIdFromBadge)
                 .collect(Collectors.toSet());
 
-        List<Person> persons = idPersons
+        return idPersons
                 .stream()
                 .map(this::getPersonById)
                 .collect(Collectors.toList());
-
-        return persons;
     }
 
     @Override
