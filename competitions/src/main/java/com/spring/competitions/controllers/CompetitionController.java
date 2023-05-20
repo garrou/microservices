@@ -50,7 +50,10 @@ public class CompetitionController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Competition> updateCompetition(@PathVariable String id, @Valid @RequestBody CompetitionUpdateDto competition) throws CompetitionNotFoundException {
+    public ResponseEntity<Competition> updateCompetition(
+            @PathVariable String id,
+            @Valid @RequestBody CompetitionUpdateDto competition
+    ) throws CompetitionNotFoundException {
         Competition updated = competitionService.updateCompetition(id, competition);
         return ResponseEntity.ok(updated);
     }

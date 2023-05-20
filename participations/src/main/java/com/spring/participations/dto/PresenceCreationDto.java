@@ -15,6 +15,7 @@ import java.util.Date;
 @Getter
 @Setter
 public class PresenceCreationDto {
+
     @NotBlank(message = "badgeId can't be empty")
     private String badgeId;
 

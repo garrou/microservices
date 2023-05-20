@@ -18,6 +18,7 @@ public class PresenceUpdateDto {
 
     @NotBlank(message = "Id can't be empty")
     private String id;
+
     @NotBlank(message = "badgeId can't be empty")
     private String badgeId;
 

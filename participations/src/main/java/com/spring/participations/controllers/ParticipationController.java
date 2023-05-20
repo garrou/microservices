@@ -60,24 +60,30 @@ public class ParticipationController {
         return ResponseEntity.ok(updated);
     }
 
-    @GetMapping("/{id}/presence")
-    public ResponseEntity<List<Presence>> getPresenceByParticipationId(@PathVariable String id) throws ParticipationNotFoundException {
+    @GetMapping("/{id}/presences")
+    public ResponseEntity<List<Presence>> getPresenceByParticipationId(
+            @PathVariable String id
+    ) throws ParticipationNotFoundException {
         List<Presence> presenceList = participationService.getPresenceByParticipationId(id);
         return ResponseEntity.ok(presenceList);
     }
 
-    @PostMapping("/{id}/presence")
-    public Presence createPresenceByParticipationId(@PathVariable String id, @Valid @RequestBody PresenceCreationDto presenceCreationDto) throws ParticipationNotFoundException {
+    @PostMapping("/{id}/presences")
+    public Presence createPresenceByParticipationId(
+            @PathVariable String id,
+            @Valid @RequestBody PresenceCreationDto presenceCreationDto
+    ) throws ParticipationNotFoundException {
         Presence p = participationService.createPresenceByParticipationId(id, presenceCreationDto);
         return p;
     }
 
-    @PutMapping("/{id}/presence")
+    @PutMapping("/{participationId}/presences/{presenceId}")
     public ResponseEntity<Presence> updatePresenceByParticipationId(
-            @PathVariable String id,
-            @Valid @RequestBody PresenceUpdateDto presenceUpdateDto
+            @PathVariable(name = "participationId") String id,
+            @Valid @RequestBody PresenceUpdateDto presenceUpdateDto,
+            @PathVariable(name = "presenceId") String presenceId
     ) throws ParticipationNotFoundException, PresenceNotFoundException {
-        Presence updated = participationService.updatePresenceByParticipationId(id, presenceUpdateDto);
+        Presence updated = participationService.updatePresenceByParticipationId(id, presenceUpdateDto, presenceId);
         return ResponseEntity.ok(updated);
     }
 }
