@@ -5,10 +5,12 @@ import com.spring.competitions.dto.CompetitionCreationDto;
 import com.spring.competitions.dto.CompetitionUpdateDto;
 import com.spring.competitions.entities.Competition;
 import com.spring.competitions.exceptions.CompetitionNotFoundException;
+import com.spring.competitions.exceptions.StudentAlreadyOnCompetitionException;
 import com.spring.competitions.repositories.CompetitionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -61,6 +63,9 @@ public class CompetitionService {
             throw new CompetitionNotFoundException();
         }
         Competition competition = mapperDto.modelMapper().map(competitionUpdateDto, Competition.class);
+        if(competition.getStudents() == null){
+            competition.setStudents(new ArrayList<>());
+        }
         return competitionRepository.save(competition);
     }
 
@@ -77,5 +82,19 @@ public class CompetitionService {
     public Competition createCompetition(CompetitionCreationDto competitionCreationDto) {
         Competition competition = mapperDto.modelMapper().map(competitionCreationDto, Competition.class);
         return competitionRepository.save(competition);
+    }
+
+    public Competition addStudent(String id, UUID studentId) throws CompetitionNotFoundException, StudentAlreadyOnCompetitionException {
+        Optional<Competition> course = competitionRepository.findById(id);
+        if(course.isEmpty()){
+            throw new CompetitionNotFoundException();
+        }
+        List<UUID> listStudent = course.get().getStudents();
+        if(listStudent.contains(studentId)){
+            throw new StudentAlreadyOnCompetitionException();
+        }
+        listStudent.add(studentId);
+        course.get().setStudents(listStudent);
+        return competitionRepository.save(course.get());
     }
 }
