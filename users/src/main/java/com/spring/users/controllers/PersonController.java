@@ -5,6 +5,7 @@ import com.spring.users.dto.PersonUpdateDto;
 import com.spring.users.entities.Person;
 import com.spring.users.exceptions.PersonNotFoundException;
 import com.spring.users.services.PersonService;
+import com.spring.users.validators.Uuid;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -41,7 +42,7 @@ public class PersonController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Person> getPerson(@PathVariable UUID id) throws PersonNotFoundException {
+    public ResponseEntity<Person> getPerson(@PathVariable @Uuid UUID id) throws PersonNotFoundException {
         Person person = personService.getPerson(id);
         return ResponseEntity.ok(person);
     }
@@ -58,7 +59,10 @@ public class PersonController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Person> updatePerson(@PathVariable UUID id, @Valid @RequestBody PersonUpdateDto person) throws PersonNotFoundException {
+    public ResponseEntity<Person> updatePerson(
+            @PathVariable @Uuid UUID id,
+            @Valid @RequestBody PersonUpdateDto person
+    ) throws PersonNotFoundException {
         Person updated = personService.updatePerson(id, person);
         return ResponseEntity.ok(updated);
     }

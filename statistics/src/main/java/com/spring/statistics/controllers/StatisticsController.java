@@ -6,7 +6,7 @@ import com.spring.statistics.dto.Participation;
 import com.spring.statistics.dto.Person;
 import com.spring.statistics.exceptions.CourseNotFoundException;
 import com.spring.statistics.exceptions.ParticipationNotFoundException;
-import com.spring.statistics.services.impl.StatisticsServiceImpl;
+import com.spring.statistics.services.StatisticsService;
 import com.spring.statistics.validators.Uuid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -18,13 +18,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-
 @RestController
 @RequestMapping("/api/statistics")
 public class StatisticsController {
 
     @Autowired
-    private StatisticsServiceImpl statisticsService;
+    private StatisticsService statisticsService;
 
     @GetMapping("/nbCourses")
     public ResponseEntity<Integer> getNbCourses() {

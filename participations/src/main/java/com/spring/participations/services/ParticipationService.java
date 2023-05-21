@@ -16,8 +16,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
+import java.util.OptionalInt;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Service
 public class ParticipationService {
@@ -33,6 +35,7 @@ public class ParticipationService {
 
     public Participation createParticipation(ParticipationCreationDto participationCreationDto) {
         Participation participation = mapperDto.modelMapper().map(participationCreationDto, Participation.class);
+
         if (participation.getPresenceList() == null) {
             participation.setPresenceList(new ArrayList<>());
         }
@@ -43,28 +46,26 @@ public class ParticipationService {
         if (courseId != null && badgeId != null) {
             List<Participation> participationList = participationRepository.findAllByCourseId(courseId);
             List<Presence> presenceList = presenceRepository.findAllByBadgeId(badgeId);
-            List<Participation> result = new ArrayList<>();
-            return filterByPresenceList(participationList, presenceList, result);
+            return filterByPresenceList(participationList, presenceList);
         } else if (badgeId != null) {
             List<Participation> participationList = (List<Participation>) participationRepository.findAll();
             List<Presence> presenceList = presenceRepository.findAllByBadgeId(badgeId);
-            List<Participation> result = new ArrayList<>();
-            return filterByPresenceList(participationList, presenceList, result);
+            return filterByPresenceList(participationList, presenceList);
         } else if (courseId != null) {
             return participationRepository.findAllByCourseId(courseId);
         }
         return (List<Participation>) participationRepository.findAll();
     }
 
-    private static List<Participation> filterByPresenceList(List<Participation> participationList, List<Presence> presenceList, List<Participation> result) {
-        for (Participation participation : participationList) {
-            for (Presence presence : presenceList) {
-                if (participation.getPresenceList().contains(presence)) {
-                    result.add(participation);
-                }
-            }
-        }
-        return result;
+    private static List<Participation> filterByPresenceList(
+            List<Participation> participationList,
+            List<Presence> presenceList
+    ) {
+        return participationList
+                .stream()
+                .filter(participation -> presenceList.stream()
+                        .anyMatch(presence -> participation.getPresenceList().contains(presence)))
+                .collect(Collectors.toList());
     }
 
     public Participation getParticipation(String id) throws ParticipationNotFoundException {
@@ -98,28 +99,36 @@ public class ParticipationService {
         Participation p = this.getParticipation(id);
         Presence presence = mapperDto.modelMapper().map(presenceDto, Presence.class);
         presenceRepository.save(presence);
+
         List<Presence> pList = p.getPresenceList();
         pList.add(presence);
         p.setPresenceList(pList);
         participationRepository.save(p);
+
         return presence;
     }
 
-    public Presence updatePresenceByParticipationId(String id, PresenceUpdateDto presenceUpdateDto) throws ParticipationNotFoundException, PresenceNotFoundException {
-        Participation p = this.getParticipation(id);
+    public Presence updatePresenceByParticipationId(
+            String participationId,
+            PresenceUpdateDto presenceUpdateDto,
+            String presenceId
+    ) throws ParticipationNotFoundException, PresenceNotFoundException {
+
+        if (!presenceUpdateDto.getId().equals(presenceId)) {
+            throw new IllegalArgumentException();
+        }
+        Participation p = this.getParticipation(participationId);
         Presence presence = mapperDto.modelMapper().map(presenceUpdateDto, Presence.class);
         List<Presence> pList = p.getPresenceList();
-        boolean presenceExist = false;
-        for (int i = 0; i < pList.size(); i++) {
-            if (Objects.equals(pList.get(i).getId(), presence.getId())) {
-                presenceExist = true;
-                pList.set(i, presence);
-                break;
-            }
-        }
-        if (!presenceExist) {
+        OptionalInt presenceIndex = IntStream
+                .range(0, pList.size())
+                .filter(i -> pList.get(i).getId().equals(presence.getId()))
+                .findFirst();
+
+        if (presenceIndex.isEmpty()) {
             throw new PresenceNotFoundException();
         }
+        pList.set(presenceIndex.getAsInt(), presence);
         p.setPresenceList(pList);
         participationRepository.save(p);
         return presence;

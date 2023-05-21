@@ -181,7 +181,6 @@ services:
     expose:
       - 8086
     networks:
-      - statistics-net
       - spring-net
     depends_on:
       eureka-server:
@@ -222,4 +221,3 @@ networks:
   badges-net:
   participations-net:
   competitions-net:
-  statistics-net:
