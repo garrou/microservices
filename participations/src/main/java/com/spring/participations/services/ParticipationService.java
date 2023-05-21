@@ -36,8 +36,8 @@ public class ParticipationService {
     public Participation createParticipation(ParticipationCreationDto participationCreationDto) {
         Participation participation = mapperDto.modelMapper().map(participationCreationDto, Participation.class);
 
-        if (participation.getPresenceList() == null) {
-            participation.setPresenceList(new ArrayList<>());
+        if (participation.getPresences() == null) {
+            participation.setPresences(new ArrayList<>());
         }
         return participationRepository.save(participation);
     }
@@ -64,7 +64,7 @@ public class ParticipationService {
         return participationList
                 .stream()
                 .filter(participation -> presenceList.stream()
-                        .anyMatch(presence -> participation.getPresenceList().contains(presence)))
+                        .anyMatch(presence -> participation.getPresences().contains(presence)))
                 .collect(Collectors.toList());
     }
 
@@ -95,7 +95,7 @@ public class ParticipationService {
 
     public List<Presence> getPresenceByParticipationId(String id) throws ParticipationNotFoundException {
         Participation p = this.getParticipation(id);
-        return p.getPresenceList();
+        return p.getPresences();
     }
 
     public Presence createPresenceByParticipationId(String id, PresenceCreationDto presenceDto) throws ParticipationNotFoundException {
@@ -103,9 +103,9 @@ public class ParticipationService {
         Presence presence = mapperDto.modelMapper().map(presenceDto, Presence.class);
         presenceRepository.save(presence);
 
-        List<Presence> pList = p.getPresenceList();
+        List<Presence> pList = p.getPresences();
         pList.add(presence);
-        p.setPresenceList(pList);
+        p.setPresences(pList);
         participationRepository.save(p);
 
         return presence;
@@ -122,7 +122,7 @@ public class ParticipationService {
         }
         Participation p = this.getParticipation(participationId);
         Presence presence = mapperDto.modelMapper().map(presenceUpdateDto, Presence.class);
-        List<Presence> pList = p.getPresenceList();
+        List<Presence> pList = p.getPresences();
         OptionalInt presenceIndex = IntStream
                 .range(0, pList.size())
                 .filter(i -> pList.get(i).getId().equals(presence.getId()))
@@ -132,7 +132,7 @@ public class ParticipationService {
             throw new PresenceNotFoundException();
         }
         pList.set(presenceIndex.getAsInt(), presence);
-        p.setPresenceList(pList);
+        p.setPresences(pList);
         participationRepository.save(p);
         return presence;
     }

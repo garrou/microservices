@@ -37,7 +37,7 @@ public class CourseCreationDto {
     @Uuid(message = "Teacher id is invalid")
     private UUID teacherId;
 
-    @Size(max = 500)
+    @Size(max = 500, message = "Maximum size is {max}")
     private List<UUID> students;
 
     @Min(value = 1, message = "Minimum value is {value}")

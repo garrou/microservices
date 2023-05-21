@@ -19,16 +19,12 @@ public class PresenceUpdateDto {
     @NotBlank(message = "Id can't be empty")
     private String id;
 
-    @NotBlank(message = "badgeId can't be empty")
+    @NotBlank(message = "BadgeId can't be empty")
     private String badgeId;
 
     private boolean presence;
 
-    private Date date;
-
     @DecimalMin(value = "0.0", message = "Minimum note is {value}")
     @DecimalMax(value = "20.0", message = "Maximum note is {value}")
     private Double note;
-
-
 }

@@ -35,13 +35,12 @@ public class MapperDtoTest {
 
     @Test
     public void mappingUpdateDtoToEntityTest() {
-        List<Presence> presenceList = new ArrayList<>();
-        presenceList.add(new Presence("1", "1", true, new Date(), 0.0));
+        List<Presence> presenceList = List.of(new Presence("1", "1", true, new Date(), 0.0));
         ParticipationUpdateDto participationUpdateDto = new ParticipationUpdateDto("test-id", "1gefaaf0", presenceList);
         Participation participation = mapperDto.modelMapper().map(participationUpdateDto, Participation.class);
 
         assertEquals(participationUpdateDto.getId(), participation.getId(), "Id must be equal");
         assertEquals(participationUpdateDto.getCourseId(), participation.getCourseId(), "CourseId must be equal");
-        assertEquals(participationUpdateDto.getPresenceList(), participation.getPresenceList(), "PresenceList must be equal");
+        assertEquals(participationUpdateDto.getPresences(), participation.getPresences(), "PresenceList must be equal");
     }
 }
