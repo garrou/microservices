@@ -9,7 +9,6 @@ import com.spring.competitions.services.CompetitionService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Answers;
 import org.mockito.ArgumentMatchers;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +23,6 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.hamcrest.Matchers.hasSize;
-import static org.mockito.ArgumentMatchers.isNotNull;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -82,7 +80,7 @@ public class CompetitionControllerTest {
     @Test
     public void getOneCompetitionTest() throws Exception {
 
-        when(competitionService.getCompetition("test")).thenReturn(COMPETITION);
+        when(competitionService.getCompetition(COMPETITION.getId())).thenReturn(COMPETITION);
 
         mvc.perform(get("/api/competitions/{id}", COMPETITION.getId())
                         .contentType(MediaType.APPLICATION_JSON)
