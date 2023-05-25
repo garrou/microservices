@@ -1,7 +1,7 @@
 package com.spring.appli.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.spring.competitions.validators.Uuid;
+import com.spring.appli.validators.Uuid;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

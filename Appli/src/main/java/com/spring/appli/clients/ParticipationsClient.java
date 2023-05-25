@@ -63,7 +63,7 @@ public interface ParticipationsClient {
             value = "/api/participations/{id}/presences",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    Presence createPresenceByParticipationId(
+    ResponseEntity<Presence> createPresenceByParticipationId(
             @PathVariable String id,
             @Valid @RequestBody PresenceCreationDto presenceCreationDto
     ) throws ParticipationNotFoundException;

@@ -25,7 +25,7 @@ public interface CompetitionsClient {
             value = "/api/competitions",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    List<Competition> getCompetitions(
+    ResponseEntity<List<Competition>> getCompetitions(
             @RequestParam(value = "level", required = false)
             @Min(value = 0, message = "Level can't be lower than {value}")
             @Max(value = 5, message = "Level can't be greater than {value}") Integer level,
@@ -61,6 +61,6 @@ public interface CompetitionsClient {
             value = "/api/competitions",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    ResponseEntity<Competition> createPerson(@Valid @RequestBody CompetitionCreationDto competition);
+    ResponseEntity<Competition> createCompetition(@Valid @RequestBody CompetitionCreationDto competition);
 
 }

@@ -1,6 +1,6 @@
 package com.spring.appli.dto;
 
-import com.spring.statistics.enums.Role;
+import com.spring.appli.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

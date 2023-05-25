@@ -1,8 +1,8 @@
 package com.spring.appli.dto;
 
-import com.spring.users.enums.Role;
-import com.spring.users.validators.Uuid;
-import com.spring.users.validators.ValueOfEnum;
+import com.spring.appli.enums.Role;
+import com.spring.appli.validators.Uuid;
+import com.spring.appli.validators.ValueOfEnum;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;

@@ -25,7 +25,7 @@ public interface CoursesClient {
             value = "/api/courses/{id}",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    Course getCourse(@PathVariable String id) throws CourseNotFoundException;
+    ResponseEntity<Course> getCourse(@PathVariable String id) throws CourseNotFoundException;
 
     @RequestMapping(
             method = RequestMethod.GET,
@@ -62,5 +62,5 @@ public interface CoursesClient {
             value = "/api/courses",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    ResponseEntity<Course> createPerson(@Valid @RequestBody CourseCreationDto course);
+    ResponseEntity<Course> createCourse(@Valid @RequestBody CourseCreationDto course);
 }

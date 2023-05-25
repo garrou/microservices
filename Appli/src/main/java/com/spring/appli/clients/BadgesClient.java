@@ -21,14 +21,14 @@ public interface BadgesClient {
             value = "/api/badges/{id}",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    Badge getBadge(@PathVariable String id) throws BadgeNotFoundException;
+    ResponseEntity<Badge> getBadge(@PathVariable String id) throws BadgeNotFoundException;
 
     @RequestMapping(
             method = RequestMethod.GET,
             value = "/api/badges",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    List<Badge> getBadges(@RequestParam(value = "id-person", required = false) String idPerson);
+    ResponseEntity<List<Badge>> getBadges(@RequestParam(value = "id-person", required = false) String idPerson);
 
 
     @RequestMapping(
@@ -36,7 +36,7 @@ public interface BadgesClient {
             value = "/api/badges/{id}",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    ResponseEntity<Badge> updateCourse(
+    ResponseEntity<Badge> updateBadge(
             @Valid @PathVariable String id,
             @RequestBody BadgeUpdateDto badge
     ) throws BadgeNotFoundException;

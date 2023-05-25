@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.UUID;
 
 @FeignClient("users")
-public interface UsersClient {
+public interface PersonsClient {
 
     @RequestMapping(
             method = RequestMethod.GET,
