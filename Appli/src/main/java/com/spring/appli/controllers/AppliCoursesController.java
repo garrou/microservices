@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/courses")
+@RequestMapping("/api/appli/courses")
 public class AppliCoursesController {
 
     @Autowired

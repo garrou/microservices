@@ -14,7 +14,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/participations")
+@RequestMapping("/api/appli/participations")
 public class AppliParticiptionsController {
 
     @Autowired

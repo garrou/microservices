@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/competitions")
+@RequestMapping("/api/appli/competitions")
 public class AppliCompetitionsController {
 
     @Autowired

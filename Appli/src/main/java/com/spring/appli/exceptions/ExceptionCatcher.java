@@ -31,4 +31,31 @@ public class ExceptionCatcher {
     public ResponseEntity<ResponseDto> handleCourseNotFoundException(HttpServletRequest request, BadgeNotFoundException e) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDto(e.getMessage()));
     }
+
+    @ExceptionHandler(CompetitionNotFoundException.class)
+    public ResponseEntity<ResponseDto> handleCompetitionNotFoundException(HttpServletRequest request, CompetitionNotFoundException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDto(e.getMessage()));
+    }
+
+    @ExceptionHandler(CourseNotFoundException.class)
+    public ResponseEntity<ResponseDto> handleCourseNotFoundException(HttpServletRequest request, CourseNotFoundException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDto(e.getMessage()));
+    }
+
+    @ExceptionHandler(ParticipationNotFoundException.class)
+    public ResponseEntity<ResponseDto> handleParticipationNotFoundException(HttpServletRequest request, ParticipationNotFoundException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDto(e.getMessage()));
+    }
+
+    @ExceptionHandler(PersonNotFoundException.class)
+    public ResponseEntity<ResponseDto> handlePersonNotFoundException(HttpServletRequest request, PersonNotFoundException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDto(e.getMessage()));
+    }
+
+    @ExceptionHandler(PresenceNotFoundException.class)
+    public ResponseEntity<ResponseDto> handlePresenceNotFoundException(HttpServletRequest request, PresenceNotFoundException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDto(e.getMessage()));
+    }
+
+
 }

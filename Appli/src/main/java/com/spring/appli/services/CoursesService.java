@@ -5,6 +5,7 @@ import com.spring.appli.dto.Course;
 import com.spring.appli.dto.CourseCreationDto;
 import com.spring.appli.dto.CourseUpdateDto;
 import com.spring.appli.exceptions.CourseNotFoundException;
+import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,15 +24,37 @@ public class CoursesService {
     }
 
     public Course getCourse(String id) throws CourseNotFoundException {
-        return this.coursesClient.getCourse(id).getBody();
+        try {
+            return this.coursesClient.getCourse(id).getBody();
+        } catch (FeignException e) {
+            if (e.status() == 404) {
+                throw new CourseNotFoundException();
+            }
+            throw e;
+        }
     }
 
     public List<UUID> getStudentsByCourse(String id) throws CourseNotFoundException {
-        return this.coursesClient.getStudentsByCourse(id).getBody();
+        try {
+            return this.coursesClient.getStudentsByCourse(id).getBody();
+
+        } catch (FeignException e) {
+            if (e.status() == 404) {
+                throw new CourseNotFoundException();
+            }
+            throw e;
+        }
     }
 
     public Course updateCourse(String id, CourseUpdateDto course) throws CourseNotFoundException {
-        return this.coursesClient.updateCourse(id, course).getBody();
+        try {
+            return this.coursesClient.updateCourse(id, course).getBody();
+        } catch (FeignException e) {
+            if (e.status() == 404) {
+                throw new CourseNotFoundException();
+            }
+            throw e;
+        }
     }
 
     public Course createCourse(CourseCreationDto course) {

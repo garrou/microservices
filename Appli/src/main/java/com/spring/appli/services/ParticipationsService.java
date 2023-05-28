@@ -4,6 +4,7 @@ import com.spring.appli.clients.ParticipationsClient;
 import com.spring.appli.dto.*;
 import com.spring.appli.exceptions.ParticipationNotFoundException;
 import com.spring.appli.exceptions.PresenceNotFoundException;
+import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,19 +22,47 @@ public class ParticipationsService {
     }
 
     public Presence createPresenceByParticipationId(String id, PresenceCreationDto presenceCreationDto) throws ParticipationNotFoundException {
-        return this.participationsClient.createPresenceByParticipationId(id, presenceCreationDto).getBody();
+        try {
+            return this.participationsClient.createPresenceByParticipationId(id, presenceCreationDto).getBody();
+        } catch (FeignException e) {
+            if (e.status() == 404) {
+                throw new ParticipationNotFoundException();
+            }
+            throw e;
+        }
     }
 
     public List<Presence> getPresenceByParticipationId(String id) throws ParticipationNotFoundException {
-        return this.participationsClient.getPresenceByParticipationId(id).getBody();
+        try {
+            return this.participationsClient.getPresenceByParticipationId(id).getBody();
+        } catch (FeignException e) {
+            if (e.status() == 404) {
+                throw new ParticipationNotFoundException();
+            }
+            throw e;
+        }
     }
 
     public Participation updateParticipation(String id, ParticipationUpdateDto participation) throws ParticipationNotFoundException {
-        return this.participationsClient.updateParticipation(id, participation).getBody();
+        try {
+            return this.participationsClient.updateParticipation(id, participation).getBody();
+        } catch (FeignException e) {
+            if (e.status() == 404) {
+                throw new ParticipationNotFoundException();
+            }
+            throw e;
+        }
     }
 
     public Participation getParticipation(String id) throws ParticipationNotFoundException {
-        return this.participationsClient.getParticipation(id).getBody();
+        try {
+            return this.participationsClient.getParticipation(id).getBody();
+        } catch (FeignException e) {
+            if (e.status() == 404) {
+                throw new ParticipationNotFoundException();
+            }
+            throw e;
+        }
     }
 
     public List<Participation> getParticipations(String courseId, String badgeId) {

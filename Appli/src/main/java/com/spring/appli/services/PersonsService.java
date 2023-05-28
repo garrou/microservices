@@ -5,6 +5,7 @@ import com.spring.appli.dto.Person;
 import com.spring.appli.dto.PersonCreationDto;
 import com.spring.appli.dto.PersonUpdateDto;
 import com.spring.appli.exceptions.PersonNotFoundException;
+import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +28,14 @@ public class PersonsService {
     }
 
     public Person getPerson(UUID id) throws PersonNotFoundException {
-        return this.personsClient.getPerson(String.valueOf(id));
+        try {
+            return this.personsClient.getPerson(String.valueOf(id));
+        } catch (FeignException e) {
+            if (e.status() == 404) {
+                throw new PersonNotFoundException();
+            }
+            throw e;
+        }
     }
 
     public Person updatePerson(UUID id, PersonUpdateDto person) {

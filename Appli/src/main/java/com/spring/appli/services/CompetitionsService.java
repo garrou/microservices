@@ -5,6 +5,7 @@ import com.spring.appli.dto.Competition;
 import com.spring.appli.dto.CompetitionCreationDto;
 import com.spring.appli.dto.CompetitionUpdateDto;
 import com.spring.appli.exceptions.CompetitionNotFoundException;
+import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,15 +23,37 @@ public class CompetitionsService {
     }
 
     public Competition getCompetition(String id) throws CompetitionNotFoundException {
-        return this.competitionsClient.getCompetition(id).getBody();
+        try {
+            return this.competitionsClient.getCompetition(id).getBody();
+        } catch (FeignException e) {
+            if (e.status() == 404) {
+                throw new CompetitionNotFoundException();
+            }
+            throw e;
+        }
     }
 
     public List<UUID> getStudentsByCompetition(String id) throws CompetitionNotFoundException {
-        return this.competitionsClient.getStudentsByCompetition(id).getBody();
+        try {
+            return this.competitionsClient.getStudentsByCompetition(id).getBody();
+        } catch (FeignException e) {
+            if (e.status() == 404) {
+                throw new CompetitionNotFoundException();
+            }
+            throw e;
+        }
     }
 
     public Competition updateCompetition(String id, CompetitionUpdateDto competition) throws CompetitionNotFoundException {
-        return this.competitionsClient.updateCompetition(id, competition).getBody();
+        try {
+            return this.competitionsClient.updateCompetition(id, competition).getBody();
+        } catch (FeignException e) {
+            if (e.status() == 404) {
+                throw new CompetitionNotFoundException();
+            }
+            throw e;
+        }
+
     }
 
     public Competition createCompetition(CompetitionCreationDto competition) {

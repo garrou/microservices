@@ -7,6 +7,7 @@ import com.spring.appli.dto.Participation;
 import com.spring.appli.dto.Person;
 import com.spring.appli.exceptions.CourseNotFoundException;
 import com.spring.appli.exceptions.ParticipationNotFoundException;
+import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,15 +23,36 @@ public class StatisticsService {
 
     //TODO add role control
     public List<Person> getStudentsPresentByIdCourse(String idCourse) throws ParticipationNotFoundException {
-        return this.statisticsClient.getStudentsPresentByIdCourse(idCourse).getBody();
+        try {
+            return this.statisticsClient.getStudentsPresentByIdCourse(idCourse).getBody();
+        } catch (FeignException e) {
+            if (e.status() == 404) {
+                throw new ParticipationNotFoundException();
+            }
+            throw e;
+        }
     }
 
     public Integer getNbStudentPresentByIdCourse(String idCourse) throws ParticipationNotFoundException {
-        return this.statisticsClient.getNbStudentPresentByIdCourse(idCourse).getBody();
+        try {
+            return this.statisticsClient.getNbStudentPresentByIdCourse(idCourse).getBody();
+        } catch (FeignException e) {
+            if (e.status() == 404) {
+                throw new ParticipationNotFoundException();
+            }
+            throw e;
+        }
     }
 
     public HashMap<Course, Participation> getCoursesByStudentId(UUID studentId) throws CourseNotFoundException {
-        return this.statisticsClient.getCoursesByIdStudent(String.valueOf(studentId)).getBody();
+        try {
+            return this.statisticsClient.getCoursesByIdStudent(String.valueOf(studentId)).getBody();
+        } catch (FeignException e) {
+            if (e.status() == 404) {
+                throw new CourseNotFoundException();
+            }
+            throw e;
+        }
     }
 
     public List<Competition> getCompetitions(Integer level, UUID teacherId, UUID studentId) {
