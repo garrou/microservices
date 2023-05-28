@@ -11,6 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class LoginDto {
+
     @NotBlank(message = "Pseudo can't be empty")
     private String pseudo;
 

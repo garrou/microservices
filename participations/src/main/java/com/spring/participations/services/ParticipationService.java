@@ -87,8 +87,8 @@ public class ParticipationService {
             throw new ParticipationNotFoundException();
         }
         Participation participation = mapperDto.modelMapper().map(participationUpdateDto, Participation.class);
-        if(participation.getPresenceList() == null){
-            participation.setPresenceList(new ArrayList<>());
+        if(participation.getPresences() == null){
+            participation.setPresences(new ArrayList<>());
         }
         return participationRepository.save(participation);
     }

@@ -24,6 +24,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.List;
 import java.util.UUID;
 
+import static com.spring.users.utils.Helper.asJsonString;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -46,9 +47,7 @@ public class PersonControllerTest {
 
     private PersonUpdateDto personUpdateDto;
 
-    private LoginDto loginDto;
-
-    private static final Person PERSON = new Person(
+    public static final Person PERSON = new Person(
             UUID.randomUUID(),
             "test-firstname",
             "test-lastname",
@@ -64,7 +63,6 @@ public class PersonControllerTest {
     public void setUp() {
         personCreationDto = modelMapper.map(PERSON, PersonCreationDto.class);
         personUpdateDto = modelMapper.map(PERSON, PersonUpdateDto.class);
-        loginDto = modelMapper.map(PERSON, LoginDto.class);
     }
 
     @Test
@@ -271,51 +269,5 @@ public class PersonControllerTest {
                 .andExpect(jsonPath("$.password").value("Password can't be empty"));
     }
 
-    @Test
-    public void loginTest() throws Exception {
-
-        when(personService.login(ArgumentMatchers.any(LoginDto.class))).thenReturn(PERSON);
-
-        mvc.perform(get("/api/users/login")
-                        .content(asJsonString(loginDto))
-                        .contentType(MediaType.APPLICATION_JSON)
-                )
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$").exists())
-                .andExpect(jsonPath("$.*", hasSize(8)))
-                .andExpect(jsonPath("$.id").value(PERSON.getId().toString()))
-                .andExpect(jsonPath("$.firstname").value(PERSON.getFirstname()))
-                .andExpect(jsonPath("$.lastname").value(PERSON.getLastname()))
-                .andExpect(jsonPath("$.pseudo").value(PERSON.getPseudo()))
-                .andExpect(jsonPath("$.email").value(PERSON.getEmail()))
-                .andExpect(jsonPath("$.address").value(PERSON.getAddress()))
-                .andExpect(jsonPath("$.level").value(PERSON.getLevel()))
-                .andExpect(jsonPath("$.role").value(PERSON.getRole().toString()));
-    }
-
-    @Test
-    public void loginTestWrongPassword() throws Exception {
-        loginDto.setPassword("wrong");
-
-        when(personService.login(ArgumentMatchers.any(LoginDto.class))).thenThrow(new WrongAuthentificationException());
-
-        mvc.perform(get("/api/users/login")
-                        .content(asJsonString(loginDto))
-                        .contentType(MediaType.APPLICATION_JSON)
-                )
-                .andDo(print())
-                .andExpect(status().isUnauthorized());
-
-    }
-
-    //TODO: test PseudoAlreadyExist
-
-    private static String asJsonString(final Object obj) {
-        try {
-            return new ObjectMapper().writeValueAsString(obj);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
+    // TODO: Pseudo already exists on post and put
 }
