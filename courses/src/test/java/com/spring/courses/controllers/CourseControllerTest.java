@@ -194,6 +194,7 @@ public class CourseControllerTest {
     public void updateCourseBadRequestTest() throws Exception {
 
         courseUpdateDto = new CourseUpdateDto();
+        courseUpdateDto.setId("id");
 
         when(courseService.updateCourse(
                 ArgumentMatchers.eq(courseUpdateDto.getId()),
@@ -207,10 +208,11 @@ public class CourseControllerTest {
                 .andDo(print())
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$").exists())
-                .andExpect(jsonPath("$.*", hasSize(4)))
+                .andExpect(jsonPath("$.*", hasSize(5)))
                 .andExpect(jsonPath("$.title").value("Title can't be empty"))
-                .andExpect(jsonPath("$.level").value("Level can't be empty"))
-                .andExpect(jsonPath("$.timeSlot").exists())
+                .andExpect(jsonPath("$.duration").value("Minimum duration is 1.0"))
+                .andExpect(jsonPath("$.teacherId").value("TeacherId is invalid"))
+                .andExpect(jsonPath("$.nbMaxStudents").value("Minimum value is 1"))
                 .andExpect(jsonPath("$.location").value("Location can't be empty"));
     }
 
