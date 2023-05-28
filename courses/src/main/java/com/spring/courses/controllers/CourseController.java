@@ -51,8 +51,8 @@ public class CourseController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Course> updateCourse(
-            @Valid @PathVariable String id,
-            @RequestBody CourseUpdateDto course
+            @PathVariable String id,
+            @Valid @RequestBody CourseUpdateDto course
     ) throws CourseNotFoundException {
         Course updated = courseService.updateCourse(id, course);
         return ResponseEntity.ok(updated);

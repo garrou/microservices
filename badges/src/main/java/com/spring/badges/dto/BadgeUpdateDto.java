@@ -15,7 +15,7 @@ public class BadgeUpdateDto {
     @NotBlank(message = "Id can't be empty")
     private String id;
 
-    @NotBlank(message = "idPerson can't be empty")
+    @NotBlank(message = "IdPerson can't be empty")
     private String idPerson;
 
 }

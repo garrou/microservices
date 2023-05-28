@@ -82,7 +82,7 @@ public class CourseUpdateDtoTest {
 
     @Test
     public void validateTestShouldBeInvalidCauseNbStudentsMax() {
-        course.setNbStudentsMax(0);
+        course.setNbMaxStudents(0);
         assertEquals(1, validator.validate(course).size(), "Students must be invalid");
     }
 }

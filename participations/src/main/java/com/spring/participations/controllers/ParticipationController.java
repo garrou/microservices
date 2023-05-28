@@ -68,13 +68,27 @@ public class ParticipationController {
         return ResponseEntity.ok(presenceList);
     }
 
+    @GetMapping("/{participationId}/presences/{presenceId}")
+    public ResponseEntity<Presence> getPresenceByParticipationIdById(
+            @PathVariable(name = "participationId") String id,
+            @PathVariable(name = "presenceId") String presenceId
+    ) throws ParticipationNotFoundException, PresenceNotFoundException {
+        Presence presence = participationService.getPresenceByParticipationIdById(id, presenceId);
+        return ResponseEntity.ok(presence);
+    }
+
     @PostMapping("/{id}/presences")
-    public Presence createPresenceByParticipationId(
+    public ResponseEntity<Presence> createPresenceByParticipationId(
             @PathVariable String id,
             @Valid @RequestBody PresenceCreationDto presenceCreationDto
     ) throws ParticipationNotFoundException {
-        Presence p = participationService.createPresenceByParticipationId(id, presenceCreationDto);
-        return p;
+        Presence created = participationService.createPresenceByParticipationId(id, presenceCreationDto);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(created.getId())
+                .toUri();
+
+        return ResponseEntity.created(location).body(created);
     }
 
     @PutMapping("/{participationId}/presences/{presenceId}")

@@ -31,10 +31,10 @@ public class CourseCreationDto {
     @DecimalMin(value = "1.0", message = "Minimum duration is {value}")
     private double duration;
 
-    @NotBlank(message = "Location cant' be empty")
+    @NotBlank(message = "Location can't be empty")
     private String location;
 
-    @Uuid(message = "Teacher id is invalid")
+    @Uuid(message = "TeacherId is invalid")
     private UUID teacherId;
 
     @Size(max = 500, message = "Maximum size is {max}")
@@ -42,5 +42,5 @@ public class CourseCreationDto {
 
     @Min(value = 1, message = "Minimum value is {value}")
     @Max(value = 500, message = "Maximum value is {value}")
-    private int nbStudentsMax;
+    private int nbMaxStudents;
 }
