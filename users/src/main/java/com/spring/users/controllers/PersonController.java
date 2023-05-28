@@ -69,13 +69,4 @@ public class PersonController {
         Person updated = personService.updatePerson(id, person);
         return ResponseEntity.ok(updated);
     }
-
-    @GetMapping("/login")
-    public ResponseEntity<Person> login(
-            @RequestBody LoginDto loginDto
-    ) throws PersonNotFoundException, WrongAuthentificationException {
-        Person person = personService.login(loginDto);
-        return ResponseEntity.ok(person);
-    }
-
 }
