@@ -23,8 +23,8 @@ public class MapperDtoTest {
         BadgeCreationDto badgeCreationDto = new BadgeCreationDto("10");
         Badge badge = mapperDto.modelMapper().map(badgeCreationDto, Badge.class);
 
-        assertNull(badge.getId(), "is must be null");
-        assertEquals(badgeCreationDto.getIdPerson(), badge.getIdPerson(), "idPerson must be equal");
+        assertNull(badge.getId(), "Id must be null");
+        assertEquals(badgeCreationDto.getIdPerson(), badge.getIdPerson(), "IdPerson must be equal");
     }
 
     @Test
@@ -32,7 +32,7 @@ public class MapperDtoTest {
         BadgeUpdateDto badgeUpdateDto = new BadgeUpdateDto("1", "10");
         Badge badge = mapperDto.modelMapper().map(badgeUpdateDto, Badge.class);
 
-        assertEquals(badgeUpdateDto.getId(), badge.getId(), "id must be equal");
-        assertEquals(badgeUpdateDto.getIdPerson(), badge.getIdPerson(), "idPerson must be equal");
+        assertEquals(badgeUpdateDto.getId(), badge.getId(), "Id must be equal");
+        assertEquals(badgeUpdateDto.getIdPerson(), badge.getIdPerson(), "IdPerson must be equal");
     }
 }

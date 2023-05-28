@@ -34,10 +34,8 @@ public class BadgeController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Badge> updateCourse(
-            @Valid @PathVariable String id,
-            @RequestBody BadgeUpdateDto badge
-    ) throws BadgeNotFoundException {
+    public ResponseEntity<Badge> updateCourse(@PathVariable String id, @Valid @RequestBody BadgeUpdateDto badge)
+            throws BadgeNotFoundException {
         Badge updated = badgeService.updateBadge(id, badge);
         return ResponseEntity.ok(updated);
     }

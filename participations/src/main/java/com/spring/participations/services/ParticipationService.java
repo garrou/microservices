@@ -98,6 +98,18 @@ public class ParticipationService {
         return p.getPresences();
     }
 
+    public Presence getPresenceByParticipationIdById(String participationId, String presenceId)
+            throws ParticipationNotFoundException, PresenceNotFoundException {
+        Participation p = this.getParticipation(participationId);
+
+
+        return p.getPresences()
+                .stream()
+                .filter(presence -> presence.getId().equals(presenceId))
+                .findFirst()
+                .orElseThrow(PresenceNotFoundException::new);
+    }
+
     public Presence createPresenceByParticipationId(String id, PresenceCreationDto presenceDto) throws ParticipationNotFoundException {
         Participation p = this.getParticipation(id);
         Presence presence = mapperDto.modelMapper().map(presenceDto, Presence.class);
