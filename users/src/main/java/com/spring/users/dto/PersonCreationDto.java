@@ -2,7 +2,10 @@ package com.spring.users.dto;
 
 import com.spring.users.enums.Role;
 import com.spring.users.validators.ValueOfEnum;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

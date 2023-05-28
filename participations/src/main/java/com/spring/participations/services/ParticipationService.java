@@ -86,8 +86,11 @@ public class ParticipationService {
         if (participationRepository.findById(participationUpdateDto.getId()).isEmpty()) {
             throw new ParticipationNotFoundException();
         }
-        Participation course = mapperDto.modelMapper().map(participationUpdateDto, Participation.class);
-        return participationRepository.save(course);
+        Participation participation = mapperDto.modelMapper().map(participationUpdateDto, Participation.class);
+        if(participation.getPresenceList() == null){
+            participation.setPresenceList(new ArrayList<>());
+        }
+        return participationRepository.save(participation);
     }
 
     public List<Presence> getPresenceByParticipationId(String id) throws ParticipationNotFoundException {

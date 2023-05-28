@@ -4,6 +4,7 @@ import com.spring.courses.dto.CourseCreationDto;
 import com.spring.courses.dto.CourseUpdateDto;
 import com.spring.courses.entities.Course;
 import com.spring.courses.exceptions.CourseNotFoundException;
+import com.spring.courses.exceptions.StudentAlreadyOnCourseException;
 import com.spring.courses.services.CourseService;
 import com.spring.courses.validators.Uuid;
 import jakarta.validation.Valid;
@@ -58,8 +59,17 @@ public class CourseController {
         return ResponseEntity.ok(updated);
     }
 
+    @PutMapping("/{id}/add")
+    public ResponseEntity<Course> addStudent(
+            @Valid @PathVariable String id,
+            @RequestParam(value = "student", required = true) @Uuid UUID studentId
+    ) throws CourseNotFoundException, StudentAlreadyOnCourseException {
+        Course updated = courseService.addStudent(id, studentId);
+        return ResponseEntity.ok(updated);
+    }
+
     @PostMapping
-    public ResponseEntity<Course> createPerson(@Valid @RequestBody CourseCreationDto course) {
+    public ResponseEntity<Course> createCourse(@Valid @RequestBody CourseCreationDto course) {
         Course created = courseService.createCourse(course);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")

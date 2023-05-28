@@ -2,7 +2,6 @@ package com.spring.users.validators;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
-import jakarta.validation.constraints.NotNull;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
@@ -18,6 +17,8 @@ import static java.lang.annotation.ElementType.*;
 public @interface Uuid {
 
     String message() default "{invalid.uuid}";
+
     Class<?>[] groups() default {};
+
     Class<? extends Payload>[] payload() default {};
 }

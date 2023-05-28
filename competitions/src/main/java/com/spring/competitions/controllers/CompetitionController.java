@@ -4,6 +4,7 @@ import com.spring.competitions.dto.CompetitionCreationDto;
 import com.spring.competitions.dto.CompetitionUpdateDto;
 import com.spring.competitions.entities.Competition;
 import com.spring.competitions.exceptions.CompetitionNotFoundException;
+import com.spring.competitions.exceptions.StudentAlreadyOnCompetitionException;
 import com.spring.competitions.services.CompetitionService;
 import com.spring.competitions.validators.Uuid;
 import jakarta.validation.Valid;
@@ -67,5 +68,14 @@ public class CompetitionController {
                 .toUri();
 
         return ResponseEntity.created(location).body(created);
+    }
+
+    @PutMapping("/{id}/add")
+    public ResponseEntity<Competition> addStudent(
+            @Valid @PathVariable String id,
+            @RequestParam(value = "student", required = true) @Uuid UUID studentId
+    ) throws CompetitionNotFoundException, StudentAlreadyOnCompetitionException {
+        Competition updated = competitionService.addStudent(id, studentId);
+        return ResponseEntity.ok(updated);
     }
 }

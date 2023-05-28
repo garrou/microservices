@@ -1,11 +1,13 @@
 package com.spring.users.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.spring.users.dto.LoginDto;
 import com.spring.users.dto.PersonCreationDto;
 import com.spring.users.dto.PersonUpdateDto;
 import com.spring.users.entities.Person;
 import com.spring.users.enums.Role;
 import com.spring.users.exceptions.PersonNotFoundException;
+import com.spring.users.exceptions.WrongAuthentificationException;
 import com.spring.users.services.PersonService;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,11 +40,13 @@ public class PersonControllerTest {
     @MockBean
     private PersonService personService;
 
-    private ModelMapper modelMapper = new ModelMapper();
+    private final ModelMapper modelMapper = new ModelMapper();
 
     private PersonCreationDto personCreationDto;
 
     private PersonUpdateDto personUpdateDto;
+
+    private LoginDto loginDto;
 
     private static final Person PERSON = new Person(
             UUID.randomUUID(),
@@ -60,6 +64,7 @@ public class PersonControllerTest {
     public void setUp() {
         personCreationDto = modelMapper.map(PERSON, PersonCreationDto.class);
         personUpdateDto = modelMapper.map(PERSON, PersonUpdateDto.class);
+        loginDto = modelMapper.map(PERSON, LoginDto.class);
     }
 
     @Test
@@ -87,7 +92,7 @@ public class PersonControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").exists())
-                .andExpect(jsonPath("$.*", hasSize(9)))
+                .andExpect(jsonPath("$.*", hasSize(8)))
                 .andExpect(jsonPath("$.id").value(PERSON.getId().toString()))
                 .andExpect(jsonPath("$.firstname").value(PERSON.getFirstname()))
                 .andExpect(jsonPath("$.lastname").value(PERSON.getLastname()))
@@ -95,8 +100,7 @@ public class PersonControllerTest {
                 .andExpect(jsonPath("$.email").value(PERSON.getEmail()))
                 .andExpect(jsonPath("$.address").value(PERSON.getAddress()))
                 .andExpect(jsonPath("$.level").value(PERSON.getLevel()))
-                .andExpect(jsonPath("$.role").value(PERSON.getRole().toString()))
-                .andExpect(jsonPath("$.password").value(PERSON.getPassword()));
+                .andExpect(jsonPath("$.role").value(PERSON.getRole().toString()));
     }
 
     @Test
@@ -126,7 +130,7 @@ public class PersonControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(redirectedUrlPattern(String.format("http://**/users/%s", PERSON.getId())))
                 .andExpect(jsonPath("$").exists())
-                .andExpect(jsonPath("$.*", hasSize(9)))
+                .andExpect(jsonPath("$.*", hasSize(8)))
                 .andExpect(jsonPath("$.id").value(PERSON.getId().toString()))
                 .andExpect(jsonPath("$.firstname").value(personCreationDto.getFirstname()))
                 .andExpect(jsonPath("$.lastname").value(personCreationDto.getLastname()))
@@ -134,8 +138,7 @@ public class PersonControllerTest {
                 .andExpect(jsonPath("$.email").value(personCreationDto.getEmail()))
                 .andExpect(jsonPath("$.address").value(personCreationDto.getAddress()))
                 .andExpect(jsonPath("$.level").value(personCreationDto.getLevel()))
-                .andExpect(jsonPath("$.role").value(personCreationDto.getRole().toString()))
-                .andExpect(jsonPath("$.password").value(personCreationDto.getPassword()));
+                .andExpect(jsonPath("$.role").value(personCreationDto.getRole()));
     }
 
     @Test
@@ -221,7 +224,7 @@ public class PersonControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").exists())
-                .andExpect(jsonPath("$.*", hasSize(9)))
+                .andExpect(jsonPath("$.*", hasSize(8)))
                 .andExpect(jsonPath("$.id").value(personUpdateDto.getId().toString()))
                 .andExpect(jsonPath("$.firstname").value(personUpdateDto.getFirstname()))
                 .andExpect(jsonPath("$.lastname").value(personUpdateDto.getLastname()))
@@ -229,8 +232,7 @@ public class PersonControllerTest {
                 .andExpect(jsonPath("$.email").value(personUpdateDto.getEmail()))
                 .andExpect(jsonPath("$.address").value(personUpdateDto.getAddress()))
                 .andExpect(jsonPath("$.level").value(personUpdateDto.getLevel()))
-                .andExpect(jsonPath("$.role").value(personUpdateDto.getRole().toString()))
-                .andExpect(jsonPath("$.password").value(personUpdateDto.getPassword()));
+                .andExpect(jsonPath("$.role").value(personUpdateDto.getRole()));
     }
 
     @Test
@@ -268,6 +270,46 @@ public class PersonControllerTest {
                 )
                 .andExpect(jsonPath("$.password").value("Password can't be empty"));
     }
+
+    @Test
+    public void loginTest() throws Exception {
+
+        when(personService.login(ArgumentMatchers.any(LoginDto.class))).thenReturn(PERSON);
+
+        mvc.perform(get("/api/users/login")
+                        .content(asJsonString(loginDto))
+                        .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").exists())
+                .andExpect(jsonPath("$.*", hasSize(8)))
+                .andExpect(jsonPath("$.id").value(PERSON.getId().toString()))
+                .andExpect(jsonPath("$.firstname").value(PERSON.getFirstname()))
+                .andExpect(jsonPath("$.lastname").value(PERSON.getLastname()))
+                .andExpect(jsonPath("$.pseudo").value(PERSON.getPseudo()))
+                .andExpect(jsonPath("$.email").value(PERSON.getEmail()))
+                .andExpect(jsonPath("$.address").value(PERSON.getAddress()))
+                .andExpect(jsonPath("$.level").value(PERSON.getLevel()))
+                .andExpect(jsonPath("$.role").value(PERSON.getRole().toString()));
+    }
+
+    @Test
+    public void loginTestWrongPassword() throws Exception {
+        loginDto.setPassword("wrong");
+
+        when(personService.login(ArgumentMatchers.any(LoginDto.class))).thenThrow(new WrongAuthentificationException());
+
+        mvc.perform(get("/api/users/login")
+                        .content(asJsonString(loginDto))
+                        .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andDo(print())
+                .andExpect(status().isUnauthorized());
+
+    }
+
+    //TODO: test PseudoAlreadyExist
 
     private static String asJsonString(final Object obj) {
         try {

@@ -32,6 +32,11 @@ public class ExceptionCatcher {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDto(e.getMessage()));
     }
 
+    @ExceptionHandler(StudentAlreadyOnCourseException.class)
+    public ResponseEntity<ResponseDto> handleStudentAlreadyOnCourseException(HttpServletRequest request, StudentAlreadyOnCourseException e) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(new ResponseDto(e.getMessage()));
+    }
+
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<ResponseDto> handleIllegalArgumentException(HttpServletRequest request, IllegalArgumentException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDto("Invalid request"));
