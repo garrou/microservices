@@ -190,6 +190,21 @@ services:
       gateway:
         condition: service_started
 
+  appli-api:
+    build: ./appli
+    container_name: appli-api
+    expose:
+      - 8087
+    networks:
+      - spring-net
+    depends_on:
+      eureka-server:
+        condition: service_started
+      zipkin:
+        condition: service_started
+      gateway:
+        condition: service_started
+
   eureka-server:
     build: ./eureka-server
     container_name: eureka-server

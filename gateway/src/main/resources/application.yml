@@ -43,6 +43,11 @@ spring:
           uri: lb://statistics
           predicates:
             - Path=/api/statistics/**
+
+        - id: appli
+          uri: lb://appli
+          predicates:
+            - Path=/api/appli/**
             
 eureka:
   client:
