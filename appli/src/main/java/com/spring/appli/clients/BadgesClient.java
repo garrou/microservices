@@ -37,8 +37,8 @@ public interface BadgesClient {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     ResponseEntity<Badge> updateBadge(
-            @Valid @PathVariable String id,
-            @RequestBody BadgeUpdateDto badge
+            @PathVariable String id,
+            @Valid @RequestBody BadgeUpdateDto badge
     ) throws BadgeNotFoundException;
 
     @RequestMapping(

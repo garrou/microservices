@@ -53,8 +53,8 @@ public interface CoursesClient {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     ResponseEntity<Course> updateCourse(
-            @Valid @PathVariable String id,
-            @RequestBody CourseUpdateDto course
+            @PathVariable String id,
+            @Valid @RequestBody CourseUpdateDto course
     ) throws CourseNotFoundException;
 
     @RequestMapping(
