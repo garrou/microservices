@@ -21,7 +21,10 @@ public class AppliParticiptionsController {
     private ParticipationsService participationsService;
 
     @PostMapping
-    public ResponseEntity<Participation> createParticipation(@Valid @RequestBody ParticipationCreationDto participation) {
+    public ResponseEntity<Participation> createParticipation(
+            @Valid @RequestBody ParticipationCreationDto participation,
+            @RequestHeader("Authorization") String bearer
+    ) {
         Participation created = participationsService.createParticipation(participation);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
@@ -34,14 +37,18 @@ public class AppliParticiptionsController {
     @GetMapping
     public ResponseEntity<List<Participation>> getParticipations(
             @RequestParam(value = "course", required = false) String courseId,
-            @RequestParam(value = "badge-id", required = false) String badgeId
+            @RequestParam(value = "badge-id", required = false) String badgeId,
+            @RequestHeader("Authorization") String bearer
     ) {
         List<Participation> participations = participationsService.getParticipations(courseId, badgeId);
         return ResponseEntity.ok(participations);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Participation> getParticipation(@PathVariable String id) throws ParticipationNotFoundException {
+    public ResponseEntity<Participation> getParticipation(
+            @PathVariable String id,
+            @RequestHeader("Authorization") String bearer
+    ) throws ParticipationNotFoundException {
         Participation participation = participationsService.getParticipation(id);
         return ResponseEntity.ok(participation);
     }
@@ -49,7 +56,8 @@ public class AppliParticiptionsController {
     @PutMapping("/{id}")
     public ResponseEntity<Participation> updateParticipation(
             @PathVariable String id,
-            @Valid @RequestBody ParticipationUpdateDto participation
+            @Valid @RequestBody ParticipationUpdateDto participation,
+            @RequestHeader("Authorization") String bearer
     ) throws ParticipationNotFoundException {
         Participation updated = participationsService.updateParticipation(id, participation);
         return ResponseEntity.ok(updated);
@@ -57,7 +65,8 @@ public class AppliParticiptionsController {
 
     @GetMapping("/{id}/presences")
     public ResponseEntity<List<Presence>> getPresenceByParticipationId(
-            @PathVariable String id
+            @PathVariable String id,
+            @RequestHeader("Authorization") String bearer
     ) throws ParticipationNotFoundException {
         List<Presence> presenceList = participationsService.getPresenceByParticipationId(id);
         return ResponseEntity.ok(presenceList);
@@ -66,7 +75,8 @@ public class AppliParticiptionsController {
     @PostMapping("/{id}/presences")
     public Presence createPresenceByParticipationId(
             @PathVariable String id,
-            @Valid @RequestBody PresenceCreationDto presenceCreationDto
+            @Valid @RequestBody PresenceCreationDto presenceCreationDto,
+            @RequestHeader("Authorization") String bearer
     ) throws ParticipationNotFoundException {
         Presence p = participationsService.createPresenceByParticipationId(id, presenceCreationDto);
         return p;
@@ -76,7 +86,8 @@ public class AppliParticiptionsController {
     public ResponseEntity<Presence> updatePresenceByParticipationId(
             @PathVariable(name = "participationId") String id,
             @Valid @RequestBody PresenceUpdateDto presenceUpdateDto,
-            @PathVariable(name = "presenceId") String presenceId
+            @PathVariable(name = "presenceId") String presenceId,
+            @RequestHeader("Authorization") String bearer
     ) throws ParticipationNotFoundException, PresenceNotFoundException {
         Presence updated = participationsService.updatePresenceByParticipationId(id, presenceUpdateDto, presenceId);
         return ResponseEntity.ok(updated);

@@ -5,6 +5,7 @@ import com.spring.appli.dto.*;
 import com.spring.appli.exceptions.ParticipationNotFoundException;
 import com.spring.appli.exceptions.PresenceNotFoundException;
 import feign.FeignException;
+import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +26,7 @@ public class ParticipationsService {
         try {
             return this.participationsClient.createPresenceByParticipationId(id, presenceCreationDto).getBody();
         } catch (FeignException e) {
-            if (e.status() == 404) {
+            if (e.status() == HttpStatus.SC_NOT_FOUND) {
                 throw new ParticipationNotFoundException();
             }
             throw e;
@@ -36,7 +37,7 @@ public class ParticipationsService {
         try {
             return this.participationsClient.getPresenceByParticipationId(id).getBody();
         } catch (FeignException e) {
-            if (e.status() == 404) {
+            if (e.status() == HttpStatus.SC_NOT_FOUND) {
                 throw new ParticipationNotFoundException();
             }
             throw e;
@@ -47,7 +48,7 @@ public class ParticipationsService {
         try {
             return this.participationsClient.updateParticipation(id, participation).getBody();
         } catch (FeignException e) {
-            if (e.status() == 404) {
+            if (e.status() == HttpStatus.SC_NOT_FOUND) {
                 throw new ParticipationNotFoundException();
             }
             throw e;
@@ -58,7 +59,7 @@ public class ParticipationsService {
         try {
             return this.participationsClient.getParticipation(id).getBody();
         } catch (FeignException e) {
-            if (e.status() == 404) {
+            if (e.status() == HttpStatus.SC_NOT_FOUND) {
                 throw new ParticipationNotFoundException();
             }
             throw e;

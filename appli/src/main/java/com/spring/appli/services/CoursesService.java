@@ -6,6 +6,7 @@ import com.spring.appli.dto.CourseCreationDto;
 import com.spring.appli.dto.CourseUpdateDto;
 import com.spring.appli.exceptions.CourseNotFoundException;
 import feign.FeignException;
+import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +28,7 @@ public class CoursesService {
         try {
             return this.coursesClient.getCourse(id).getBody();
         } catch (FeignException e) {
-            if (e.status() == 404) {
+            if (e.status() == HttpStatus.SC_NOT_FOUND) {
                 throw new CourseNotFoundException();
             }
             throw e;
@@ -39,7 +40,7 @@ public class CoursesService {
             return this.coursesClient.getStudentsByCourse(id).getBody();
 
         } catch (FeignException e) {
-            if (e.status() == 404) {
+            if (e.status() == HttpStatus.SC_NOT_FOUND) {
                 throw new CourseNotFoundException();
             }
             throw e;
@@ -50,7 +51,7 @@ public class CoursesService {
         try {
             return this.coursesClient.updateCourse(id, course).getBody();
         } catch (FeignException e) {
-            if (e.status() == 404) {
+            if (e.status() == HttpStatus.SC_NOT_FOUND) {
                 throw new CourseNotFoundException();
             }
             throw e;

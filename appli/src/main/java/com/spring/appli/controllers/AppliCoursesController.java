@@ -38,13 +38,19 @@ public class AppliCoursesController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Course> getCourse(@PathVariable String id) throws CourseNotFoundException {
+    public ResponseEntity<Course> getCourse(
+            @PathVariable String id,
+            @RequestHeader("Authorization") String bearer
+    ) throws CourseNotFoundException {
         Course course = coursesService.getCourse(id);
         return ResponseEntity.ok(course);
     }
 
     @GetMapping("/{id}/students")
-    public ResponseEntity<List<UUID>> getStudentsByCourse(@PathVariable String id) throws CourseNotFoundException {
+    public ResponseEntity<List<UUID>> getStudentsByCourse(
+            @PathVariable String id,
+            @RequestHeader("Authorization") String bearer
+    ) throws CourseNotFoundException {
         List<UUID> students = coursesService.getStudentsByCourse(id);
         return ResponseEntity.ok(students);
     }
@@ -52,14 +58,18 @@ public class AppliCoursesController {
     @PutMapping("/{id}")
     public ResponseEntity<Course> updateCourse(
             @PathVariable String id,
-            @Valid @RequestBody CourseUpdateDto course
+            @Valid @RequestBody CourseUpdateDto course,
+            @RequestHeader("Authorization") String bearer
     ) throws CourseNotFoundException {
         Course updated = coursesService.updateCourse(id, course);
         return ResponseEntity.ok(updated);
     }
 
     @PostMapping
-    public ResponseEntity<Course> createPerson(@Valid @RequestBody CourseCreationDto course) {
+    public ResponseEntity<Course> createPerson(
+            @Valid @RequestBody CourseCreationDto course,
+            @RequestHeader("Authorization") String bearer
+    ) {
         Course created = coursesService.createCourse(course);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")

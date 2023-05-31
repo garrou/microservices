@@ -6,6 +6,7 @@ import com.spring.appli.dto.BadgeCreationDto;
 import com.spring.appli.dto.BadgeUpdateDto;
 import com.spring.appli.exceptions.BadgeNotFoundException;
 import feign.FeignException;
+import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +26,7 @@ public class BadgesService {
         try {
             return this.badgesClient.getBadge(id).getBody();
         } catch (FeignException e) {
-            if (e.status() == 404) {
+            if (e.status() == HttpStatus.SC_NOT_FOUND) {
                 throw new BadgeNotFoundException();
             }
             throw e;

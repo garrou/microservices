@@ -52,6 +52,21 @@ public class ExceptionCatcher {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDto(e.getMessage()));
     }
 
+    @ExceptionHandler(BadTokenException.class)
+    public ResponseEntity<ResponseDto> handleBadTokenException(HttpServletRequest request, BadTokenException e) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ResponseDto(e.getMessage()));
+    }
+
+    @ExceptionHandler(WrongAuthentificationException.class)
+    public ResponseEntity<ResponseDto> handleWrongAuthentificationException(HttpServletRequest request, WrongAuthentificationException e) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ResponseDto(e.getMessage()));
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ResponseDto> handleAccessDeniedException(HttpServletRequest request, AccessDeniedException e) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ResponseDto(e.getMessage()));
+    }
+
     @ExceptionHandler(PresenceNotFoundException.class)
     public ResponseEntity<ResponseDto> handlePresenceNotFoundException(HttpServletRequest request, PresenceNotFoundException e) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDto(e.getMessage()));

@@ -1,10 +1,12 @@
 package com.spring.appli.clients;
 
 
+import com.spring.appli.dto.LoginDto;
 import com.spring.appli.dto.Person;
 import com.spring.appli.dto.PersonCreationDto;
 import com.spring.appli.dto.PersonUpdateDto;
 import com.spring.appli.exceptions.PersonNotFoundException;
+import com.spring.appli.exceptions.WrongAuthentificationException;
 import com.spring.appli.validators.Uuid;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
@@ -61,4 +63,13 @@ public interface PersonsClient {
             @PathVariable @Uuid UUID id,
             @Valid @RequestBody PersonUpdateDto person
     );
+
+
+    @RequestMapping(method = RequestMethod.POST,
+            value = "/api/auth/login",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<Person> login(@Valid @RequestBody LoginDto loginDto)
+            throws PersonNotFoundException, WrongAuthentificationException;
+
+
 }

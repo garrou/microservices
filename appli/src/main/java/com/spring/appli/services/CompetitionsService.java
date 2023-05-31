@@ -6,6 +6,7 @@ import com.spring.appli.dto.CompetitionCreationDto;
 import com.spring.appli.dto.CompetitionUpdateDto;
 import com.spring.appli.exceptions.CompetitionNotFoundException;
 import feign.FeignException;
+import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +27,7 @@ public class CompetitionsService {
         try {
             return this.competitionsClient.getCompetition(id).getBody();
         } catch (FeignException e) {
-            if (e.status() == 404) {
+            if (e.status() == HttpStatus.SC_NOT_FOUND) {
                 throw new CompetitionNotFoundException();
             }
             throw e;
@@ -37,7 +38,7 @@ public class CompetitionsService {
         try {
             return this.competitionsClient.getStudentsByCompetition(id).getBody();
         } catch (FeignException e) {
-            if (e.status() == 404) {
+            if (e.status() == HttpStatus.SC_NOT_FOUND) {
                 throw new CompetitionNotFoundException();
             }
             throw e;
@@ -48,7 +49,7 @@ public class CompetitionsService {
         try {
             return this.competitionsClient.updateCompetition(id, competition).getBody();
         } catch (FeignException e) {
-            if (e.status() == 404) {
+            if (e.status() == HttpStatus.SC_NOT_FOUND) {
                 throw new CompetitionNotFoundException();
             }
             throw e;

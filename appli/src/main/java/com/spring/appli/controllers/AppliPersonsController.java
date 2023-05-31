@@ -35,20 +35,27 @@ public class AppliPersonsController {
             @Max(value = 5, message = "Superior level can't be greater than {value}")
             @RequestParam(value = "level-sup", required = false) Integer levelSup,
             @NotBlank
-            @RequestParam(value = "pseudo", required = false) String pseudo
+            @RequestParam(value = "pseudo", required = false) String pseudo,
+            @RequestHeader("Authorization") String bearer
     ) {
         List<Person> persons = personService.getPersons(level, levelSup, pseudo);
         return ResponseEntity.ok(persons);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Person> getPerson(@PathVariable @Uuid UUID id) throws PersonNotFoundException {
+    public ResponseEntity<Person> getPerson(
+            @PathVariable @Uuid UUID id,
+            @RequestHeader("Authorization") String bearer
+    ) throws PersonNotFoundException {
         Person person = personService.getPerson(id);
         return ResponseEntity.ok(person);
     }
 
     @PostMapping
-    public ResponseEntity<Person> createPerson(@Valid @RequestBody PersonCreationDto person) {
+    public ResponseEntity<Person> createPerson(
+            @Valid @RequestBody PersonCreationDto person,
+            @RequestHeader("Authorization") String bearer
+    ) {
         Person created = personService.createPerson(person);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
@@ -61,8 +68,10 @@ public class AppliPersonsController {
     @PutMapping("/{id}")
     public ResponseEntity<Person> updatePerson(
             @PathVariable @Uuid UUID id,
-            @Valid @RequestBody PersonUpdateDto person
+            @Valid @RequestBody PersonUpdateDto person,
+            @RequestHeader("Authorization") String bearer
     ) throws PersonNotFoundException {
+
         Person updated = personService.updatePerson(id, person);
         return ResponseEntity.ok(updated);
     }

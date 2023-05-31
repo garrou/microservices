@@ -31,20 +31,27 @@ public class AppliCompetitionsController {
             @Min(value = 0, message = "Level can't be lower than {value}")
             @Max(value = 5, message = "Level can't be greater than {value}") Integer level,
             @RequestParam(value = "teacher", required = false) @Uuid UUID teacherId,
-            @RequestParam(value = "student", required = false) @Uuid UUID studentId
+            @RequestParam(value = "student", required = false) @Uuid UUID studentId,
+            @RequestHeader("Authorization") String bearer
     ) {
         List<Competition> competitions = competitionsService.getCompetitions(teacherId, studentId, level);
         return ResponseEntity.ok(competitions);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Competition> getCompetition(@PathVariable String id) throws CompetitionNotFoundException {
+    public ResponseEntity<Competition> getCompetition(
+            @PathVariable String id,
+            @RequestHeader("Authorization") String bearer
+    ) throws CompetitionNotFoundException {
         Competition competition = competitionsService.getCompetition(id);
         return ResponseEntity.ok(competition);
     }
 
     @GetMapping("/{id}/students")
-    public ResponseEntity<List<UUID>> getStudentsByCompetition(@PathVariable String id) throws CompetitionNotFoundException {
+    public ResponseEntity<List<UUID>> getStudentsByCompetition(
+            @PathVariable String id,
+            @RequestHeader("Authorization") String bearer
+    ) throws CompetitionNotFoundException {
         List<UUID> students = competitionsService.getStudentsByCompetition(id);
         return ResponseEntity.ok(students);
     }
@@ -52,14 +59,18 @@ public class AppliCompetitionsController {
     @PutMapping("/{id}")
     public ResponseEntity<Competition> updateCompetition(
             @PathVariable String id,
-            @Valid @RequestBody CompetitionUpdateDto competition
+            @Valid @RequestBody CompetitionUpdateDto competition,
+            @RequestHeader("Authorization") String bearer
     ) throws CompetitionNotFoundException {
         Competition updated = competitionsService.updateCompetition(id, competition);
         return ResponseEntity.ok(updated);
     }
 
     @PostMapping
-    public ResponseEntity<Competition> createPerson(@Valid @RequestBody CompetitionCreationDto competition) {
+    public ResponseEntity<Competition> createPerson(
+            @Valid @RequestBody CompetitionCreationDto competition,
+            @RequestHeader("Authorization") String bearer
+    ) {
         Competition created = competitionsService.createCompetition(competition);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")

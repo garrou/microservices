@@ -8,6 +8,7 @@ import com.spring.appli.dto.Person;
 import com.spring.appli.exceptions.CourseNotFoundException;
 import com.spring.appli.exceptions.ParticipationNotFoundException;
 import feign.FeignException;
+import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +27,7 @@ public class StatisticsService {
         try {
             return this.statisticsClient.getStudentsPresentByIdCourse(idCourse).getBody();
         } catch (FeignException e) {
-            if (e.status() == 404) {
+            if (e.status() == HttpStatus.SC_NOT_FOUND) {
                 throw new ParticipationNotFoundException();
             }
             throw e;
@@ -37,7 +38,7 @@ public class StatisticsService {
         try {
             return this.statisticsClient.getNbStudentPresentByIdCourse(idCourse).getBody();
         } catch (FeignException e) {
-            if (e.status() == 404) {
+            if (e.status() == HttpStatus.SC_NOT_FOUND) {
                 throw new ParticipationNotFoundException();
             }
             throw e;
@@ -48,7 +49,7 @@ public class StatisticsService {
         try {
             return this.statisticsClient.getCoursesByIdStudent(String.valueOf(studentId)).getBody();
         } catch (FeignException e) {
-            if (e.status() == 404) {
+            if (e.status() == HttpStatus.SC_NOT_FOUND) {
                 throw new CourseNotFoundException();
             }
             throw e;
