@@ -1,8 +1,7 @@
 package com.spring.appli.controllers;
 
 import com.spring.appli.dto.Competition;
-import com.spring.appli.dto.Course;
-import com.spring.appli.dto.Participation;
+import com.spring.appli.dto.CourseParticipationDto;
 import com.spring.appli.dto.Person;
 import com.spring.appli.enums.Role;
 import com.spring.appli.exceptions.AccessDeniedException;
@@ -18,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -62,7 +60,7 @@ public class AppliStatisticsController {
     }
 
     @GetMapping("/courses/{studentId}")
-    public ResponseEntity<HashMap<Course, Participation>> getCoursesByIdStudent(
+    public ResponseEntity<List<CourseParticipationDto>> getCoursesByIdStudent(
             @PathVariable String studentId,
             @RequestHeader("Authorization") String bearer
     ) throws CourseNotFoundException, BadTokenException, AccessDeniedException {

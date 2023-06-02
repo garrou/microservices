@@ -2,8 +2,7 @@ package com.spring.appli.clients;
 
 
 import com.spring.appli.dto.Competition;
-import com.spring.appli.dto.Course;
-import com.spring.appli.dto.Participation;
+import com.spring.appli.dto.CourseParticipationDto;
 import com.spring.appli.dto.Person;
 import com.spring.appli.exceptions.CourseNotFoundException;
 import com.spring.appli.exceptions.ParticipationNotFoundException;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -51,7 +49,7 @@ public interface StatisticsClient {
             value = "/api/statistics/courses/{studentId}",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    ResponseEntity<HashMap<Course, Participation>> getCoursesByIdStudent(@PathVariable String studentId) throws CourseNotFoundException;
+    ResponseEntity<List<CourseParticipationDto>> getCoursesByIdStudent(@PathVariable String studentId) throws CourseNotFoundException;
 
     @RequestMapping(
             method = RequestMethod.GET,

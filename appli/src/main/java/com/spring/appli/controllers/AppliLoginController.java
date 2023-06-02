@@ -4,6 +4,7 @@ import com.spring.appli.dto.LoginDto;
 import com.spring.appli.dto.Person;
 import com.spring.appli.dto.PersonCreationDto;
 import com.spring.appli.exceptions.PersonNotFoundException;
+import com.spring.appli.exceptions.PseudoAlreadyExistException;
 import com.spring.appli.exceptions.WrongAuthentificationException;
 import com.spring.appli.services.LoginService;
 import jakarta.validation.Valid;
@@ -33,7 +34,7 @@ public class AppliLoginController {
 
     @PostMapping("/signup")
     public ResponseEntity<Person> createPerson(
-            @Valid @RequestBody PersonCreationDto person) {
+            @Valid @RequestBody PersonCreationDto person) throws PseudoAlreadyExistException {
         Person created = loginService.createPerson(person);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")

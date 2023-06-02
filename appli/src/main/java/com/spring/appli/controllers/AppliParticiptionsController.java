@@ -79,6 +79,7 @@ public class AppliParticiptionsController {
         return ResponseEntity.ok(updated);
     }
 
+
     @GetMapping("/{id}/presences")
     public ResponseEntity<List<Presence>> getPresenceByParticipationId(
             @PathVariable String id,
@@ -89,6 +90,19 @@ public class AppliParticiptionsController {
         }
         List<Presence> presenceList = participationsService.getPresenceByParticipationId(id);
         return ResponseEntity.ok(presenceList);
+    }
+
+    @GetMapping("/{participationId}/presences/{presenceId}")
+    public ResponseEntity<Presence> getPresenceByParticipationIdById(
+            @PathVariable(name = "participationId") String id,
+            @PathVariable(name = "presenceId") String presenceId,
+            @RequestHeader("Authorization") String bearer
+    ) throws ParticipationNotFoundException, PresenceNotFoundException, BadTokenException, AccessDeniedException {
+        if (!TokenUtil.contains(TokenUtil.parseToken(bearer, TokenUtil.ROLE))) {
+            throw new AccessDeniedException();
+        }
+        Presence presence = participationsService.getPresenceByParticipationIdById(id, presenceId);
+        return ResponseEntity.ok(presence);
     }
 
     @PostMapping("/{id}/presences")

@@ -105,8 +105,12 @@ public class AppliCoursesController {
     @PutMapping("/{id}/add")
     public ResponseEntity<Course> addStudent(
             @Valid @PathVariable String id,
-            @RequestParam(value = "student", required = true) @Uuid UUID studentId
-    ) throws CourseNotFoundException, StudentAlreadyOnCourseException {
+            @RequestParam(value = "student", required = true) @Uuid UUID studentId,
+            @RequestHeader("Authorization") String bearer
+    ) throws CourseNotFoundException, StudentAlreadyOnCourseException, AccessDeniedException, BadTokenException {
+        if (!TokenUtil.contains(TokenUtil.parseToken(bearer, TokenUtil.ROLE))) {
+            throw new AccessDeniedException();
+        }
         Course updated = coursesService.addStudent(id, studentId);
         return ResponseEntity.ok(updated);
     }

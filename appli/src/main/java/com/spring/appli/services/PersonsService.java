@@ -17,7 +17,6 @@ public class PersonsService {
 
     @Autowired
     private PersonsClient personsClient;
-    //TODO add role control
 
 
     public List<Person> getPersons(Integer level, Integer levelSup, String pseudo) {

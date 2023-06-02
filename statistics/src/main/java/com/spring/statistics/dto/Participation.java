@@ -17,5 +17,5 @@ public class Participation {
 
     private String courseId;
 
-    private List<Presence> presenceList;
+    private List<Presence> presences;
 }

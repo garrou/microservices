@@ -78,4 +78,14 @@ public interface ParticipationsClient {
             @Valid @RequestBody PresenceUpdateDto presenceUpdateDto,
             @PathVariable(name = "presenceId") String presenceId
     ) throws ParticipationNotFoundException, PresenceNotFoundException;
+
+    @RequestMapping(
+            method = RequestMethod.GET,
+            value = "/{participationId}/presences/{presenceId}",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    ResponseEntity<Presence> getPresenceByParticipationIdById(
+            @PathVariable(name = "participationId") String id,
+            @PathVariable(name = "presenceId") String presenceId
+    ) throws ParticipationNotFoundException, PresenceNotFoundException;
 }

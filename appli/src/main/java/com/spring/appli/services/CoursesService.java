@@ -20,7 +20,6 @@ public class CoursesService {
     @Autowired
     private CoursesClient coursesClient;
 
-    //TODO add role control
     public List<Course> getCourses(UUID teacherId, UUID studentId, Integer level) {
         return this.coursesClient.getCourses(level, teacherId, studentId).getBody();
     }
@@ -64,12 +63,12 @@ public class CoursesService {
     }
 
     public Course addStudent(String id, UUID studentId) throws CourseNotFoundException, StudentAlreadyOnCourseException {
-        try{
-            return this.coursesClient.addStudent(id,studentId).getBody();
-        } catch(FeignException e){
-            if(e.status() == HttpStatus.SC_CONFLICT){
+        try {
+            return this.coursesClient.addStudent(id, studentId).getBody();
+        } catch (FeignException e) {
+            if (e.status() == HttpStatus.SC_CONFLICT) {
                 throw new StudentAlreadyOnCourseException();
-            } else if(e.status() == HttpStatus.SC_NOT_FOUND){
+            } else if (e.status() == HttpStatus.SC_NOT_FOUND) {
                 throw new CourseNotFoundException();
             }
             throw e;

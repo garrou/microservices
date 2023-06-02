@@ -8,20 +8,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 public class PresenceCreationDto {
 
-    @NotBlank(message = "badgeId can't be empty")
+    @NotBlank(message = "BadgeId can't be empty")
     private String badgeId;
 
     private boolean presence = Boolean.FALSE;
-
-    private Date date;
 
     @DecimalMin(value = "0.0", message = "Minimum note is {value}")
     @DecimalMax(value = "20.0", message = "Maximum note is {value}")

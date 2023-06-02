@@ -6,6 +6,7 @@ import com.spring.appli.dto.LoginDto;
 import com.spring.appli.dto.Person;
 import com.spring.appli.dto.PersonCreationDto;
 import com.spring.appli.exceptions.PersonNotFoundException;
+import com.spring.appli.exceptions.PseudoAlreadyExistException;
 import com.spring.appli.exceptions.WrongAuthentificationException;
 import feign.FeignException;
 import org.apache.http.HttpStatus;
@@ -36,8 +37,16 @@ public class LoginService {
 
     }
 
-    public Person createPerson(PersonCreationDto person) {
-        return this.authClient.createPerson(person).getBody();
+    public Person createPerson(PersonCreationDto person) throws PseudoAlreadyExistException {
+        try {
+            return this.authClient.createPerson(person).getBody();
+        } catch (FeignException e) {
+            if (e.status() == HttpStatus.SC_CONFLICT) {
+                throw new PseudoAlreadyExistException();
+            }
+            throw e;
+        }
+
     }
 
 }

@@ -1,6 +1,7 @@
 package com.spring.appli.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,12 +14,12 @@ import java.util.List;
 @Getter
 @Setter
 public class ParticipationUpdateDto {
-
-    @NotBlank
+    @NotBlank(message = "Id can't be empty")
     private String id;
 
-    @NotBlank
+    @NotBlank(message = "CourseId can't be empty")
     private String courseId;
 
-    private List<Presence> presenceList;
+    @Size(max = 500, message = "Maximum size is {max}")
+    private List<Presence> presences;
 }

@@ -16,7 +16,6 @@ import java.util.List;
 public class BadgesService {
     @Autowired
     private BadgesClient badgesClient;
-    //TODO add role control
 
     public List<Badge> getBadges(String idPerson) {
         return this.badgesClient.getBadges(idPerson).getBody();

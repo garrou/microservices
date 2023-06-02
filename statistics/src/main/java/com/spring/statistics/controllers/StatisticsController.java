@@ -1,8 +1,7 @@
 package com.spring.statistics.controllers;
 
 import com.spring.statistics.dto.Competition;
-import com.spring.statistics.dto.Course;
-import com.spring.statistics.dto.Participation;
+import com.spring.statistics.dto.CourseParticipationDto;
 import com.spring.statistics.dto.Person;
 import com.spring.statistics.exceptions.CourseNotFoundException;
 import com.spring.statistics.exceptions.ParticipationNotFoundException;
@@ -14,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -41,7 +39,7 @@ public class StatisticsController {
     }
 
     @GetMapping("/courses/{studentId}")
-    public ResponseEntity<HashMap<Course, Participation>> getCoursesByIdStudent(@PathVariable String studentId) throws CourseNotFoundException {
+    public ResponseEntity<List<CourseParticipationDto>> getCoursesByIdStudent(@PathVariable String studentId) throws CourseNotFoundException {
         return ResponseEntity.ok(statisticsService.getCoursesByStudentId(UUID.fromString(studentId)));
     }
 

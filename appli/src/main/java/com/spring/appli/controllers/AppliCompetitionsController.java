@@ -3,9 +3,11 @@ package com.spring.appli.controllers;
 import com.spring.appli.dto.Competition;
 import com.spring.appli.dto.CompetitionCreationDto;
 import com.spring.appli.dto.CompetitionUpdateDto;
-import com.spring.appli.dto.Course;
 import com.spring.appli.enums.Role;
-import com.spring.appli.exceptions.*;
+import com.spring.appli.exceptions.AccessDeniedException;
+import com.spring.appli.exceptions.BadTokenException;
+import com.spring.appli.exceptions.CompetitionNotFoundException;
+import com.spring.appli.exceptions.StudentAlreadyOnCompetitionException;
 import com.spring.appli.services.CompetitionsService;
 import com.spring.appli.utils.TokenUtil;
 import com.spring.appli.validators.Uuid;
@@ -103,8 +105,12 @@ public class AppliCompetitionsController {
     @PutMapping("/{id}/add")
     public ResponseEntity<Competition> addStudent(
             @Valid @PathVariable String id,
-            @RequestParam(value = "student", required = true) @Uuid UUID studentId
-    ) throws CompetitionNotFoundException, StudentAlreadyOnCompetitionException {
+            @RequestParam(value = "student", required = true) @Uuid UUID studentId,
+            @RequestHeader("Authorization") String bearer
+    ) throws CompetitionNotFoundException, StudentAlreadyOnCompetitionException, BadTokenException, AccessDeniedException {
+        if (!TokenUtil.contains(TokenUtil.parseToken(bearer, TokenUtil.ROLE))) {
+            throw new AccessDeniedException();
+        }
         Competition updated = competitionsService.addStudent(id, studentId);
         return ResponseEntity.ok(updated);
     }

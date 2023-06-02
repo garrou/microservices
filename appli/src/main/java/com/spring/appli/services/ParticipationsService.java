@@ -17,7 +17,6 @@ public class ParticipationsService {
     @Autowired
     private ParticipationsClient participationsClient;
 
-    //TODO add role control
     public Presence updatePresenceByParticipationId(String id, PresenceUpdateDto presenceUpdateDto, String presenceId) throws ParticipationNotFoundException, PresenceNotFoundException {
         return this.participationsClient.updatePresenceByParticipationId(id, presenceUpdateDto, presenceId).getBody();
     }
@@ -36,6 +35,18 @@ public class ParticipationsService {
     public List<Presence> getPresenceByParticipationId(String id) throws ParticipationNotFoundException {
         try {
             return this.participationsClient.getPresenceByParticipationId(id).getBody();
+        } catch (FeignException e) {
+            if (e.status() == HttpStatus.SC_NOT_FOUND) {
+                throw new ParticipationNotFoundException();
+            }
+            throw e;
+        }
+    }
+
+    public Presence getPresenceByParticipationIdById(String participationId, String presenceId)
+            throws ParticipationNotFoundException, PresenceNotFoundException {
+        try {
+            return this.participationsClient.getPresenceByParticipationIdById(participationId, presenceId).getBody();
         } catch (FeignException e) {
             if (e.status() == HttpStatus.SC_NOT_FOUND) {
                 throw new ParticipationNotFoundException();
