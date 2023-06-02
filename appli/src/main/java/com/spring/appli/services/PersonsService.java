@@ -2,7 +2,6 @@ package com.spring.appli.services;
 
 import com.spring.appli.clients.PersonsClient;
 import com.spring.appli.dto.Person;
-import com.spring.appli.dto.PersonCreationDto;
 import com.spring.appli.dto.PersonUpdateDto;
 import com.spring.appli.exceptions.PersonNotFoundException;
 import feign.FeignException;
@@ -20,9 +19,6 @@ public class PersonsService {
     private PersonsClient personsClient;
     //TODO add role control
 
-    public Person createPerson(PersonCreationDto person) {
-        return this.personsClient.createPerson(person).getBody();
-    }
 
     public List<Person> getPersons(Integer level, Integer levelSup, String pseudo) {
         return this.personsClient.getPersons(level, levelSup, pseudo).getBody();
@@ -39,7 +35,7 @@ public class PersonsService {
         }
     }
 
-    public Person updatePerson(UUID id, PersonUpdateDto person) {
+    public Person updatePerson(UUID id, PersonUpdateDto person, String bearer) {
         return this.personsClient.updatePerson(id, person).getBody();
     }
 }

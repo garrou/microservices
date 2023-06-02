@@ -1,10 +1,13 @@
 package com.spring.appli.controllers;
 
 import com.spring.appli.dto.Person;
-import com.spring.appli.dto.PersonCreationDto;
 import com.spring.appli.dto.PersonUpdateDto;
+import com.spring.appli.enums.Role;
+import com.spring.appli.exceptions.AccessDeniedException;
+import com.spring.appli.exceptions.BadTokenException;
 import com.spring.appli.exceptions.PersonNotFoundException;
 import com.spring.appli.services.PersonsService;
+import com.spring.appli.utils.TokenUtil;
 import com.spring.appli.validators.Uuid;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
@@ -13,10 +16,9 @@ import jakarta.validation.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @RestController
@@ -37,7 +39,11 @@ public class AppliPersonsController {
             @NotBlank
             @RequestParam(value = "pseudo", required = false) String pseudo,
             @RequestHeader("Authorization") String bearer
-    ) {
+    ) throws BadTokenException, AccessDeniedException {
+        if (Role.MEMBER.equals(Role.valueOf(TokenUtil.parseToken(bearer, TokenUtil.ROLE)))
+                || Role.TEACHER.equals(Role.valueOf(TokenUtil.parseToken(bearer, TokenUtil.ROLE)))) {
+            throw new AccessDeniedException();
+        }
         List<Person> persons = personService.getPersons(level, levelSup, pseudo);
         return ResponseEntity.ok(persons);
     }
@@ -46,23 +52,19 @@ public class AppliPersonsController {
     public ResponseEntity<Person> getPerson(
             @PathVariable @Uuid UUID id,
             @RequestHeader("Authorization") String bearer
-    ) throws PersonNotFoundException {
+    ) throws PersonNotFoundException, BadTokenException, AccessDeniedException {
+        checkTokenAndIdMatchForRole(id, bearer);
         Person person = personService.getPerson(id);
         return ResponseEntity.ok(person);
     }
 
-    @PostMapping
-    public ResponseEntity<Person> createPerson(
-            @Valid @RequestBody PersonCreationDto person,
-            @RequestHeader("Authorization") String bearer
-    ) {
-        Person created = personService.createPerson(person);
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(created.getId())
-                .toUri();
-
-        return ResponseEntity.created(location).body(created);
+    private void checkTokenAndIdMatchForRole(@PathVariable @Uuid UUID id, @RequestHeader("Authorization") String bearer) throws BadTokenException, AccessDeniedException {
+        if (Role.TEACHER.equals(Role.valueOf(TokenUtil.parseToken(bearer, TokenUtil.ROLE)))
+                && !Objects.equals(String.valueOf(id), TokenUtil.parseToken(bearer, TokenUtil.ID))
+                || Role.MEMBER.equals(Role.valueOf(TokenUtil.parseToken(bearer, TokenUtil.ROLE)))
+                && !Objects.equals(String.valueOf(id), TokenUtil.parseToken(bearer, TokenUtil.ID))) {
+            throw new AccessDeniedException();
+        }
     }
 
     @PutMapping("/{id}")
@@ -70,9 +72,9 @@ public class AppliPersonsController {
             @PathVariable @Uuid UUID id,
             @Valid @RequestBody PersonUpdateDto person,
             @RequestHeader("Authorization") String bearer
-    ) throws PersonNotFoundException {
-
-        Person updated = personService.updatePerson(id, person);
+    ) throws PersonNotFoundException, BadTokenException, AccessDeniedException {
+        checkTokenAndIdMatchForRole(id, bearer);
+        Person updated = personService.updatePerson(id, person, bearer);
         return ResponseEntity.ok(updated);
     }
 }

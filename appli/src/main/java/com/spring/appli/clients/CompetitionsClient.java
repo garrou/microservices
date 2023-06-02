@@ -4,7 +4,11 @@ package com.spring.appli.clients;
 import com.spring.appli.dto.Competition;
 import com.spring.appli.dto.CompetitionCreationDto;
 import com.spring.appli.dto.CompetitionUpdateDto;
+import com.spring.appli.dto.Course;
 import com.spring.appli.exceptions.CompetitionNotFoundException;
+import com.spring.appli.exceptions.CourseNotFoundException;
+import com.spring.appli.exceptions.StudentAlreadyOnCompetitionException;
+import com.spring.appli.exceptions.StudentAlreadyOnCourseException;
 import com.spring.appli.validators.Uuid;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
@@ -63,4 +67,11 @@ public interface CompetitionsClient {
     )
     ResponseEntity<Competition> createCompetition(@Valid @RequestBody CompetitionCreationDto competition);
 
+    @RequestMapping(method = RequestMethod.PUT,
+            value = "/api/competitions/{id}/add",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<Competition> addStudent(
+            @Valid @PathVariable String id,
+            @RequestParam(value = "student", required = true) @Uuid UUID studentId
+    ) throws CompetitionNotFoundException, StudentAlreadyOnCompetitionException;
 }

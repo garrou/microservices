@@ -3,8 +3,13 @@ package com.spring.appli.controllers;
 import com.spring.appli.dto.Course;
 import com.spring.appli.dto.CourseCreationDto;
 import com.spring.appli.dto.CourseUpdateDto;
+import com.spring.appli.enums.Role;
+import com.spring.appli.exceptions.AccessDeniedException;
+import com.spring.appli.exceptions.BadTokenException;
 import com.spring.appli.exceptions.CourseNotFoundException;
+import com.spring.appli.exceptions.StudentAlreadyOnCourseException;
 import com.spring.appli.services.CoursesService;
+import com.spring.appli.utils.TokenUtil;
 import com.spring.appli.validators.Uuid;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
@@ -31,8 +36,12 @@ public class AppliCoursesController {
             @Min(value = 0, message = "Level can't be lower than {value}")
             @Max(value = 5, message = "Level can't be greater than {value}") Integer level,
             @RequestParam(value = "teacher", required = false) @Uuid UUID teacherId,
-            @RequestParam(value = "student", required = false) @Uuid UUID studentId
-    ) {
+            @RequestParam(value = "student", required = false) @Uuid UUID studentId,
+            @RequestHeader("Authorization") String bearer
+    ) throws AccessDeniedException, BadTokenException {
+        if (!TokenUtil.contains(TokenUtil.parseToken(bearer, TokenUtil.ROLE))) {
+            throw new AccessDeniedException();
+        }
         List<Course> courses = coursesService.getCourses(teacherId, studentId, level);
         return ResponseEntity.ok(courses);
     }
@@ -41,7 +50,10 @@ public class AppliCoursesController {
     public ResponseEntity<Course> getCourse(
             @PathVariable String id,
             @RequestHeader("Authorization") String bearer
-    ) throws CourseNotFoundException {
+    ) throws CourseNotFoundException, AccessDeniedException, BadTokenException {
+        if (!TokenUtil.contains(TokenUtil.parseToken(bearer, TokenUtil.ROLE))) {
+            throw new AccessDeniedException();
+        }
         Course course = coursesService.getCourse(id);
         return ResponseEntity.ok(course);
     }
@@ -50,7 +62,10 @@ public class AppliCoursesController {
     public ResponseEntity<List<UUID>> getStudentsByCourse(
             @PathVariable String id,
             @RequestHeader("Authorization") String bearer
-    ) throws CourseNotFoundException {
+    ) throws CourseNotFoundException, BadTokenException, AccessDeniedException {
+        if (Role.MEMBER.equals(Role.valueOf(TokenUtil.parseToken(bearer, TokenUtil.ROLE)))) {
+            throw new AccessDeniedException();
+        }
         List<UUID> students = coursesService.getStudentsByCourse(id);
         return ResponseEntity.ok(students);
     }
@@ -60,16 +75,24 @@ public class AppliCoursesController {
             @PathVariable String id,
             @Valid @RequestBody CourseUpdateDto course,
             @RequestHeader("Authorization") String bearer
-    ) throws CourseNotFoundException {
+    ) throws CourseNotFoundException, BadTokenException, AccessDeniedException {
+        if (Role.MEMBER.equals(Role.valueOf(TokenUtil.parseToken(bearer, TokenUtil.ROLE))) ||
+                Role.SECRETARY.equals(Role.valueOf(TokenUtil.parseToken(bearer, TokenUtil.ROLE)))) {
+            throw new AccessDeniedException();
+        }
         Course updated = coursesService.updateCourse(id, course);
         return ResponseEntity.ok(updated);
     }
 
     @PostMapping
-    public ResponseEntity<Course> createPerson(
+    public ResponseEntity<Course> createCourse(
             @Valid @RequestBody CourseCreationDto course,
             @RequestHeader("Authorization") String bearer
-    ) {
+    ) throws AccessDeniedException, BadTokenException {
+        if (Role.MEMBER.equals(Role.valueOf(TokenUtil.parseToken(bearer, TokenUtil.ROLE))) ||
+                Role.SECRETARY.equals(Role.valueOf(TokenUtil.parseToken(bearer, TokenUtil.ROLE)))) {
+            throw new AccessDeniedException();
+        }
         Course created = coursesService.createCourse(course);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
@@ -78,4 +101,14 @@ public class AppliCoursesController {
 
         return ResponseEntity.created(location).body(created);
     }
+
+    @PutMapping("/{id}/add")
+    public ResponseEntity<Course> addStudent(
+            @Valid @PathVariable String id,
+            @RequestParam(value = "student", required = true) @Uuid UUID studentId
+    ) throws CourseNotFoundException, StudentAlreadyOnCourseException {
+        Course updated = coursesService.addStudent(id, studentId);
+        return ResponseEntity.ok(updated);
+    }
+
 }

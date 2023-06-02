@@ -3,8 +3,11 @@ package com.spring.appli.controllers;
 import com.spring.appli.dto.Competition;
 import com.spring.appli.dto.CompetitionCreationDto;
 import com.spring.appli.dto.CompetitionUpdateDto;
-import com.spring.appli.exceptions.CompetitionNotFoundException;
+import com.spring.appli.dto.Course;
+import com.spring.appli.enums.Role;
+import com.spring.appli.exceptions.*;
 import com.spring.appli.services.CompetitionsService;
+import com.spring.appli.utils.TokenUtil;
 import com.spring.appli.validators.Uuid;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
@@ -33,7 +36,10 @@ public class AppliCompetitionsController {
             @RequestParam(value = "teacher", required = false) @Uuid UUID teacherId,
             @RequestParam(value = "student", required = false) @Uuid UUID studentId,
             @RequestHeader("Authorization") String bearer
-    ) {
+    ) throws BadTokenException, AccessDeniedException {
+        if (!TokenUtil.contains(TokenUtil.parseToken(bearer, TokenUtil.ROLE))) {
+            throw new AccessDeniedException();
+        }
         List<Competition> competitions = competitionsService.getCompetitions(teacherId, studentId, level);
         return ResponseEntity.ok(competitions);
     }
@@ -42,7 +48,10 @@ public class AppliCompetitionsController {
     public ResponseEntity<Competition> getCompetition(
             @PathVariable String id,
             @RequestHeader("Authorization") String bearer
-    ) throws CompetitionNotFoundException {
+    ) throws CompetitionNotFoundException, BadTokenException, AccessDeniedException {
+        if (!TokenUtil.contains(TokenUtil.parseToken(bearer, TokenUtil.ROLE))) {
+            throw new AccessDeniedException();
+        }
         Competition competition = competitionsService.getCompetition(id);
         return ResponseEntity.ok(competition);
     }
@@ -51,7 +60,10 @@ public class AppliCompetitionsController {
     public ResponseEntity<List<UUID>> getStudentsByCompetition(
             @PathVariable String id,
             @RequestHeader("Authorization") String bearer
-    ) throws CompetitionNotFoundException {
+    ) throws CompetitionNotFoundException, BadTokenException, AccessDeniedException {
+        if (Role.MEMBER.equals(Role.valueOf(TokenUtil.parseToken(bearer, TokenUtil.ROLE)))) {
+            throw new AccessDeniedException();
+        }
         List<UUID> students = competitionsService.getStudentsByCompetition(id);
         return ResponseEntity.ok(students);
     }
@@ -61,16 +73,24 @@ public class AppliCompetitionsController {
             @PathVariable String id,
             @Valid @RequestBody CompetitionUpdateDto competition,
             @RequestHeader("Authorization") String bearer
-    ) throws CompetitionNotFoundException {
+    ) throws CompetitionNotFoundException, BadTokenException, AccessDeniedException {
+        if (Role.MEMBER.equals(Role.valueOf(TokenUtil.parseToken(bearer, TokenUtil.ROLE))) ||
+                Role.SECRETARY.equals(Role.valueOf(TokenUtil.parseToken(bearer, TokenUtil.ROLE)))) {
+            throw new AccessDeniedException();
+        }
         Competition updated = competitionsService.updateCompetition(id, competition);
         return ResponseEntity.ok(updated);
     }
 
     @PostMapping
-    public ResponseEntity<Competition> createPerson(
+    public ResponseEntity<Competition> createCompetition(
             @Valid @RequestBody CompetitionCreationDto competition,
             @RequestHeader("Authorization") String bearer
-    ) {
+    ) throws AccessDeniedException, BadTokenException {
+        if (Role.MEMBER.equals(Role.valueOf(TokenUtil.parseToken(bearer, TokenUtil.ROLE))) ||
+                Role.SECRETARY.equals(Role.valueOf(TokenUtil.parseToken(bearer, TokenUtil.ROLE)))) {
+            throw new AccessDeniedException();
+        }
         Competition created = competitionsService.createCompetition(competition);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
@@ -78,5 +98,14 @@ public class AppliCompetitionsController {
                 .toUri();
 
         return ResponseEntity.created(location).body(created);
+    }
+
+    @PutMapping("/{id}/add")
+    public ResponseEntity<Competition> addStudent(
+            @Valid @PathVariable String id,
+            @RequestParam(value = "student", required = true) @Uuid UUID studentId
+    ) throws CompetitionNotFoundException, StudentAlreadyOnCompetitionException {
+        Competition updated = competitionsService.addStudent(id, studentId);
+        return ResponseEntity.ok(updated);
     }
 }

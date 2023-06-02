@@ -4,7 +4,11 @@ import com.spring.appli.clients.CompetitionsClient;
 import com.spring.appli.dto.Competition;
 import com.spring.appli.dto.CompetitionCreationDto;
 import com.spring.appli.dto.CompetitionUpdateDto;
+import com.spring.appli.dto.Course;
 import com.spring.appli.exceptions.CompetitionNotFoundException;
+import com.spring.appli.exceptions.CourseNotFoundException;
+import com.spring.appli.exceptions.StudentAlreadyOnCompetitionException;
+import com.spring.appli.exceptions.StudentAlreadyOnCourseException;
 import feign.FeignException;
 import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,5 +63,8 @@ public class CompetitionsService {
 
     public Competition createCompetition(CompetitionCreationDto competition) {
         return this.competitionsClient.createCompetition(competition).getBody();
+    }
+    public Competition addStudent(String id, UUID studentId) throws CompetitionNotFoundException, StudentAlreadyOnCompetitionException {
+        return this.competitionsClient.addStudent(id,studentId).getBody();
     }
 }

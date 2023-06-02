@@ -1,9 +1,13 @@
 package com.spring.appli.controllers;
 
 import com.spring.appli.dto.*;
+import com.spring.appli.enums.Role;
+import com.spring.appli.exceptions.AccessDeniedException;
+import com.spring.appli.exceptions.BadTokenException;
 import com.spring.appli.exceptions.ParticipationNotFoundException;
 import com.spring.appli.exceptions.PresenceNotFoundException;
 import com.spring.appli.services.ParticipationsService;
+import com.spring.appli.utils.TokenUtil;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +28,10 @@ public class AppliParticiptionsController {
     public ResponseEntity<Participation> createParticipation(
             @Valid @RequestBody ParticipationCreationDto participation,
             @RequestHeader("Authorization") String bearer
-    ) {
+    ) throws BadTokenException, AccessDeniedException {
+        if (Role.MEMBER.equals(Role.valueOf(TokenUtil.parseToken(bearer, TokenUtil.ROLE)))) {
+            throw new AccessDeniedException();
+        }
         Participation created = participationsService.createParticipation(participation);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
@@ -39,7 +46,10 @@ public class AppliParticiptionsController {
             @RequestParam(value = "course", required = false) String courseId,
             @RequestParam(value = "badge-id", required = false) String badgeId,
             @RequestHeader("Authorization") String bearer
-    ) {
+    ) throws BadTokenException, AccessDeniedException {
+        if (!TokenUtil.contains(TokenUtil.parseToken(bearer, TokenUtil.ROLE))) {
+            throw new AccessDeniedException();
+        }
         List<Participation> participations = participationsService.getParticipations(courseId, badgeId);
         return ResponseEntity.ok(participations);
     }
@@ -48,7 +58,10 @@ public class AppliParticiptionsController {
     public ResponseEntity<Participation> getParticipation(
             @PathVariable String id,
             @RequestHeader("Authorization") String bearer
-    ) throws ParticipationNotFoundException {
+    ) throws ParticipationNotFoundException, BadTokenException, AccessDeniedException {
+        if (!TokenUtil.contains(TokenUtil.parseToken(bearer, TokenUtil.ROLE))) {
+            throw new AccessDeniedException();
+        }
         Participation participation = participationsService.getParticipation(id);
         return ResponseEntity.ok(participation);
     }
@@ -58,7 +71,10 @@ public class AppliParticiptionsController {
             @PathVariable String id,
             @Valid @RequestBody ParticipationUpdateDto participation,
             @RequestHeader("Authorization") String bearer
-    ) throws ParticipationNotFoundException {
+    ) throws ParticipationNotFoundException, BadTokenException, AccessDeniedException {
+        if (Role.MEMBER.equals(Role.valueOf(TokenUtil.parseToken(bearer, TokenUtil.ROLE)))) {
+            throw new AccessDeniedException();
+        }
         Participation updated = participationsService.updateParticipation(id, participation);
         return ResponseEntity.ok(updated);
     }
@@ -67,7 +83,10 @@ public class AppliParticiptionsController {
     public ResponseEntity<List<Presence>> getPresenceByParticipationId(
             @PathVariable String id,
             @RequestHeader("Authorization") String bearer
-    ) throws ParticipationNotFoundException {
+    ) throws ParticipationNotFoundException, BadTokenException, AccessDeniedException {
+        if (!TokenUtil.contains(TokenUtil.parseToken(bearer, TokenUtil.ROLE))) {
+            throw new AccessDeniedException();
+        }
         List<Presence> presenceList = participationsService.getPresenceByParticipationId(id);
         return ResponseEntity.ok(presenceList);
     }
@@ -77,7 +96,10 @@ public class AppliParticiptionsController {
             @PathVariable String id,
             @Valid @RequestBody PresenceCreationDto presenceCreationDto,
             @RequestHeader("Authorization") String bearer
-    ) throws ParticipationNotFoundException {
+    ) throws ParticipationNotFoundException, BadTokenException, AccessDeniedException {
+        if (!TokenUtil.contains(TokenUtil.parseToken(bearer, TokenUtil.ROLE))) {
+            throw new AccessDeniedException();
+        }
         Presence p = participationsService.createPresenceByParticipationId(id, presenceCreationDto);
         return p;
     }
@@ -88,7 +110,10 @@ public class AppliParticiptionsController {
             @Valid @RequestBody PresenceUpdateDto presenceUpdateDto,
             @PathVariable(name = "presenceId") String presenceId,
             @RequestHeader("Authorization") String bearer
-    ) throws ParticipationNotFoundException, PresenceNotFoundException {
+    ) throws ParticipationNotFoundException, PresenceNotFoundException, BadTokenException, AccessDeniedException {
+        if (!TokenUtil.contains(TokenUtil.parseToken(bearer, TokenUtil.ROLE))) {
+            throw new AccessDeniedException();
+        }
         Presence updated = participationsService.updatePresenceByParticipationId(id, presenceUpdateDto, presenceId);
         return ResponseEntity.ok(updated);
     }

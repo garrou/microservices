@@ -38,6 +38,9 @@ public class StatisticsService implements com.spring.statistics.interfaces.Stati
     @Override
     public List<Person> getStudentsPresentByIdCourse(String idCourse) {
         List<Participation> pList = this.participationClient.getParticipations(idCourse, null);
+        if(pList.isEmpty()){
+            return new ArrayList<>();
+        }
         Set<String> idPersons = pList.get(0)
                 .getPresenceList()
                 .stream()

@@ -30,7 +30,8 @@ public class AppliBadgesController {
             @RequestParam(value = "id-person", required = false) String idPerson,
             @RequestHeader("Authorization") String bearer
     ) throws BadTokenException, AccessDeniedException {
-        if (!Role.SECRETARY.equals(Role.valueOf(TokenUtil.parseToken(bearer, TokenUtil.ROLE)))) {
+        if (Role.MEMBER.equals(Role.valueOf(TokenUtil.parseToken(bearer, TokenUtil.ROLE))) ||
+                Role.TEACHER.equals(Role.valueOf(TokenUtil.parseToken(bearer, TokenUtil.ROLE)))) {
             throw new AccessDeniedException();
         }
         List<Badge> badges = badgesService.getBadges(idPerson);
@@ -42,7 +43,7 @@ public class AppliBadgesController {
             @PathVariable String id,
             @RequestHeader("Authorization") String bearer
     ) throws BadgeNotFoundException, AccessDeniedException, BadTokenException {
-        if (!Role.SECRETARY.equals(Role.valueOf(TokenUtil.parseToken(bearer, TokenUtil.ROLE)))) {
+        if (!TokenUtil.contains(TokenUtil.parseToken(bearer, TokenUtil.ROLE))) {
             throw new AccessDeniedException();
         }
         Badge badge = badgesService.getBadge(id);
@@ -55,7 +56,8 @@ public class AppliBadgesController {
             @Valid @RequestBody BadgeUpdateDto badge,
             @RequestHeader("Authorization") String bearer
     ) throws BadgeNotFoundException, AccessDeniedException, BadTokenException {
-        if (!Role.SECRETARY.equals(Role.valueOf(TokenUtil.parseToken(bearer, TokenUtil.ROLE)))) {
+        if (Role.MEMBER.equals(Role.valueOf(TokenUtil.parseToken(bearer, TokenUtil.ROLE))) ||
+                Role.TEACHER.equals(Role.valueOf(TokenUtil.parseToken(bearer, TokenUtil.ROLE)))) {
             throw new AccessDeniedException();
         }
         Badge updated = badgesService.updateBadge(id, badge);
@@ -67,7 +69,8 @@ public class AppliBadgesController {
             @Valid @RequestBody BadgeCreationDto badge,
             @RequestHeader("Authorization") String bearer
     ) throws AccessDeniedException, BadTokenException {
-        if (!Role.SECRETARY.equals(Role.valueOf(TokenUtil.parseToken(bearer, TokenUtil.ROLE)))) {
+        if (!Role.SECRETARY.equals(Role.valueOf(TokenUtil.parseToken(bearer, TokenUtil.ROLE))) &&
+                !Role.PRESIDENT.equals(Role.valueOf(TokenUtil.parseToken(bearer, TokenUtil.ROLE)))) {
             throw new AccessDeniedException();
         }
         Badge created = badgesService.createBadge(badge);

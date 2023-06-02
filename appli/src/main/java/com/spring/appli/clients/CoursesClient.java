@@ -5,6 +5,7 @@ import com.spring.appli.dto.Course;
 import com.spring.appli.dto.CourseCreationDto;
 import com.spring.appli.dto.CourseUpdateDto;
 import com.spring.appli.exceptions.CourseNotFoundException;
+import com.spring.appli.exceptions.StudentAlreadyOnCourseException;
 import com.spring.appli.validators.Uuid;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
@@ -63,4 +64,12 @@ public interface CoursesClient {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     ResponseEntity<Course> createCourse(@Valid @RequestBody CourseCreationDto course);
+
+    @RequestMapping(method = RequestMethod.PUT,
+            value = "/api/courses/{id}/add",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<Course> addStudent(
+            @Valid @PathVariable String id,
+            @RequestParam(value = "student", required = true) @Uuid UUID studentId
+    ) throws CourseNotFoundException, StudentAlreadyOnCourseException;
 }

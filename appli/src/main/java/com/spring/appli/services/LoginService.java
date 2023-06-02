@@ -4,6 +4,7 @@ import com.spring.appli.clients.PersonsClient;
 import com.spring.appli.configs.MapperDto;
 import com.spring.appli.dto.LoginDto;
 import com.spring.appli.dto.Person;
+import com.spring.appli.dto.PersonCreationDto;
 import com.spring.appli.exceptions.PersonNotFoundException;
 import com.spring.appli.exceptions.WrongAuthentificationException;
 import feign.FeignException;
@@ -33,6 +34,10 @@ public class LoginService {
             throw e;
         }
 
+    }
+
+    public Person createPerson(PersonCreationDto person) {
+        return this.authClient.createPerson(person).getBody();
     }
 
 }

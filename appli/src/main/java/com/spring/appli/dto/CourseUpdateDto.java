@@ -45,5 +45,5 @@ public class CourseUpdateDto {
 
     @Min(value = 1, message = "Minimum value is {value}")
     @Max(value = 500, message = "Maximum value is {value}")
-    private int nbStudentsMax;
+    private int nbMaxStudents;
 }

@@ -5,6 +5,7 @@ import com.spring.appli.dto.Course;
 import com.spring.appli.dto.CourseCreationDto;
 import com.spring.appli.dto.CourseUpdateDto;
 import com.spring.appli.exceptions.CourseNotFoundException;
+import com.spring.appli.exceptions.StudentAlreadyOnCourseException;
 import feign.FeignException;
 import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,5 +61,19 @@ public class CoursesService {
 
     public Course createCourse(CourseCreationDto course) {
         return this.coursesClient.createCourse(course).getBody();
+    }
+
+    public Course addStudent(String id, UUID studentId) throws CourseNotFoundException, StudentAlreadyOnCourseException {
+        try{
+            return this.coursesClient.addStudent(id,studentId).getBody();
+        } catch(FeignException e){
+            if(e.status() == HttpStatus.SC_CONFLICT){
+                throw new StudentAlreadyOnCourseException();
+            } else if(e.status() == HttpStatus.SC_NOT_FOUND){
+                throw new CourseNotFoundException();
+            }
+            throw e;
+        }
+
     }
 }

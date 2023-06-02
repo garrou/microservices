@@ -74,8 +74,8 @@ public class CompetitionCreationDtoTest {
     }
 
     @Test
-    public void validateTestShouldBeInvalidCauseNbStudentsMax() {
-        competition.setNbStudentsMax(0);
+    public void validateTestShouldBeInvalidCauseNbMaxStudents() {
+        competition.setNbMaxStudents(0);
         assertEquals(1, validator.validate(competition).size(), "Students must be invalid");
     }
 }
