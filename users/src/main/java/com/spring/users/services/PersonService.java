@@ -12,6 +12,7 @@ import com.spring.users.repositories.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -27,7 +28,7 @@ public class PersonService {
 
     public Person createPerson(PersonCreationDto personCreationDto) throws PseudoAlreadyExistException {
 
-        if (!personRepository.findAllByPseudo(personCreationDto.getPseudo()).isEmpty()) {
+        if (personRepository.findOneByPseudo(personCreationDto.getPseudo()) != null) {
             throw new PseudoAlreadyExistException();
         }
         Person person = mapperDto.modelMapper().map(personCreationDto, Person.class);
@@ -43,10 +44,13 @@ public class PersonService {
         if (personRepository.findById(personUpdateDto.getId()).isEmpty()) {
             throw new PersonNotFoundException();
         }
-        if (!personRepository.findAllByPseudo(personUpdateDto.getPseudo()).isEmpty()) {
+        Person foundPerson = personRepository.findOneByPseudo(personUpdateDto.getPseudo());
+
+        if (foundPerson != null && foundPerson.getId() != personUpdateDto.getId()) {
             throw new PseudoAlreadyExistException();
         }
         Person person = mapperDto.modelMapper().map(personUpdateDto, Person.class);
+
         return personRepository.save(person);
 
     }
@@ -65,7 +69,9 @@ public class PersonService {
         } else if (levelSup != null) {
             return personRepository.findAllByLevelGreaterThan(levelSup);
         } else if (pseudo != null) {
-            return personRepository.findAllByPseudo(pseudo);
+            List<Person> list = new ArrayList<>();
+            list.add(personRepository.findOneByPseudo(pseudo));
+            return list;
         }
         return (List<Person>) personRepository.findAll();
     }
@@ -81,12 +87,12 @@ public class PersonService {
     }
 
     public Person login(LoginDto loginDto) throws PersonNotFoundException, WrongAuthentificationException {
-        List<Person> person = personRepository.findAllByPseudo(loginDto.getPseudo());
-        if (person.isEmpty()) {
+        Person person = personRepository.findOneByPseudo(loginDto.getPseudo());
+        if (person == null) {
             throw new PersonNotFoundException();
         }
-        if (person.get(0).getPassword().equals(loginDto.getPassword())) {
-            return person.get(0);
+        if (person.getPassword().equals(loginDto.getPassword())) {
+            return person;
         }
         throw new WrongAuthentificationException();
     }
