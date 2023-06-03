@@ -92,5 +92,10 @@ public class ExceptionCatcher {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDto(e.getMessage()));
     }
 
+    @ExceptionHandler(InsufficientLevelException.class)
+    public ResponseEntity<ResponseDto> handleInsufficientLevelException(HttpServletRequest request, InsufficientLevelException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDto(e.getMessage()));
+    }
+
 
 }

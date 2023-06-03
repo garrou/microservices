@@ -85,12 +85,12 @@ public class AppliCoursesController {
     public ResponseEntity<Course> createCourse(
             @Valid @RequestBody CourseCreationDto course,
             @RequestHeader("Authorization") String bearer
-    ) throws AccessDeniedException, BadTokenException, TooEarlyException {
+    ) throws AccessDeniedException, BadTokenException, TooEarlyException, PersonNotFoundException, InsufficientLevelException {
         if (Role.MEMBER.equals(Role.valueOf(TokenUtil.parseToken(bearer, TokenUtil.ROLE))) ||
                 Role.SECRETARY.equals(Role.valueOf(TokenUtil.parseToken(bearer, TokenUtil.ROLE)))) {
             throw new AccessDeniedException();
         }
-        Course created = coursesService.createCourse(course);
+        Course created = coursesService.createCourse(course, bearer);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(created.getId())

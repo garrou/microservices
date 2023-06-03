@@ -1,12 +1,14 @@
 package com.spring.appli.services;
 
 import com.spring.appli.clients.CoursesClient;
+import com.spring.appli.clients.PersonsClient;
 import com.spring.appli.dto.Course;
 import com.spring.appli.dto.CourseCreationDto;
 import com.spring.appli.dto.CourseUpdateDto;
-import com.spring.appli.exceptions.CourseNotFoundException;
-import com.spring.appli.exceptions.StudentAlreadyOnCourseException;
-import com.spring.appli.exceptions.TooEarlyException;
+import com.spring.appli.dto.Person;
+import com.spring.appli.enums.Role;
+import com.spring.appli.exceptions.*;
+import com.spring.appli.utils.TokenUtil;
 import feign.FeignException;
 import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ public class CoursesService {
 
     @Autowired
     private CoursesClient coursesClient;
+
+    @Autowired
+    private PersonsClient personsClient;
 
     public List<Course> getCourses(UUID teacherId, UUID studentId, Integer level) {
         return this.coursesClient.getCourses(level, teacherId, studentId).getBody();
@@ -61,9 +66,15 @@ public class CoursesService {
         }
     }
 
-    public Course createCourse(CourseCreationDto course) throws TooEarlyException {
+    public Course createCourse(CourseCreationDto course, String bearer) throws TooEarlyException, BadTokenException, PersonNotFoundException, InsufficientLevelException {
         if (!isSevenDaysAfterCurrentDay(course.getTimeSlot())) {
             throw new TooEarlyException();
+        }
+        if (Role.TEACHER.equals(Role.valueOf(TokenUtil.parseToken(bearer, TokenUtil.ROLE)))) {
+            Person person = this.personsClient.getPerson(TokenUtil.parseToken(bearer, TokenUtil.ID));
+            if (person.getLevel() < course.getLevel()) {
+                throw new InsufficientLevelException();
+            }
         }
         return this.coursesClient.createCourse(course).getBody();
     }
