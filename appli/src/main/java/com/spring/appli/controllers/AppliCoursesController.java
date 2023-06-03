@@ -4,10 +4,7 @@ import com.spring.appli.dto.Course;
 import com.spring.appli.dto.CourseCreationDto;
 import com.spring.appli.dto.CourseUpdateDto;
 import com.spring.appli.enums.Role;
-import com.spring.appli.exceptions.AccessDeniedException;
-import com.spring.appli.exceptions.BadTokenException;
-import com.spring.appli.exceptions.CourseNotFoundException;
-import com.spring.appli.exceptions.StudentAlreadyOnCourseException;
+import com.spring.appli.exceptions.*;
 import com.spring.appli.services.CoursesService;
 import com.spring.appli.utils.TokenUtil;
 import com.spring.appli.validators.Uuid;
@@ -88,7 +85,7 @@ public class AppliCoursesController {
     public ResponseEntity<Course> createCourse(
             @Valid @RequestBody CourseCreationDto course,
             @RequestHeader("Authorization") String bearer
-    ) throws AccessDeniedException, BadTokenException {
+    ) throws AccessDeniedException, BadTokenException, TooEarlyException {
         if (Role.MEMBER.equals(Role.valueOf(TokenUtil.parseToken(bearer, TokenUtil.ROLE))) ||
                 Role.SECRETARY.equals(Role.valueOf(TokenUtil.parseToken(bearer, TokenUtil.ROLE)))) {
             throw new AccessDeniedException();

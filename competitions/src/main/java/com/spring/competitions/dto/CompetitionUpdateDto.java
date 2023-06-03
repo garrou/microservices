@@ -28,7 +28,7 @@ public class CompetitionUpdateDto {
     @Max(value = 5, message = "Maximum level is {value}")
     private int level;
 
-    @JsonFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     private Date timeSlot;
 
     @DecimalMin(value = "1.0", message = "Minimum duration is {value}")

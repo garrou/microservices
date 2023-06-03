@@ -6,11 +6,14 @@ import com.spring.appli.dto.CourseCreationDto;
 import com.spring.appli.dto.CourseUpdateDto;
 import com.spring.appli.exceptions.CourseNotFoundException;
 import com.spring.appli.exceptions.StudentAlreadyOnCourseException;
+import com.spring.appli.exceptions.TooEarlyException;
 import feign.FeignException;
 import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -58,7 +61,10 @@ public class CoursesService {
         }
     }
 
-    public Course createCourse(CourseCreationDto course) {
+    public Course createCourse(CourseCreationDto course) throws TooEarlyException {
+        if (!isSevenDaysAfterCurrentDay(course.getTimeSlot())) {
+            throw new TooEarlyException();
+        }
         return this.coursesClient.createCourse(course).getBody();
     }
 
@@ -74,5 +80,19 @@ public class CoursesService {
             throw e;
         }
 
+    }
+
+    public boolean isSevenDaysAfterCurrentDay(Date timeSlot) {
+        // Add 7 days to the current date
+        Calendar sevenDaysLater = Calendar.getInstance();
+        sevenDaysLater.setTime(new Date());
+        sevenDaysLater.add(Calendar.DAY_OF_MONTH, 7);
+
+        //Get the date from timeslot
+        Calendar currentDate = Calendar.getInstance();
+        currentDate.setTime(timeSlot);
+
+        // Compare the dates
+        return currentDate.after(sevenDaysLater);
     }
 }

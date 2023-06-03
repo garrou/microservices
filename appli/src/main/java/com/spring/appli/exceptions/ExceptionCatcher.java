@@ -87,5 +87,10 @@ public class ExceptionCatcher {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDto(e.getMessage()));
     }
 
+    @ExceptionHandler(TooEarlyException.class)
+    public ResponseEntity<ResponseDto> handleTooEarlyException(HttpServletRequest request, TooEarlyException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDto(e.getMessage()));
+    }
+
 
 }
