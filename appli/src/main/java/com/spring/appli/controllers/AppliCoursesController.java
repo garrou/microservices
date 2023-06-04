@@ -73,8 +73,8 @@ public class AppliCoursesController {
             @Valid @RequestBody CourseUpdateDto course,
             @RequestHeader("Authorization") String bearer
     ) throws CourseNotFoundException, BadTokenException, AccessDeniedException {
-        if (Role.MEMBER.equals(Role.valueOf(TokenUtil.parseToken(bearer, TokenUtil.ROLE))) ||
-                Role.SECRETARY.equals(Role.valueOf(TokenUtil.parseToken(bearer, TokenUtil.ROLE)))) {
+        Role role = Role.valueOf(TokenUtil.parseToken(bearer, TokenUtil.ROLE));
+        if (Role.MEMBER.equals(role) || Role.SECRETARY.equals(role)) {
             throw new AccessDeniedException();
         }
         Course updated = coursesService.updateCourse(id, course);
@@ -86,8 +86,8 @@ public class AppliCoursesController {
             @Valid @RequestBody CourseCreationDto course,
             @RequestHeader("Authorization") String bearer
     ) throws AccessDeniedException, BadTokenException, TooEarlyException, PersonNotFoundException, InsufficientLevelException {
-        if (Role.MEMBER.equals(Role.valueOf(TokenUtil.parseToken(bearer, TokenUtil.ROLE))) ||
-                Role.SECRETARY.equals(Role.valueOf(TokenUtil.parseToken(bearer, TokenUtil.ROLE)))) {
+        Role role = Role.valueOf(TokenUtil.parseToken(bearer, TokenUtil.ROLE));
+        if (Role.MEMBER.equals(role) || Role.SECRETARY.equals(role)) {
             throw new AccessDeniedException();
         }
         Course created = coursesService.createCourse(course, bearer);
@@ -99,9 +99,9 @@ public class AppliCoursesController {
         return ResponseEntity.created(location).body(created);
     }
 
-    @PutMapping("/{id}/add")
+    @PostMapping("/{id}/student")
     public ResponseEntity<Course> addStudent(
-            @Valid @PathVariable String id,
+            @PathVariable String id,
             @RequestParam(value = "student", required = true) @Uuid UUID studentId,
             @RequestHeader("Authorization") String bearer
     ) throws CourseNotFoundException, StudentAlreadyOnCourseException, AccessDeniedException, BadTokenException {

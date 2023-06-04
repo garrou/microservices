@@ -59,9 +59,9 @@ public class CourseController {
         return ResponseEntity.ok(updated);
     }
 
-    @PutMapping("/{id}/add")
+    @PostMapping("/{id}/student")
     public ResponseEntity<Course> addStudent(
-            @Valid @PathVariable String id,
+            @PathVariable String id,
             @RequestParam(value = "student", required = true) @Uuid UUID studentId
     ) throws CourseNotFoundException, StudentAlreadyOnCourseException {
         Course updated = courseService.addStudent(id, studentId);

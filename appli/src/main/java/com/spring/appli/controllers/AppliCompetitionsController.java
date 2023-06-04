@@ -76,8 +76,8 @@ public class AppliCompetitionsController {
             @Valid @RequestBody CompetitionUpdateDto competition,
             @RequestHeader("Authorization") String bearer
     ) throws CompetitionNotFoundException, BadTokenException, AccessDeniedException {
-        if (Role.MEMBER.equals(Role.valueOf(TokenUtil.parseToken(bearer, TokenUtil.ROLE))) ||
-                Role.SECRETARY.equals(Role.valueOf(TokenUtil.parseToken(bearer, TokenUtil.ROLE)))) {
+        Role role = Role.valueOf(TokenUtil.parseToken(bearer, TokenUtil.ROLE));
+        if (Role.MEMBER.equals(role) || Role.SECRETARY.equals(role)) {
             throw new AccessDeniedException();
         }
         Competition updated = competitionsService.updateCompetition(id, competition);
@@ -89,8 +89,8 @@ public class AppliCompetitionsController {
             @Valid @RequestBody CompetitionCreationDto competition,
             @RequestHeader("Authorization") String bearer
     ) throws AccessDeniedException, BadTokenException {
-        if (Role.MEMBER.equals(Role.valueOf(TokenUtil.parseToken(bearer, TokenUtil.ROLE))) ||
-                Role.SECRETARY.equals(Role.valueOf(TokenUtil.parseToken(bearer, TokenUtil.ROLE)))) {
+        Role role = Role.valueOf(TokenUtil.parseToken(bearer, TokenUtil.ROLE));
+        if (Role.MEMBER.equals(role) || Role.SECRETARY.equals(role)) {
             throw new AccessDeniedException();
         }
         Competition created = competitionsService.createCompetition(competition);
@@ -102,9 +102,9 @@ public class AppliCompetitionsController {
         return ResponseEntity.created(location).body(created);
     }
 
-    @PutMapping("/{id}/add")
+    @PutMapping("/{id}/student")
     public ResponseEntity<Competition> addStudent(
-            @Valid @PathVariable String id,
+            @PathVariable String id,
             @RequestParam(value = "student", required = true) @Uuid UUID studentId,
             @RequestHeader("Authorization") String bearer
     ) throws CompetitionNotFoundException, StudentAlreadyOnCompetitionException, BadTokenException, AccessDeniedException {

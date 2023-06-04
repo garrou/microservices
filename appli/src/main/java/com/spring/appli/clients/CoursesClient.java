@@ -65,11 +65,11 @@ public interface CoursesClient {
     )
     ResponseEntity<Course> createCourse(@Valid @RequestBody CourseCreationDto course);
 
-    @RequestMapping(method = RequestMethod.PUT,
-            value = "/api/courses/{id}/add",
+    @RequestMapping(method = RequestMethod.POST,
+            value = "/api/courses/{id}/student",
             produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<Course> addStudent(
-            @Valid @PathVariable String id,
+            @PathVariable String id,
             @RequestParam(value = "student", required = true) @Uuid UUID studentId
     ) throws CourseNotFoundException, StudentAlreadyOnCourseException;
 }

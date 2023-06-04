@@ -40,8 +40,8 @@ public class AppliPersonsController {
             @RequestParam(value = "pseudo", required = false) String pseudo,
             @RequestHeader("Authorization") String bearer
     ) throws BadTokenException, AccessDeniedException {
-        if (Role.MEMBER.equals(Role.valueOf(TokenUtil.parseToken(bearer, TokenUtil.ROLE)))
-                || Role.TEACHER.equals(Role.valueOf(TokenUtil.parseToken(bearer, TokenUtil.ROLE)))) {
+        Role role = Role.valueOf(TokenUtil.parseToken(bearer, TokenUtil.ROLE));
+        if (Role.MEMBER.equals(role) || Role.TEACHER.equals(role)) {
             throw new AccessDeniedException();
         }
         List<Person> persons = personService.getPersons(level, levelSup, pseudo);
@@ -59,10 +59,10 @@ public class AppliPersonsController {
     }
 
     private void checkTokenAndIdMatchForRole(@PathVariable @Uuid UUID id, @RequestHeader("Authorization") String bearer) throws BadTokenException, AccessDeniedException {
-        if (Role.TEACHER.equals(Role.valueOf(TokenUtil.parseToken(bearer, TokenUtil.ROLE)))
-                && !Objects.equals(String.valueOf(id), TokenUtil.parseToken(bearer, TokenUtil.ID))
-                || Role.MEMBER.equals(Role.valueOf(TokenUtil.parseToken(bearer, TokenUtil.ROLE)))
-                && !Objects.equals(String.valueOf(id), TokenUtil.parseToken(bearer, TokenUtil.ID))) {
+        Role role = Role.valueOf(TokenUtil.parseToken(bearer, TokenUtil.ROLE));
+        String idRole = TokenUtil.parseToken(bearer, TokenUtil.ID);
+        if (Role.TEACHER.equals(role) && !Objects.equals(String.valueOf(id), idRole)
+                || Role.MEMBER.equals(role) && !Objects.equals(String.valueOf(id), idRole)) {
             throw new AccessDeniedException();
         }
     }

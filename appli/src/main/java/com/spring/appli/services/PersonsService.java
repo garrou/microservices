@@ -34,7 +34,15 @@ public class PersonsService {
         }
     }
 
-    public Person updatePerson(UUID id, PersonUpdateDto person, String bearer) {
-        return this.personsClient.updatePerson(id, person).getBody();
+    public Person updatePerson(UUID id, PersonUpdateDto person, String bearer) throws PersonNotFoundException {
+        try{
+            return this.personsClient.updatePerson(id, person).getBody();
+        } catch (FeignException e) {
+            if (e.status() == HttpStatus.SC_NOT_FOUND) {
+                throw new PersonNotFoundException();
+            }
+            throw e;
+        }
+
     }
 }

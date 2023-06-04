@@ -64,11 +64,11 @@ public interface CompetitionsClient {
     )
     ResponseEntity<Competition> createCompetition(@Valid @RequestBody CompetitionCreationDto competition);
 
-    @RequestMapping(method = RequestMethod.PUT,
-            value = "/api/competitions/{id}/add",
+    @RequestMapping(method = RequestMethod.POST,
+            value = "/api/competitions/{id}/student",
             produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<Competition> addStudent(
-            @Valid @PathVariable String id,
+            @PathVariable String id,
             @RequestParam(value = "student", required = true) @Uuid UUID studentId
     ) throws CompetitionNotFoundException, StudentAlreadyOnCompetitionException;
 }
