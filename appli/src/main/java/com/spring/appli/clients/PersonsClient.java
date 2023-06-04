@@ -71,5 +71,13 @@ public interface PersonsClient {
     ResponseEntity<Person> login(@Valid @RequestBody LoginDto loginDto)
             throws PersonNotFoundException, WrongAuthentificationException;
 
+    @RequestMapping(
+            method = RequestMethod.DELETE,
+            value = "/api/users/{id}",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    ResponseEntity<String> deletePerson(
+            @PathVariable @Uuid UUID id
+    ) throws PersonNotFoundException;
 
 }

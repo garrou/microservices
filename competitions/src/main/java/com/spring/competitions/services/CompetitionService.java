@@ -97,4 +97,13 @@ public class CompetitionService {
         course.get().setStudents(listStudent);
         return competitionRepository.save(course.get());
     }
+
+    public void deleteCompetition(String id) throws CompetitionNotFoundException {
+        Optional<Competition> courseOptinal = competitionRepository.findById(id);
+        if(courseOptinal.isEmpty()){
+            throw new CompetitionNotFoundException();
+        }
+        competitionRepository.deleteById(id);
+
+    }
 }

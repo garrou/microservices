@@ -112,4 +112,16 @@ public class AppliCoursesController {
         return ResponseEntity.ok(updated);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteCourse(
+            @PathVariable String id,
+            @RequestHeader("Authorization") String bearer
+    ) throws CourseNotFoundException, AccessDeniedException, BadTokenException {
+        Role role = Role.valueOf(TokenUtil.parseToken(bearer, TokenUtil.ROLE));
+        if (Role.MEMBER.equals(role) || Role.SECRETARY.equals(role)) {
+            throw new AccessDeniedException();
+        }
+        coursesService.deleteCourse(id);
+        return ResponseEntity.ok("Deleted");
+    }
 }

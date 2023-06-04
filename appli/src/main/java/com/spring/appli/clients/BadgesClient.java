@@ -47,4 +47,12 @@ public interface BadgesClient {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     ResponseEntity<Badge> createBadge(@Valid @RequestBody BadgeCreationDto badge);
+
+    @RequestMapping(
+            method = RequestMethod.DELETE,
+            value = "/api/badges/{id}",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    ResponseEntity<String> deleteBadge(@PathVariable String id) throws BadgeNotFoundException;
+
 }

@@ -78,4 +78,10 @@ public class CourseController {
 
         return ResponseEntity.created(location).body(created);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteCourse(@PathVariable String id) throws CourseNotFoundException {
+        courseService.deleteCourse(id);
+        return ResponseEntity.ok("Deleted");
+    }
 }

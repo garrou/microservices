@@ -2,10 +2,7 @@ package com.spring.appli.controllers;
 
 import com.spring.appli.dto.*;
 import com.spring.appli.enums.Role;
-import com.spring.appli.exceptions.AccessDeniedException;
-import com.spring.appli.exceptions.BadTokenException;
-import com.spring.appli.exceptions.ParticipationNotFoundException;
-import com.spring.appli.exceptions.PresenceNotFoundException;
+import com.spring.appli.exceptions.*;
 import com.spring.appli.services.ParticipationsService;
 import com.spring.appli.utils.TokenUtil;
 import jakarta.validation.Valid;
@@ -130,5 +127,18 @@ public class AppliParticiptionsController {
         }
         Presence updated = participationsService.updatePresenceByParticipationId(id, presenceUpdateDto, presenceId);
         return ResponseEntity.ok(updated);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteParticipation(
+            @PathVariable String id,
+            @RequestHeader("Authorization") String bearer
+    ) throws ParticipationNotFoundException, AccessDeniedException, BadTokenException {
+        Role role = Role.valueOf(TokenUtil.parseToken(bearer, TokenUtil.ROLE));
+        if (Role.MEMBER.equals(role) || Role.SECRETARY.equals(role)) {
+            throw new AccessDeniedException();
+        }
+        participationsService.deleteParticipation(id);
+        return ResponseEntity.ok("Deleted");
     }
 }

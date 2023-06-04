@@ -54,4 +54,14 @@ public class BadgeService {
         Badge badge = mapperDto.modelMapper().map(badgeCreationDto, Badge.class);
         return badgeRepository.save(badge);
     }
+
+
+    public void deleteBadge(String id) throws BadgeNotFoundException {
+        Optional<Badge> courseOptinal = badgeRepository.findById(id);
+        if(courseOptinal.isEmpty()){
+            throw new BadgeNotFoundException();
+        }
+        badgeRepository.deleteById(id);
+
+    }
 }

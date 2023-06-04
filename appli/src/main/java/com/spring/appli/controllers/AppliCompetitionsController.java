@@ -4,10 +4,7 @@ import com.spring.appli.dto.Competition;
 import com.spring.appli.dto.CompetitionCreationDto;
 import com.spring.appli.dto.CompetitionUpdateDto;
 import com.spring.appli.enums.Role;
-import com.spring.appli.exceptions.AccessDeniedException;
-import com.spring.appli.exceptions.BadTokenException;
-import com.spring.appli.exceptions.CompetitionNotFoundException;
-import com.spring.appli.exceptions.StudentAlreadyOnCompetitionException;
+import com.spring.appli.exceptions.*;
 import com.spring.appli.services.CompetitionsService;
 import com.spring.appli.utils.TokenUtil;
 import com.spring.appli.validators.Uuid;
@@ -113,5 +110,18 @@ public class AppliCompetitionsController {
         }
         Competition updated = competitionsService.addStudent(id, studentId);
         return ResponseEntity.ok(updated);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteCompetition(
+            @PathVariable String id,
+            @RequestHeader("Authorization") String bearer
+    ) throws CompetitionNotFoundException, AccessDeniedException, BadTokenException {
+        Role role = Role.valueOf(TokenUtil.parseToken(bearer, TokenUtil.ROLE));
+        if (Role.MEMBER.equals(role) || Role.SECRETARY.equals(role)) {
+            throw new AccessDeniedException();
+        }
+        competitionsService.deleteCompetition(id);
+        return ResponseEntity.ok("Deleted");
     }
 }

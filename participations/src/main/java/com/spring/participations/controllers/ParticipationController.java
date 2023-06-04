@@ -100,4 +100,10 @@ public class ParticipationController {
         Presence updated = participationService.updatePresenceByParticipationId(id, presenceUpdateDto, presenceId);
         return ResponseEntity.ok(updated);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteParticipation(@PathVariable String id) throws ParticipationNotFoundException {
+        participationService.deleteParticipation(id);
+        return ResponseEntity.ok("Deleted");
+    }
 }

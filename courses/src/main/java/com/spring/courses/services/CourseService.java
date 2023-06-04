@@ -100,4 +100,12 @@ public class CourseService {
         course.get().setStudents(listStudent);
         return courseRepository.save(course.get());
     }
+
+    public void deleteCourse(String id) throws CourseNotFoundException {
+        Optional<Course> courseOptinal = courseRepository.findById(id);
+        if(courseOptinal.isEmpty()){
+            throw new CourseNotFoundException();
+        }
+        courseRepository.deleteById(id);
+    }
 }
