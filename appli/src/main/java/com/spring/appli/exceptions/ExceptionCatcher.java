@@ -28,7 +28,7 @@ public class ExceptionCatcher {
     }
 
     @ExceptionHandler(BadgeNotFoundException.class)
-    public ResponseEntity<ResponseDto> handleCourseNotFoundException(HttpServletRequest request, BadgeNotFoundException e) {
+    public ResponseEntity<ResponseDto> handleBadgeNotFoundException(HttpServletRequest request, BadgeNotFoundException e) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDto(e.getMessage()));
     }
 
@@ -52,9 +52,49 @@ public class ExceptionCatcher {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDto(e.getMessage()));
     }
 
+    @ExceptionHandler(BadTokenException.class)
+    public ResponseEntity<ResponseDto> handleBadTokenException(HttpServletRequest request, BadTokenException e) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ResponseDto(e.getMessage()));
+    }
+
+    @ExceptionHandler(WrongAuthentificationException.class)
+    public ResponseEntity<ResponseDto> handleWrongAuthentificationException(HttpServletRequest request, WrongAuthentificationException e) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ResponseDto(e.getMessage()));
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ResponseDto> handleAccessDeniedException(HttpServletRequest request, AccessDeniedException e) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ResponseDto(e.getMessage()));
+    }
+
+    @ExceptionHandler(StudentAlreadyOnCompetitionException.class)
+    public ResponseEntity<ResponseDto> handleStudentAlreadyOnCompetitionException(HttpServletRequest request, StudentAlreadyOnCompetitionException e) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(new ResponseDto(e.getMessage()));
+    }
+
+    @ExceptionHandler(StudentAlreadyOnCourseException.class)
+    public ResponseEntity<ResponseDto> handleStudentAlreadyOnCourseException(HttpServletRequest request, StudentAlreadyOnCourseException e) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(new ResponseDto(e.getMessage()));
+    }
+
+    @ExceptionHandler(PseudoAlreadyExistException.class)
+    public ResponseEntity<ResponseDto> handlePseudoAlreadyExistException(HttpServletRequest request, PseudoAlreadyExistException e) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(new ResponseDto(e.getMessage()));
+    }
+
     @ExceptionHandler(PresenceNotFoundException.class)
     public ResponseEntity<ResponseDto> handlePresenceNotFoundException(HttpServletRequest request, PresenceNotFoundException e) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDto(e.getMessage()));
+    }
+
+    @ExceptionHandler(TooEarlyException.class)
+    public ResponseEntity<ResponseDto> handleTooEarlyException(HttpServletRequest request, TooEarlyException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDto(e.getMessage()));
+    }
+
+    @ExceptionHandler(InsufficientLevelException.class)
+    public ResponseEntity<ResponseDto> handleInsufficientLevelException(HttpServletRequest request, InsufficientLevelException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDto(e.getMessage()));
     }
 
 

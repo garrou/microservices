@@ -1,12 +1,10 @@
 package com.spring.users.controllers;
 
-import com.spring.users.dto.LoginDto;
 import com.spring.users.dto.PersonCreationDto;
 import com.spring.users.dto.PersonUpdateDto;
 import com.spring.users.entities.Person;
 import com.spring.users.exceptions.PersonNotFoundException;
 import com.spring.users.exceptions.PseudoAlreadyExistException;
-import com.spring.users.exceptions.WrongAuthentificationException;
 import com.spring.users.services.PersonService;
 import com.spring.users.validators.Uuid;
 import jakarta.validation.Valid;

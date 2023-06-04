@@ -2,16 +2,15 @@ package com.spring.appli.services;
 
 import com.spring.appli.clients.StatisticsClient;
 import com.spring.appli.dto.Competition;
-import com.spring.appli.dto.Course;
-import com.spring.appli.dto.Participation;
+import com.spring.appli.dto.CourseParticipationDto;
 import com.spring.appli.dto.Person;
 import com.spring.appli.exceptions.CourseNotFoundException;
 import com.spring.appli.exceptions.ParticipationNotFoundException;
 import feign.FeignException;
+import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,12 +20,11 @@ public class StatisticsService {
     @Autowired
     private StatisticsClient statisticsClient;
 
-    //TODO add role control
     public List<Person> getStudentsPresentByIdCourse(String idCourse) throws ParticipationNotFoundException {
         try {
             return this.statisticsClient.getStudentsPresentByIdCourse(idCourse).getBody();
         } catch (FeignException e) {
-            if (e.status() == 404) {
+            if (e.status() == HttpStatus.SC_NOT_FOUND) {
                 throw new ParticipationNotFoundException();
             }
             throw e;
@@ -37,18 +35,18 @@ public class StatisticsService {
         try {
             return this.statisticsClient.getNbStudentPresentByIdCourse(idCourse).getBody();
         } catch (FeignException e) {
-            if (e.status() == 404) {
+            if (e.status() == HttpStatus.SC_NOT_FOUND) {
                 throw new ParticipationNotFoundException();
             }
             throw e;
         }
     }
 
-    public HashMap<Course, Participation> getCoursesByStudentId(UUID studentId) throws CourseNotFoundException {
+    public List<CourseParticipationDto> getCoursesByStudentId(UUID studentId) throws CourseNotFoundException {
         try {
             return this.statisticsClient.getCoursesByIdStudent(String.valueOf(studentId)).getBody();
         } catch (FeignException e) {
-            if (e.status() == 404) {
+            if (e.status() == HttpStatus.SC_NOT_FOUND) {
                 throw new CourseNotFoundException();
             }
             throw e;

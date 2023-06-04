@@ -10,7 +10,7 @@ public interface PersonRepository extends CrudRepository<Person, UUID> {
 
     List<Person> findAllByLevel(Integer level);
 
-    List<Person> findAllByPseudo(String pseudo);
+    Person findOneByPseudo(String pseudo);
 
     List<Person> findAllByPseudoAndLevel(String pseudo, Integer level);
 

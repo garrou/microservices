@@ -70,9 +70,9 @@ public class CompetitionController {
         return ResponseEntity.created(location).body(created);
     }
 
-    @PutMapping("/{id}/add")
+    @PostMapping("/{id}/student")
     public ResponseEntity<Competition> addStudent(
-            @Valid @PathVariable String id,
+            @PathVariable String id,
             @RequestParam(value = "student", required = true) @Uuid UUID studentId
     ) throws CompetitionNotFoundException, StudentAlreadyOnCompetitionException {
         Competition updated = competitionService.addStudent(id, studentId);

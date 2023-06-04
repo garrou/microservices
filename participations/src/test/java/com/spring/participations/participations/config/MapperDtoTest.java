@@ -35,7 +35,7 @@ public class MapperDtoTest {
 
     @Test
     public void mappingUpdateDtoToEntityTest() {
-        List<Presence> presenceList = List.of(new Presence("1", "1", true, new Date(), 0.0));
+        List<Presence> presenceList = List.of(new Presence("1", "1", true,  0.0));
         ParticipationUpdateDto participationUpdateDto = new ParticipationUpdateDto("test-id", "1gefaaf0", presenceList);
         Participation participation = mapperDto.modelMapper().map(participationUpdateDto, Participation.class);
 

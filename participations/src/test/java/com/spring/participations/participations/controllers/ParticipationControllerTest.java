@@ -64,7 +64,6 @@ public class ParticipationControllerTest {
             "presence-id",
             "test-id",
             false,
-            new Date(),
             16.0
     );
 
@@ -147,7 +146,7 @@ public class ParticipationControllerTest {
         participationCreationDto.setCourseId(" ");
         participationCreationDto.setPresences(
                 IntStream.range(0, 504)
-                        .mapToObj(i -> new Presence("", "", false, new Date(), 10.0))
+                        .mapToObj(i -> new Presence("", "", false, 10.0))
                         .toList()
         );
 
@@ -194,7 +193,7 @@ public class ParticipationControllerTest {
         participationUpdateDto.setCourseId("");
         participationUpdateDto.setPresences(
                 IntStream.range(0, 600)
-                        .mapToObj(i -> new Presence("", "", false, new Date(), 1.0))
+                        .mapToObj(i -> new Presence("", "", false, 1.0))
                         .toList()
         );
 
@@ -283,7 +282,6 @@ public class ParticipationControllerTest {
                 .andExpect(jsonPath("$.id").value(PRESENCE.getId()))
                 .andExpect(jsonPath("$.badgeId").value(PRESENCE.getBadgeId()))
                 .andExpect(jsonPath("$.presence").value(PRESENCE.isPresence()))
-                .andExpect(jsonPath("$.date").exists())
                 .andExpect(jsonPath("$.note").value(PRESENCE.getNote()));
     }
 
@@ -313,7 +311,6 @@ public class ParticipationControllerTest {
                 .andExpect(jsonPath("$.id").value(PRESENCE.getId()))
                 .andExpect(jsonPath("$.badgeId").value(PRESENCE.getBadgeId()))
                 .andExpect(jsonPath("$.presence").value(PRESENCE.isPresence()))
-                .andExpect(jsonPath("$.date").exists())
                 .andExpect(jsonPath("$.note").value(PRESENCE.getNote()));
     }
 

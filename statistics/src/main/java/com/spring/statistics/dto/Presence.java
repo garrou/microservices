@@ -5,8 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -18,8 +16,6 @@ public class Presence {
     private String badgeId;
 
     private boolean presence;
-
-    private Date date;
 
     private Double note;
 }

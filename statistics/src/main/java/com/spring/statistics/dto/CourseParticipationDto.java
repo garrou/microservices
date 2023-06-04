@@ -1,22 +1,19 @@
-package com.spring.competitions.entities;
+package com.spring.statistics.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-@Document
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class Competition {
-
+public class CourseParticipationDto {
     private String id;
 
     private String title;
@@ -34,4 +31,6 @@ public class Competition {
     private List<UUID> students;
 
     private int nbMaxStudents;
+
+    private List<Participation> participations;
 }

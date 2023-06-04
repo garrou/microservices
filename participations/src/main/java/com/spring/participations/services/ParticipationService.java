@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.OptionalInt;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Service
@@ -33,6 +32,25 @@ public class ParticipationService {
     @Autowired
     private MapperDto mapperDto;
 
+    private static List<Participation> filterByPresenceList(
+            List<Participation> participationList,
+            String badgeId
+    ) {
+        List<Participation> matchingParticipations = new ArrayList<>();
+
+        for (Participation participation : participationList) {
+            List<Presence> presences = participation.getPresences();
+            for (Presence presence : presences) {
+                if (presence.getBadgeId().equals(badgeId)) {
+                    matchingParticipations.add(participation);
+                    break; // Once a match is found, move to the next participation
+                }
+            }
+        }
+
+        return matchingParticipations;
+    }
+
     public Participation createParticipation(ParticipationCreationDto participationCreationDto) {
         Participation participation = mapperDto.modelMapper().map(participationCreationDto, Participation.class);
 
@@ -45,27 +63,14 @@ public class ParticipationService {
     public List<Participation> getParticipations(String courseId, String badgeId) {
         if (courseId != null && badgeId != null) {
             List<Participation> participationList = participationRepository.findAllByCourseId(courseId);
-            List<Presence> presenceList = presenceRepository.findAllByBadgeId(badgeId);
-            return filterByPresenceList(participationList, presenceList);
+            return filterByPresenceList(participationList, badgeId);
         } else if (badgeId != null) {
             List<Participation> participationList = (List<Participation>) participationRepository.findAll();
-            List<Presence> presenceList = presenceRepository.findAllByBadgeId(badgeId);
-            return filterByPresenceList(participationList, presenceList);
+            return filterByPresenceList(participationList, badgeId);
         } else if (courseId != null) {
             return participationRepository.findAllByCourseId(courseId);
         }
         return (List<Participation>) participationRepository.findAll();
-    }
-
-    private static List<Participation> filterByPresenceList(
-            List<Participation> participationList,
-            List<Presence> presenceList
-    ) {
-        return participationList
-                .stream()
-                .filter(participation -> presenceList.stream()
-                        .anyMatch(presence -> participation.getPresences().contains(presence)))
-                .collect(Collectors.toList());
     }
 
     public Participation getParticipation(String id) throws ParticipationNotFoundException {
@@ -87,7 +92,7 @@ public class ParticipationService {
             throw new ParticipationNotFoundException();
         }
         Participation participation = mapperDto.modelMapper().map(participationUpdateDto, Participation.class);
-        if(participation.getPresences() == null){
+        if (participation.getPresences() == null) {
             participation.setPresences(new ArrayList<>());
         }
         return participationRepository.save(participation);

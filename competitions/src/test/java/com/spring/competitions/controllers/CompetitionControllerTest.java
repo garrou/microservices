@@ -97,7 +97,7 @@ public class CompetitionControllerTest {
                 .andExpect(jsonPath("$.location").value(COMPETITION.getLocation()))
                 .andExpect(jsonPath("$.teacherId").value(COMPETITION.getTeacherId().toString()))
                 .andExpect(jsonPath("$.students").isArray())
-                .andExpect(jsonPath("$.nbStudentsMax").value(COMPETITION.getNbStudentsMax()));
+                .andExpect(jsonPath("$.nbMaxStudents").value(COMPETITION.getNbMaxStudents()));
     }
 
     @Test
@@ -137,7 +137,7 @@ public class CompetitionControllerTest {
                 .andExpect(jsonPath("$.location").value(COMPETITION.getLocation()))
                 .andExpect(jsonPath("$.teacherId").value(COMPETITION.getTeacherId().toString()))
                 .andExpect(jsonPath("$.students").isArray())
-                .andExpect(jsonPath("$.nbStudentsMax").value(COMPETITION.getNbStudentsMax()));
+                .andExpect(jsonPath("$.nbMaxStudents").value(COMPETITION.getNbMaxStudents()));
     }
 
     @Test
@@ -159,7 +159,7 @@ public class CompetitionControllerTest {
                 .andExpect(jsonPath("$.duration").value("Minimum duration is 1.0"))
                 .andExpect(jsonPath("$.location").value("Location can't be empty"))
                 .andExpect(jsonPath("$.teacherId").value("Teacher id is invalid"))
-                .andExpect(jsonPath("$.nbStudentsMax").value("Minimum value is 1"));
+                .andExpect(jsonPath("$.nbMaxStudents").value("Minimum value is 1"));
     }
 
     @Test
@@ -188,7 +188,7 @@ public class CompetitionControllerTest {
                 .andExpect(jsonPath("$.location").value(competitionUpdateDto.getLocation()))
                 .andExpect(jsonPath("$.teacherId").value(competitionUpdateDto.getTeacherId().toString()))
                 .andExpect(jsonPath("$.students").isArray())
-                .andExpect(jsonPath("$.nbStudentsMax").value(competitionUpdateDto.getNbStudentsMax()));
+                .andExpect(jsonPath("$.nbMaxStudents").value(competitionUpdateDto.getNbMaxStudents()));
     }
 
     @Test
@@ -199,7 +199,7 @@ public class CompetitionControllerTest {
         competitionUpdateDto.setLevel(9);
         competitionUpdateDto.setTitle("");
         competitionUpdateDto.setLocation("");
-        competitionUpdateDto.setNbStudentsMax(900);
+        competitionUpdateDto.setNbMaxStudents(900);
         competitionUpdateDto.setTeacherId(null);
 
         when(competitionService.updateCompetition(competitionUpdateDto.getId(), competitionUpdateDto))
@@ -218,7 +218,7 @@ public class CompetitionControllerTest {
                 .andExpect(jsonPath("$.duration").value("Minimum duration is 1.0"))
                 .andExpect(jsonPath("$.location").value("Location can't be empty"))
                 .andExpect(jsonPath("$.teacherId").value("Teacher id is invalid"))
-                .andExpect(jsonPath("$.nbStudentsMax").value("Maximum value is 500"));
+                .andExpect(jsonPath("$.nbMaxStudents").value("Maximum value is 500"));
     }
 
     private static String asJsonString(final Object obj) {

@@ -28,7 +28,7 @@ public class CourseUpdateDto {
     @Max(value = 5, message = "The maximum level is {value}")
     private int level;
 
-    @JsonFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     private Date timeSlot;
 
     @DecimalMin(value = "1.0", message = "Minimum duration is {value}")
@@ -45,5 +45,5 @@ public class CourseUpdateDto {
 
     @Min(value = 1, message = "Minimum value is {value}")
     @Max(value = 500, message = "Maximum value is {value}")
-    private int nbStudentsMax;
+    private int nbMaxStudents;
 }
