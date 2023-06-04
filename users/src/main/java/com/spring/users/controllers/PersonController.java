@@ -67,4 +67,12 @@ public class PersonController {
         Person updated = personService.updatePerson(id, person);
         return ResponseEntity.ok(updated);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deletePerson(
+            @PathVariable @Uuid UUID id
+    ) throws PersonNotFoundException {
+        personService.deletePerson(id);
+        return ResponseEntity.ok("Deleted");
+    }
 }

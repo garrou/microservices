@@ -3,6 +3,7 @@ package com.spring.appli.services;
 import com.spring.appli.clients.ParticipationsClient;
 import com.spring.appli.dto.*;
 import com.spring.appli.exceptions.ParticipationNotFoundException;
+import com.spring.appli.exceptions.PersonNotFoundException;
 import com.spring.appli.exceptions.PresenceNotFoundException;
 import feign.FeignException;
 import org.apache.http.HttpStatus;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ParticipationsService {
@@ -83,5 +85,16 @@ public class ParticipationsService {
 
     public Participation createParticipation(ParticipationCreationDto participation) {
         return this.participationsClient.createParticipation(participation).getBody();
+    }
+
+    public void deleteParticipation(String id) throws ParticipationNotFoundException {
+        try{
+            this.participationsClient.deleteParticipation(id);
+        } catch(FeignException e){
+            if(e.status() == HttpStatus.SC_NOT_FOUND){
+                throw new ParticipationNotFoundException();
+            }
+            throw e;
+        }
     }
 }

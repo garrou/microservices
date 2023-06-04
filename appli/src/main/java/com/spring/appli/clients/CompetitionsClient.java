@@ -71,4 +71,13 @@ public interface CompetitionsClient {
             @PathVariable String id,
             @RequestParam(value = "student", required = true) @Uuid UUID studentId
     ) throws CompetitionNotFoundException, StudentAlreadyOnCompetitionException;
+
+    @RequestMapping(
+            method = RequestMethod.DELETE,
+            value = "/api/competitions/{id}",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    ResponseEntity<String> deleteCompetition(
+            @PathVariable String id
+    ) throws CompetitionNotFoundException;
 }

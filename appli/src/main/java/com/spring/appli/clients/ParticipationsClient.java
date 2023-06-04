@@ -88,4 +88,13 @@ public interface ParticipationsClient {
             @PathVariable(name = "participationId") String id,
             @PathVariable(name = "presenceId") String presenceId
     ) throws ParticipationNotFoundException, PresenceNotFoundException;
+
+    @RequestMapping(
+            method = RequestMethod.DELETE,
+            value = "/api/participations/{id}",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    ResponseEntity<String> deleteParticipation(
+            @PathVariable String id
+    ) throws ParticipationNotFoundException;
 }

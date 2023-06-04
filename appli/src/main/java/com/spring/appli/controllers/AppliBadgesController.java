@@ -7,6 +7,7 @@ import com.spring.appli.enums.Role;
 import com.spring.appli.exceptions.AccessDeniedException;
 import com.spring.appli.exceptions.BadTokenException;
 import com.spring.appli.exceptions.BadgeNotFoundException;
+import com.spring.appli.exceptions.CourseNotFoundException;
 import com.spring.appli.services.BadgesService;
 import com.spring.appli.utils.TokenUtil;
 import jakarta.validation.Valid;
@@ -80,5 +81,18 @@ public class AppliBadgesController {
                 .toUri();
 
         return ResponseEntity.created(location).body(created);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteBadge(
+            @PathVariable String id,
+            @RequestHeader("Authorization") String bearer
+    ) throws BadgeNotFoundException, AccessDeniedException, BadTokenException {
+        Role role = Role.valueOf(TokenUtil.parseToken(bearer, TokenUtil.ROLE));
+        if (Role.MEMBER.equals(role) || Role.TEACHER.equals(role)) {
+            throw new AccessDeniedException();
+        }
+        badgesService.deleteBadge(id);
+        return ResponseEntity.ok("Deleted");
     }
 }

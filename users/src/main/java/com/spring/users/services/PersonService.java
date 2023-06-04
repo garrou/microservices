@@ -96,4 +96,12 @@ public class PersonService {
         }
         throw new WrongAuthentificationException();
     }
+
+    public void deletePerson(UUID id) throws PersonNotFoundException {
+        Optional<Person> courseOptinal = personRepository.findById(id);
+        if(!courseOptinal.isPresent()){
+            throw new PersonNotFoundException();
+        }
+        personRepository.deleteById(id);
+    }
 }

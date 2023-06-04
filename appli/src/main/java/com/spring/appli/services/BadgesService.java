@@ -5,6 +5,7 @@ import com.spring.appli.dto.Badge;
 import com.spring.appli.dto.BadgeCreationDto;
 import com.spring.appli.dto.BadgeUpdateDto;
 import com.spring.appli.exceptions.BadgeNotFoundException;
+import com.spring.appli.exceptions.CourseNotFoundException;
 import feign.FeignException;
 import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,5 +47,17 @@ public class BadgesService {
 
     public Badge createBadge(BadgeCreationDto badge) {
         return this.badgesClient.createBadge(badge).getBody();
+    }
+
+    public void deleteBadge(String id) throws BadgeNotFoundException {
+        try{
+            this.badgesClient.deleteBadge(id);
+        } catch(FeignException e){
+            if(e.status() == HttpStatus.SC_NOT_FOUND){
+                throw new BadgeNotFoundException();
+            }
+            throw e;
+        }
+
     }
 }

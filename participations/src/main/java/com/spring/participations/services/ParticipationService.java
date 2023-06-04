@@ -153,4 +153,12 @@ public class ParticipationService {
         participationRepository.save(p);
         return presence;
     }
+
+    public void deleteParticipation(String id) throws ParticipationNotFoundException {
+        Optional<Participation> courseOptinal = participationRepository.findById(id);
+        if(courseOptinal.isEmpty()){
+            throw new ParticipationNotFoundException();
+        }
+        participationRepository.deleteById(id);
+    }
 }

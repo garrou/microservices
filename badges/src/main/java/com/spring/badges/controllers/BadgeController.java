@@ -50,4 +50,10 @@ public class BadgeController {
 
         return ResponseEntity.created(location).body(created);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteBadge(@PathVariable String id) throws BadgeNotFoundException {
+        badgeService.deleteBadge(id);
+        return ResponseEntity.ok("Deleted");
+    }
 }

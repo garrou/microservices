@@ -78,4 +78,10 @@ public class CompetitionController {
         Competition updated = competitionService.addStudent(id, studentId);
         return ResponseEntity.ok(updated);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteCompetition(@PathVariable String id) throws CompetitionNotFoundException {
+        competitionService.deleteCompetition(id);
+        return ResponseEntity.ok("Deleted");
+    }
 }

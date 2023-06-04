@@ -72,4 +72,12 @@ public interface CoursesClient {
             @PathVariable String id,
             @RequestParam(value = "student", required = true) @Uuid UUID studentId
     ) throws CourseNotFoundException, StudentAlreadyOnCourseException;
+
+    @RequestMapping(
+            method = RequestMethod.DELETE,
+            value = "/api/courses/{id}",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+     ResponseEntity<String> deleteCourse(@PathVariable String id) throws CourseNotFoundException;
+
 }

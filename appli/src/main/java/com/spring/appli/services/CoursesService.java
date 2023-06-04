@@ -106,4 +106,16 @@ public class CoursesService {
         // Compare the dates
         return currentDate.after(sevenDaysLater);
     }
+
+    public void deleteCourse(String id) throws CourseNotFoundException {
+        try{
+            this.coursesClient.deleteCourse(id);
+        } catch(FeignException e){
+            if(e.status() == HttpStatus.SC_NOT_FOUND){
+                throw new CourseNotFoundException();
+            }
+            throw e;
+        }
+
+    }
 }

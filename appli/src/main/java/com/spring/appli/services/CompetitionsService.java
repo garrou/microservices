@@ -5,6 +5,7 @@ import com.spring.appli.dto.Competition;
 import com.spring.appli.dto.CompetitionCreationDto;
 import com.spring.appli.dto.CompetitionUpdateDto;
 import com.spring.appli.exceptions.CompetitionNotFoundException;
+import com.spring.appli.exceptions.CourseNotFoundException;
 import com.spring.appli.exceptions.StudentAlreadyOnCompetitionException;
 import feign.FeignException;
 import org.apache.http.HttpStatus;
@@ -63,5 +64,17 @@ public class CompetitionsService {
 
     public Competition addStudent(String id, UUID studentId) throws CompetitionNotFoundException, StudentAlreadyOnCompetitionException {
         return this.competitionsClient.addStudent(id, studentId).getBody();
+    }
+
+    public void deleteCompetition(String id) throws CompetitionNotFoundException {
+        try{
+            this.competitionsClient.deleteCompetition(id);
+        } catch(FeignException e){
+            if(e.status() == HttpStatus.SC_NOT_FOUND){
+                throw new CompetitionNotFoundException();
+            }
+            throw e;
+        }
+
     }
 }

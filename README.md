@@ -11,6 +11,6 @@ Micro services architecture
 - Users (Postgres)
 - Courses (Mongo)
 - Competitions (Mongo)
-- Statistics (Postgres)
+- Statistics
 - Badges (Mongo)
 - Participations (Postgres)

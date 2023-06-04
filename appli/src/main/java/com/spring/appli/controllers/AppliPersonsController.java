@@ -5,6 +5,7 @@ import com.spring.appli.dto.PersonUpdateDto;
 import com.spring.appli.enums.Role;
 import com.spring.appli.exceptions.AccessDeniedException;
 import com.spring.appli.exceptions.BadTokenException;
+import com.spring.appli.exceptions.CourseNotFoundException;
 import com.spring.appli.exceptions.PersonNotFoundException;
 import com.spring.appli.services.PersonsService;
 import com.spring.appli.utils.TokenUtil;
@@ -76,5 +77,18 @@ public class AppliPersonsController {
         checkTokenAndIdMatchForRole(id, bearer);
         Person updated = personService.updatePerson(id, person, bearer);
         return ResponseEntity.ok(updated);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deletePerson(
+            @PathVariable String id,
+            @RequestHeader("Authorization") String bearer
+    ) throws PersonNotFoundException, AccessDeniedException, BadTokenException {
+        Role role = Role.valueOf(TokenUtil.parseToken(bearer, TokenUtil.ROLE));
+        if (Role.MEMBER.equals(role) || Role.TEACHER.equals(role)) {
+            throw new AccessDeniedException();
+        }
+        personService.deletePerson(id);
+        return ResponseEntity.ok("Deleted");
     }
 }

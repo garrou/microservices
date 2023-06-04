@@ -3,6 +3,7 @@ package com.spring.appli.services;
 import com.spring.appli.clients.PersonsClient;
 import com.spring.appli.dto.Person;
 import com.spring.appli.dto.PersonUpdateDto;
+import com.spring.appli.exceptions.CourseNotFoundException;
 import com.spring.appli.exceptions.PersonNotFoundException;
 import feign.FeignException;
 import org.apache.http.HttpStatus;
@@ -43,6 +44,16 @@ public class PersonsService {
             }
             throw e;
         }
+    }
 
+    public void deletePerson(String id) throws PersonNotFoundException {
+        try{
+            this.personsClient.deletePerson(UUID.fromString(id));
+        } catch(FeignException e){
+            if(e.status() == HttpStatus.SC_NOT_FOUND){
+                throw new PersonNotFoundException();
+            }
+            throw e;
+        }
     }
 }
