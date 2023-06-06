@@ -9,6 +9,18 @@ services:
     networks:
       - spring-net
 
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - "9090:9090"
+    container_name: prometheus
+    depends_on:
+      - eureka-server
+    networks:
+      - spring-net
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+
   users-pg:
     image: postgres:15.2
     container_name: users-pg
