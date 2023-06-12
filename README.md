@@ -14,3 +14,9 @@ Micro services architecture
 - Statistics
 - Badges (Mongo)
 - Participations (Postgres)
+
+## Docker
+
+```sh
+docker-compose up -d
+```
