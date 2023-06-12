@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 @EnableDiscoveryClient
+@Slf4j
 public class BadgesApplication {
     @LoadBalanced
     public static void main(String[] args) {

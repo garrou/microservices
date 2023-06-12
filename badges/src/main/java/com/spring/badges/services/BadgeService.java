@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class BadgeService {
 
     @Autowired
@@ -34,6 +35,7 @@ public class BadgeService {
 
         Optional<Badge> badge = badgeRepository.findById(id);
         if (badge.isEmpty()) {
+            log.error("BADGES - stop KO : getBadge, BadgeNotFoundException");
             throw new BadgeNotFoundException();
         }
         return badge.get();
@@ -42,9 +44,11 @@ public class BadgeService {
     public Badge updateBadge(String id, BadgeUpdateDto badgeUpdateDto) throws BadgeNotFoundException {
 
         if (!id.equals(badgeUpdateDto.getId())) {
+            log.error("BADGES - stop KO : updateBadge, IllegalArgumentException");
             throw new IllegalArgumentException();
         }
         if (badgeRepository.findById(badgeUpdateDto.getId()).isEmpty()) {
+            log.error("BADGES - stop KO : updateBadge, BadgeNotFoundException");
             throw new BadgeNotFoundException();
         }
         Badge badge = mapperDto.modelMapper().map(badgeUpdateDto, Badge.class);
@@ -60,6 +64,7 @@ public class BadgeService {
     public void deleteBadge(String id) throws BadgeNotFoundException {
         Optional<Badge> courseOptinal = badgeRepository.findById(id);
         if(courseOptinal.isEmpty()){
+            log.error("BADGES - stop KO : deleteBadge, BadgeNotFoundException");
             throw new BadgeNotFoundException();
         }
         badgeRepository.deleteById(id);

@@ -1,0 +1,2964 @@
+{
+	"info": {
+		"_postman_id": "43e88463-efab-4df1-b7ed-b7dffec2319d",
+		"name": "M2 Projet Spring",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19134917",
+		"_collection_link": "https://crimson-sunset-779973.postman.co/workspace/L'EQUIPE~91f58a6b-6c91-463e-ac75-be521797634c/collection/19134917-43e88463-efab-4df1-b7ed-b7dffec2319d?action=share&creator=19134917&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "Appli",
+			"item": [
+				{
+					"name": "Badges",
+					"item": [
+						{
+							"name": "Create badge",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"idPerson\":\"{{student-id}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/appli/badges",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"appli",
+										"badges"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get badges",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/api/appli/badges",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"appli",
+										"badges"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get badges for person",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/api/appli/badges?id-person={{user-id}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"appli",
+										"badges"
+									],
+									"query": [
+										{
+											"key": "id-person",
+											"value": "{{user-id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get one badge",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/api/appli/badges/{{badge-id}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"appli",
+										"badges",
+										"{{badge-id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update badge",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\":\"{{badge-id}}\",\r\n    \"idPerson\":\"51718c61-2777-4dbf-a2e7-160f3200bca5\" // can switch badge to other user\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/appli/badges/{{badge-id}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"appli",
+										"badges",
+										"{{badge-id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Badge",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"idPerson\":\"{{user-id}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/appli/badges/{{badge-id}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"appli",
+										"badges",
+										"{{badge-id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Users",
+					"item": [
+						{
+							"name": "Get users",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/api/appli/users",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"appli",
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get users by level",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/api/appli/users?level=2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"appli",
+										"users"
+									],
+									"query": [
+										{
+											"key": "level",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get users by level sup",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/api/appli/users?level-sup=3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"appli",
+										"users"
+									],
+									"query": [
+										{
+											"key": "level-sup",
+											"value": "3"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get users by pseudo",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/api/appli/users?pseudo=tt10",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"appli",
+										"users"
+									],
+									"query": [
+										{
+											"key": "pseudo",
+											"value": "tt10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get users by pseudo & level",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/api/appli/users?pseudo=tt10&level=4",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"appli",
+										"users"
+									],
+									"query": [
+										{
+											"key": "pseudo",
+											"value": "tt10"
+										},
+										{
+											"key": "level-sup",
+											"value": "",
+											"disabled": true
+										},
+										{
+											"key": "level",
+											"value": "4"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get one user",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/api/appli/users/{{user-id}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"appli",
+										"users",
+										"{{user-id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update user",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\":\"{{user-id}}\",\r\n    \"firstname\": \"titi\",\r\n    \"lastname\": \"Tata2\",\r\n    \"pseudo\": \"tt10\",\r\n    \"email\": \"tdt@gmail.com\",\r\n    \"address\": \"9 speed road\",\r\n    \"level\": 2,\r\n    \"role\": \"TEACHER\",\r\n    \"password\": \"testtest\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/appli/users/{{user-id}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"appli",
+										"users",
+										"{{user-id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete user",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/api/appli/users/{{user-id}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"appli",
+										"users",
+										"{{user-id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Courses",
+					"item": [
+						{
+							"name": "Create course",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\": \"COUCOU\",\r\n    \"level\": 3,\r\n    \"timeSlot\": \"11/05/2023 08:30\",\r\n    \"duration\": 120,\r\n    \"location\": \"Toulouse\",\r\n    \"teacherId\": \"{{user-id}}\",\r\n    \"students\": [\r\n    ],\r\n    \"nbMaxStudents\": 20\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/appli/courses",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"appli",
+										"courses"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get courses",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/api/appli/courses",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"appli",
+										"courses"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get courses level",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/api/appli/courses?level=2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"appli",
+										"courses"
+									],
+									"query": [
+										{
+											"key": "level",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get courses teacher id",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/api/appli/courses?teacher={{user-id}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"appli",
+										"courses"
+									],
+									"query": [
+										{
+											"key": "teacher",
+											"value": "{{user-id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get courses student id",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/api/appli/courses?student={{student-id}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"appli",
+										"courses"
+									],
+									"query": [
+										{
+											"key": "student",
+											"value": "{{student-id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get one course",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/api/appli/courses/{{course-id}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"appli",
+										"courses",
+										"{{course-id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get liste students by course id",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/api/appli/courses/{{course-id}}/students",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"appli",
+										"courses",
+										"{{course-id}}",
+										"students"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add student",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/api/appli/courses/{{course-id}}/student?student={{student-id}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"appli",
+										"courses",
+										"{{course-id}}",
+										"student"
+									],
+									"query": [
+										{
+											"key": "student",
+											"value": "{{student-id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Edit course",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\":\"{{course-id}}\",\r\n    \"title\": \"COUCOU2\",\r\n    \"level\": 3,\r\n    \"timeSlot\": \"11/05/2023 08:30\",\r\n    \"duration\": 120,\r\n    \"location\": \"Toulouse\",\r\n    \"teacherId\": \"8283e3c1-7ae5-4ea5-867a-29d5e021c755\",\r\n    \"students\": [\r\n    ],\r\n    \"nbStudentsMax\": 20\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/appli/courses/{{course-id}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"appli",
+										"courses",
+										"{{course-id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete course",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/api/appli/courses/{{course-id}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"appli",
+										"courses",
+										"{{course-id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Competitions",
+					"item": [
+						{
+							"name": "Create competitions",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\": \"COUCOU\",\r\n    \"level\": 3,\r\n    \"timeSlot\": \"11/05/2023 10:30\",\r\n    \"duration\": 120,\r\n    \"location\": \"Toulouse\",\r\n    \"teacherId\": \"{{user-id}}\",\r\n    \"students\": [\r\n    ],\r\n    \"nbMaxStudents\": 20\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/appli/competitions",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"appli",
+										"competitions"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get competitions",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/api/appli/competitions",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"appli",
+										"competitions"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get competitions level",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/api/appli/competitions?level=2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"appli",
+										"competitions"
+									],
+									"query": [
+										{
+											"key": "level",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get competitions teacher id",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/api/appli/competitions?teacher={{user-id}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"appli",
+										"competitions"
+									],
+									"query": [
+										{
+											"key": "teacher",
+											"value": "{{user-id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get competitions student id",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/api/appli/competitions?student={{student-id}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"appli",
+										"competitions"
+									],
+									"query": [
+										{
+											"key": "student",
+											"value": "{{student-id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get competitions student list",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/api/appli/competitions/{{competition-id}}/students",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"appli",
+										"competitions",
+										"{{competition-id}}",
+										"students"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get one competition",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/api/appli/competitions/{{competition-id}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"appli",
+										"competitions",
+										"{{competition-id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add student competition",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/api/appli/competitions/{{competition-id}}/student?student={{user-id}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"appli",
+										"competitions",
+										"{{competition-id}}",
+										"student"
+									],
+									"query": [
+										{
+											"key": "student",
+											"value": "{{user-id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Edit competition",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\":\"{{competition-id}}\",\r\n    \"title\": \"COUCOU2\",\r\n    \"level\": 3,\r\n    \"timeSlot\": \"11/05/2023 08:00\",\r\n    \"duration\": 120,\r\n    \"location\": \"Paris\",\r\n    \"teacherId\": \"8283e3c1-7ae5-4ea5-867a-29d5e021c755\",\r\n    \"nbMaxStudents\": 20\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/appli/competitions/{{competition-id}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"appli",
+										"competitions",
+										"{{competition-id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete competition",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/api/appli/competitions/{{competition-id}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"appli",
+										"competitions",
+										"{{competition-id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Participations",
+					"item": [
+						{
+							"name": "Get participations",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/api/appli/participations",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"appli",
+										"participations"
+									],
+									"query": [
+										{
+											"key": "course",
+											"value": null,
+											"disabled": true
+										},
+										{
+											"key": "badge-id",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create participation",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"courseId\": \"{{course-id}}\",\r\n    \"presences\":[]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/appli/participations",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"appli",
+										"participations"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get one participation",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/api/appli/participations/{{participation-id}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"appli",
+										"participations",
+										"{{participation-id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update participation",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": \"{{participation-id}}\",\r\n    \"courseId\": \"toto\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/appli/participations/{{participation-id}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"appli",
+										"participations",
+										"{{participation-id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get presence",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/api/appli/participations/{{participation-id}}/presences",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"appli",
+										"participations",
+										"{{participation-id}}",
+										"presences"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create presence",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"badgeId\": \"{{badge-id}}\",\r\n    \"presence\":true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/appli/participations/{{participation-id}}/presences",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"appli",
+										"participations",
+										"{{participation-id}}",
+										"presences"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update presence",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": \"{{presence-id}}\",\r\n    \"badgeId\": \"titi\"\r\n    //\"presence\": true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/appli/participations/{{participation-id}}/presences/{{presence-id}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"appli",
+										"participations",
+										"{{participation-id}}",
+										"presences",
+										"{{presence-id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete participation",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/api/appli/participations/{{participation-id}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"appli",
+										"participations",
+										"{{participation-id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Statistiques",
+					"item": [
+						{
+							"name": "Get nb cours",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/api/appli/statistics/nbCourses",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"appli",
+										"statistics",
+										"nbCourses"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get presence by id course",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/api/appli/statistics/presence/{{course-id}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"appli",
+										"statistics",
+										"presence",
+										"{{course-id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get nb presence by id course",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/api/appli/statistics/nbPresence/{{course-id}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"appli",
+										"statistics",
+										"nbPresence",
+										"{{course-id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get cours by id student",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/api/appli/statistics/courses/{{student-id}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"appli",
+										"statistics",
+										"courses",
+										"{{student-id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get competition",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/api/appli/statistics/competitions?level=3&student={{student-id}}&teacher={{user-id}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"appli",
+										"statistics",
+										"competitions"
+									],
+									"query": [
+										{
+											"key": "level",
+											"value": "3"
+										},
+										{
+											"key": "student",
+											"value": "{{student-id}}"
+										},
+										{
+											"key": "teacher",
+											"value": "{{user-id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get nbCompetition",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/api/appli/statistics/nbCompetitions?level=3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"appli",
+										"statistics",
+										"nbCompetitions"
+									],
+									"query": [
+										{
+											"key": "level",
+											"value": "3"
+										},
+										{
+											"key": "teacher",
+											"value": "{{user-id}}",
+											"disabled": true
+										},
+										{
+											"key": "student",
+											"value": "{{student-id}}",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Authentication",
+					"item": [
+						{
+							"name": "Post login",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"pseudo\": \"tt10\",\r\n    \"password\": \"testtest\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/appli/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"appli",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create user",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstname\": \"toto\",\r\n    \"lastname\": \"Tata\",\r\n    \"pseudo\": \"tt10\",\r\n    \"email\": \"tdt@gmail.com\",\r\n    \"address\": \"9 speed road\",\r\n    \"level\": 4,\r\n    \"role\": \"TEACHER\",\r\n    \"password\": \"testtest\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/appli/signup",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"appli",
+										"signup"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "MS en direct",
+			"item": [
+				{
+					"name": "Badges",
+					"item": [
+						{
+							"name": "Get badges",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/badges",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"badges"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get badges for person",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/badges?id-person={{user-id}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"badges"
+									],
+									"query": [
+										{
+											"key": "id-person",
+											"value": "{{user-id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get one badge",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/badges/{{badge-id}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"badges",
+										"{{badge-id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create badge",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"idPerson\":\"{{user-id}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/badges",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"badges"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update badge",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\":\"{{badge-id}}\",\r\n    \"idPerson\":\"51718c61-2777-4dbf-a2e7-160f3200bca5\" // can switch badge to other user\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/badges/{{badge-id}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"badges",
+										"{{badge-id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/badges/{{badge-id}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"badges",
+										"{{badge-id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Users",
+					"item": [
+						{
+							"name": "Post login",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"pseudo\": \"tt10\",\r\n    \"password\": \"testtest\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/users/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"users",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create user",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstname\": \"toto\",\r\n    \"lastname\": \"Tata\",\r\n    \"pseudo\": \"tt10\",\r\n    \"email\": \"tdt@gmail.com\",\r\n    \"address\": \"9 speed road\",\r\n    \"level\": 4,\r\n    \"role\": \"TEACHER\",\r\n    \"password\": \"testtest\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/users",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get users",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/users",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get users by level",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/users?level=2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"users"
+									],
+									"query": [
+										{
+											"key": "level",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get users by level sup",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/users?level-sup=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"users"
+									],
+									"query": [
+										{
+											"key": "level-sup",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get users by pseudo",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/users?pseudo=tt10",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"users"
+									],
+									"query": [
+										{
+											"key": "pseudo",
+											"value": "tt10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get users by pseudo & level",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/users?pseudo=tt10&level=2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"users"
+									],
+									"query": [
+										{
+											"key": "pseudo",
+											"value": "tt10"
+										},
+										{
+											"key": "level",
+											"value": "2"
+										},
+										{
+											"key": "level-sup",
+											"value": "",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get one user",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/users/{{user-id}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"users",
+										"{{user-id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update user",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\":\"{{user-id}}\",\r\n    \"firstname\": \"titi\",\r\n    \"lastname\": \"Tata\",\r\n    \"pseudo\": \"tt10\",\r\n    \"email\": \"tdt@gmail.com\",\r\n    \"address\": \"9 speed road\",\r\n    \"level\": 2,\r\n    \"role\": \"TEACHER\",\r\n    \"password\": \"testtest\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/users/{{user-id}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"users",
+										"{{user-id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Courses",
+					"item": [
+						{
+							"name": "Create course",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\": \"COUCOU\",\r\n    \"level\": 3,\r\n    \"timeSlot\": \"11/05/2023\",\r\n    \"duration\": 120,\r\n    \"location\": \"Toulouse\",\r\n    \"teacherId\": \"8283e3c1-7ae5-4ea5-867a-29d5e021c755\",\r\n    \"students\": [\r\n    ],\r\n    \"nbStudentsMax\": 20\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/courses",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"courses"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get courses",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/courses",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"courses"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get courses level",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/courses?level=3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"courses"
+									],
+									"query": [
+										{
+											"key": "level",
+											"value": "3"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get courses teacher id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/courses?student={{user-id}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"courses"
+									],
+									"query": [
+										{
+											"key": "student",
+											"value": "{{user-id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get courses student id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/courses?student={{user-id}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"courses"
+									],
+									"query": [
+										{
+											"key": "student",
+											"value": "{{user-id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get one course",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/courses/{{course-id}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"courses",
+										"{{course-id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get liste students by course id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/courses/{{course-id}}/students",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"courses",
+										"{{course-id}}",
+										"students"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add student",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/courses/{{course-id}}/add?student={{user-id}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"courses",
+										"{{course-id}}",
+										"add"
+									],
+									"query": [
+										{
+											"key": "student",
+											"value": "{{user-id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Edit course",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\":\"{{course-id}}\",\r\n    \"title\": \"COUCOU2\",\r\n    \"level\": 3,\r\n    \"timeSlot\": \"11/05/2023\",\r\n    \"duration\": 120,\r\n    \"location\": \"Toulouse\",\r\n    \"teacherId\": \"8283e3c1-7ae5-4ea5-867a-29d5e021c755\",\r\n    \"students\": [\r\n    ],\r\n    \"nbStudentsMax\": 20\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/courses/{{course-id}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"courses",
+										"{{course-id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Competitions",
+					"item": [
+						{
+							"name": "Create competitions",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\": \"COUCOU\",\r\n    \"level\": 3,\r\n    \"timeSlot\": \"11/05/2023\",\r\n    \"duration\": 120,\r\n    \"location\": \"Toulouse\",\r\n    \"teacherId\": \"8283e3c1-7ae5-4ea5-867a-29d5e021c755\",\r\n    \"students\": [\r\n    ],\r\n    \"nbStudentsMax\": 20\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/competitions",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"competitions"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get competitions",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/competitions",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"competitions"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get competitions level",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/competitions?level=2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"competitions"
+									],
+									"query": [
+										{
+											"key": "level",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get competitions teacher id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/competitions?teacher=8283e3c1-7ae5-4ea5-867a-29d5e021c755",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"competitions"
+									],
+									"query": [
+										{
+											"key": "teacher",
+											"value": "8283e3c1-7ae5-4ea5-867a-29d5e021c755"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get competitions student id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/competitions?student={{user-id}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"competitions"
+									],
+									"query": [
+										{
+											"key": "student",
+											"value": "{{user-id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get competitions student id Copy",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/competitions/{{competition-id}}/students",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"competitions",
+										"{{competition-id}}",
+										"students"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get one competition",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/competitions/{{competition-id}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"competitions",
+										"{{competition-id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "add student competition",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/competitions/{{competition-id}}/add?student={{user-id}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"competitions",
+										"{{competition-id}}",
+										"add"
+									],
+									"query": [
+										{
+											"key": "student",
+											"value": "{{user-id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "edit competition",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\":\"{{competition-id}}\",\r\n    \"title\": \"COUCOU2\",\r\n    \"level\": 3,\r\n    \"timeSlot\": \"11/05/2023\",\r\n    \"duration\": 120,\r\n    \"location\": \"Paris\",\r\n    \"teacherId\": \"8283e3c1-7ae5-4ea5-867a-29d5e021c755\",\r\n    \"nbStudentsMax\": 20\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/competitions/{{competition-id}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"competitions",
+										"{{competition-id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Participations",
+					"item": [
+						{
+							"name": "Get participations",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/participations",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"participations"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create participation",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"courseId\": \"{{course-id}}\",\r\n    \"prensenceList\":[]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/participations",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"participations"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get one participation",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/participations/{{participation-id}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"participations",
+										"{{participation-id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update participation",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": \"{{participation-id}}\",\r\n    \"courseId\": \"toto\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/participations/{{participation-id}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"participations",
+										"{{participation-id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get presence",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/participations/{{participation-id}}/presences",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"participations",
+										"{{participation-id}}",
+										"presences"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create presence",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"badgeId\": \"{{badge-id}}\",\r\n    \"presence\":true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/participations/{{participation-id}}/presences",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"participations",
+										"{{participation-id}}",
+										"presences"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update presence",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": \"{{presence-id}}\",\r\n    \"badgeId\": \"titi\"\r\n    //\"presence\": true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/participations/{{participation-id}}/presences/{{presence-id}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"participations",
+										"{{participation-id}}",
+										"presences",
+										"{{presence-id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Statistiques",
+					"item": [
+						{
+							"name": "Get nb cours",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/statistics/nbCourses",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"statistics",
+										"nbCourses"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get presence by id course",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/statistics/presence/{{course-id}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"statistics",
+										"presence",
+										"{{course-id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get nb presence by id course",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/statistics/nbPresence/{{course-id}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"statistics",
+										"nbPresence",
+										"{{course-id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get cours by id student",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/statistics/courses/{{student-id}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"statistics",
+										"courses",
+										"{{student-id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get competition",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/statistics/competitions?level=3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"statistics",
+										"competitions"
+									],
+									"query": [
+										{
+											"key": "level",
+											"value": "3"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get nbCompetition",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/statistics/nbCompetitions?level=3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"statistics",
+										"nbCompetitions"
+									],
+									"query": [
+										{
+											"key": "level",
+											"value": "3"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "badge-id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "user-id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "course-id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "competition-id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "participation-id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "presence-id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "student-id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "student-badge-id",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
