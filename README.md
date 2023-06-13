@@ -20,3 +20,10 @@ Micro services architecture
 ```sh
 docker-compose up -d
 ```
+
+## Endpoints
+
+- Gateway : http://localhost:8080
+- Prometheus : http://localhost:9090
+- Eureka : http://localhost:9000
+- Zipkin : http://localhost:9411/zipkin
